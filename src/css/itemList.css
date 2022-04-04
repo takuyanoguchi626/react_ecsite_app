@@ -1,0 +1,14 @@
+.itemList {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.itemImage {
+  width: 230px;
+  height: 230px;
+}
+
+.container {
+  width: 800px;
+  margin: 0 auto;
+}
