@@ -1,6 +1,6 @@
-import { topping } from "./topping";
+import { Topping } from "./topping";
 
-export type item = {
+export type Item = {
   deleted: boolean;
   description: string;
   id: number;
@@ -8,6 +8,6 @@ export type item = {
   name: string;
   priceL: number;
   priceM: number;
-  toppingList: Array<topping>;
+  toppingList: Array<Topping>;
   type: string;
 };

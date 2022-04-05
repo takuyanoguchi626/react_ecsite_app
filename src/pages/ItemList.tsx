@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../css/itemList.css";
-import { item } from "../types/item";
+import { Item } from "../types/item";
 
 export const ItemList = () => {
   const [itemList, setItemList] = useState([]);
@@ -22,11 +22,11 @@ export const ItemList = () => {
       <input type="text" />
       <button>検索</button>
       <div className="itemList">
-        {itemList.map((item: item) => {
+        {itemList.map((item: Item) => {
           return (
             <div>
               <nav>
-                <Link to="/ItemDetail">
+                <Link to={"/ItemDetail/" + item.id}>
                   <img className="itemImage" src={item.imagePath} alt="" />
                 </Link>
               </nav>

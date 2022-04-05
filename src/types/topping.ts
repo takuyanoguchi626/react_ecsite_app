@@ -1,4 +1,4 @@
-export type topping = {
+export type Topping = {
   id: number;
   name: string;
   priceL: number;
