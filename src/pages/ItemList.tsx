@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../css/itemList.css";
-import { Item } from "../types/item";
+import { Item } from "../types/Item";
 
 export const ItemList = () => {
   const [itemList, setItemList] = useState([]);

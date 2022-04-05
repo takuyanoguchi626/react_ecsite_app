@@ -2,8 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "../css/itemDetail.css";
-import { Item } from "../types/item";
-import { Topping } from "../types/topping";
+import { Item } from "../types/Item";
+import { Topping } from "../types/Topping";
 
 export const ItemDetail = () => {
   const [item, setItem] = useState<Item>();
