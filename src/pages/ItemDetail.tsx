@@ -7,48 +7,70 @@ import { Topping } from "../types/Topping";
 
 import { useContext } from "react";
 import { cartListContext } from "../components/providers/CartListProvider";
+import { OrderItem } from "../types/OrderItem";
 
 export const ItemDetail = () => {
+  //画面遷移のメソッド化
+  const navigate = useNavigate();
+  //URLのパラメータを取得
+  const { itemId } = useParams();
+
+  useEffect(() => {
+    axios
+      .get("http://153.127.48.168:8080/ecsite-api/item/" + itemId)
+      .then((res) => {
+        setItem(res.data.item);
+        setToppingList(res.data.item.toppingList);
+      });
+  }, [itemId]);
+
+  //商品
   const [item, setItem] = useState<Item>({
     deleted: false,
-    description: "",
+    description: "初期値",
     id: 0,
     imagePath: "",
-    name: "",
+    name: "初期値",
     priceL: 0,
     priceM: 0,
     toppingList: [],
     type: "",
   });
 
+  //商品のサイズ
+  const [size, setSize] = useState<string>("M");
+  //商品のサイズの選択
+  const [hasSize, setHasSize] = useState(true);
+  //商品のサイズのradioButtonのチェンジメソッド
+  const changeSize = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setHasSize(!hasSize);
+    setSize(() => e.target.value);
+    console.log(size);
+  };
+
+  //商品のトッピング一覧
   const [toppingList, setToppingList] = useState<Array<Topping>>();
 
-  const { itemId } = useParams();
+  //商品の量
+  const [quantity, setQuantity] = useState<number>(100);
 
-  const [size, setSize] = useState(true);
-
-  const changeSize = () => {
-    setSize(!size);
-  };
-
-  const navigate = useNavigate();
-
+  //ショッピングカート
   const cart = useContext(cartListContext);
 
+  //カートに商品を入れる
   const pushInCartList = () => {
-    cart?.setCartList([...cart.cartList, item]);
+    const orderItem: OrderItem = {
+      id: 1, //仮
+      itemId: item.id,
+      orderId: 1, //仮）オーダーのステートを作成し、そのIDを取ってくる
+      quantity: quantity,
+      size: size,
+      item: item,
+      orderToppingList: [],
+    };
+    cart?.setCartList([...cart.cartList, orderItem]);
     navigate("/CartList/");
   };
-
-  useEffect(() => {
-    axios
-      .get("http://153.127.48.168:8080/ecsite-api/item/" + itemId)
-      .then((res) => {
-        console.log(res.data.item);
-        setItem(res.data.item);
-        setToppingList(res.data.item.toppingList);
-      });
-  }, [itemId]);
 
   return (
     <div>
@@ -59,7 +81,8 @@ export const ItemDetail = () => {
         id="M"
         name="size"
         type="radio"
-        checked={size}
+        value="M"
+        checked={hasSize}
         onChange={changeSize}
       />
       <label htmlFor="M"> M {item?.priceM}円</label>
@@ -67,7 +90,8 @@ export const ItemDetail = () => {
         id="L"
         name="size"
         type="radio"
-        checked={!size}
+        value="L"
+        checked={!hasSize}
         onChange={changeSize}
       />
       <label htmlFor="L">L {item?.priceL}円</label>
@@ -82,7 +106,11 @@ export const ItemDetail = () => {
       })}
 
       <div>数量</div>
-      <select name="quantity" id="">
+      <select
+        name="quantity"
+        onChange={(e) => setQuantity(Number(e.target.value))}
+        defaultValue="1"
+      >
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
