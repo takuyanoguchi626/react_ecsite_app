@@ -5,14 +5,40 @@ import "../css/itemDetail.css";
 import { Item } from "../types/Item";
 import { Topping } from "../types/Topping";
 
+import { useContext } from "react";
+import { cartListContext } from "../components/providers/CartListProvider";
+
 export const ItemDetail = () => {
-  const [item, setItem] = useState<Item>();
+  const [item, setItem] = useState<Item>({
+    deleted: false,
+    description: "",
+    id: 0,
+    imagePath: "",
+    name: "",
+    priceL: 0,
+    priceM: 0,
+    toppingList: [],
+    type: "",
+  });
 
   const [toppingList, setToppingList] = useState<Array<Topping>>();
 
   const { itemId } = useParams();
 
+  const [size, setSize] = useState(true);
+
+  const changeSize = () => {
+    setSize(!size);
+  };
+
   const navigate = useNavigate();
+
+  const cart = useContext(cartListContext);
+
+  const pushInCartList = () => {
+    cart?.setCartList([...cart.cartList, item]);
+    navigate("/CartList/");
+  };
 
   useEffect(() => {
     axios
@@ -29,14 +55,26 @@ export const ItemDetail = () => {
       <h1>{item?.name}</h1>
       <img className="itemImage" src={item?.imagePath} alt="" />
       <p>{item?.description}</p>
-      <input id="M" name="size" type="radio" checked />
+      <input
+        id="M"
+        name="size"
+        type="radio"
+        checked={size}
+        onChange={changeSize}
+      />
       <label htmlFor="M"> M {item?.priceM}円</label>
-      <input id="L" name="size" type="radio" />
+      <input
+        id="L"
+        name="size"
+        type="radio"
+        checked={!size}
+        onChange={changeSize}
+      />
       <label htmlFor="L">L {item?.priceL}円</label>
       <div>トッピング： 1つにつき Ｍ 200円(税抜) Ｌ 300円(税抜)</div>
-      {toppingList?.map((topping) => {
+      {toppingList?.map((topping, index) => {
         return (
-          <label>
+          <label key={index}>
             <input type="checkbox" />
             <span>{topping.name}</span>
           </label>
@@ -63,7 +101,7 @@ export const ItemDetail = () => {
       <div>
         <button
           onClick={() => {
-            navigate("/CartList/");
+            pushInCartList();
           }}
         >
           カートに入れる
