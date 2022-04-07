@@ -10,7 +10,7 @@ export const ItemList = () => {
     axios
       .get("http://153.127.48.168:8080/ecsite-api/item/items/coffee")
       .then((res) => {
-        console.dir(JSON.stringify(res));
+        // console.dir(JSON.stringify(res));
         setItemList(() => res.data.items);
       });
   }, []);

@@ -75,7 +75,7 @@ export const ItemDetail = () => {
   return (
     <div>
       <h1>{item?.name}</h1>
-      <img className="itemImage" src={item?.imagePath} alt="" />
+      <img className="itemImage" src={item?.imagePath} alt="test" />
       <p>{item?.description}</p>
       <input
         id="M"
