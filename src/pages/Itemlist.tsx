@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Item } from "../types/Item";
 import { Link } from "react-router-dom";
+import { View } from "react-native";
 
 export const ItemList = () => {
   const ItemListUrl = "http://153.127.48.168:8080/ecsite-api/item/items/pizza";
@@ -25,21 +26,29 @@ export const ItemList = () => {
         <button type="button">検索</button>
       </div>
       {/* mapで一覧表示させる */}
-      {itemList.map((item: Item) => {
-        return (
-          <div className="itemLists">
-            <div>
-              <Link to={"/ItemDetail/" + `${item.id}`}>
-                <img src={`${item.imagePath}`} alt="images" />
-              </Link>
+      <View
+        style={{
+          flex: 1,
+          width: "100%",
+          flexDirection: "row",
+        }}
+      >
+        {itemList.map((item: Item) => {
+          return (
+            <div className="itemLists">
+              <div>
+                <Link to={"/ItemDetail/" + `${item.id}`}>
+                  <img src={`${item.imagePath}`} alt="images" />
+                </Link>
+              </div>
+              <p>{item.name}</p>
+              <p>{item.priceM}</p>
+              <p>{item.priceL}</p>
+              {/* end of itemList */}
             </div>
-            <p>{item.name}</p>
-            <p>{item.priceM}</p>
-            <p>{item.priceL}</p>
-            {/* end of itemList */}
-          </div>
-        );
-      })}
+          );
+        })}
+      </View>
     </div>
   );
 };
