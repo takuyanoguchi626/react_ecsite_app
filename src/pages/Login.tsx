@@ -72,7 +72,7 @@ export const Login = () => {
               <div className="row login-btn">
                 <button
                   className="btn"
-                  type="submit"
+                  type="button"
                   onClick={() => navigate("/toppage")}
                 >
                   ボタン

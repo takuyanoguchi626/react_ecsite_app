@@ -7,7 +7,7 @@ export const Toppage = () => {
   return (
     <div>
       <h1>THIS IS TOPPAGE</h1>
-
+      <h2>Enjoy our Delicious Pizza</h2>
       <div>
         <button className="btn" onClick={() => navigate("/login")}>
           ログイン
