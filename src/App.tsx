@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import Header from "./components/Header";
 import { Login } from "./pages/Login";
 import { Logout } from "./pages/Logout";
 import { Toppage } from "./pages/Toppage";
@@ -8,8 +9,9 @@ function App() {
   return (
     <div>
       <BrowserRouter>
+        <Header />
         <Link to="toppage">TOP</Link>　|　
-        <Link to="login">ログイン</Link>　|　<Link to="logout">ログアウト</Link>
+        <Link to="logout">ログアウト</Link>
         　|　
         <Routes>
           <Route path="/toppage" element={<Toppage />} />

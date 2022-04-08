@@ -1,0 +1,14 @@
+.root .appbar {
+  border-radius: 10px;
+  box-shadow: 1px 1px 5px black;
+  background-color: burlywood;
+  color: brown;
+  padding: 0 15px;
+  flex-grow: 1;
+}
+.toolbar {
+  padding: 0;
+}
+.title {
+  flex-grow: 1;
+}
