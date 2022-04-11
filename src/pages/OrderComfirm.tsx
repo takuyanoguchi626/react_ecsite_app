@@ -26,6 +26,7 @@ export const OrderComfirm: FC = () => {
   const [deliveryDate, setDeliveryDate] = useState("1111-11-11");
   const [deliveryHour, setDeliveryHour] = useState("01");
   const [paymentMethod, setPaymentMethod] = useState(0);
+  const [orderErrorMessage, setOrderErrorMessage] = useState("");
 
   const [deliveryTime, setDeliveryTime] = useState("");
   useEffect(() => {
@@ -90,12 +91,11 @@ export const OrderComfirm: FC = () => {
     );
     console.log(response.data.status);
     const status = response.data.status;
-    //   if (status === "success") {
-    //     this.$store.commit("resetUserOrderInfo");
-    //     this.$router.push("/orderFinished");
-    //   } else {
-    //     this.orderMessage = "注文できませんでした。";
-    //   }
+    if (status === "success") {
+      navigate("/orderFinished");
+    } else {
+      setOrderErrorMessage(() => "注文できませんでした。");
+    }
   };
 
   return (
