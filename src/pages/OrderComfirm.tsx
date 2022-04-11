@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 // import { UserInfo } from "../types/UserInfo";
 import axios from "axios";
 import { format } from "date-fns";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // import { CartListTable } from "../components/CartListTable";
 
 export const OrderComfirm: FC = () => {
