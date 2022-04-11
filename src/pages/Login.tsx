@@ -73,9 +73,9 @@ export const Login = () => {
                 <button
                   className="btn"
                   type="button"
-                  onClick={() => navigate("/toppage")}
+                  onClick={() => navigate("/itemList")}
                 >
-                  ボタン
+                  ログイン
                 </button>
 
                 <button

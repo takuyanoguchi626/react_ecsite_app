@@ -10,11 +10,8 @@ function App() {
     <div>
       <BrowserRouter>
         <Header />
-        <Link to="toppage">TOP</Link>　|　
-        <Link to="logout">ログアウト</Link>
-        　|　
         <Routes>
-          <Route path="/toppage" element={<Toppage />} />
+          <Route path="/" element={<Toppage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
         </Routes>

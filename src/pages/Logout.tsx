@@ -23,7 +23,7 @@ export const Logout = () => {
       <h2>また買いに来てね</h2>
       {error}
       <div>
-        <button className="btn" onClick={() => navigate("/toppage")}>
+        <button className="btn" onClick={() => navigate("/")}>
           TOPページに戻る
         </button>
       </div>

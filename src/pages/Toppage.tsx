@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Button from "@material-ui/core/Button";
 
 export const Toppage = () => {
   const navigate = useNavigate();
@@ -9,15 +10,25 @@ export const Toppage = () => {
       <h1>THIS IS TOPPAGE</h1>
       <h2>Enjoy our Delicious Pizza</h2>
       <div>
-        <button className="btn" onClick={() => navigate("/login")}>
+        <Button
+          className="btn"
+          style={{ color: "#e0f2f1", backgroundColor: "#004d40" }}
+          variant="contained"
+          onClick={() => navigate("/login")}
+        >
           ログイン
-        </button>
-      </div>
-      <div>
-        <button className="btn" onClick={() => navigate("/registerUser")}>
+        </Button>
+        &nbsp; &nbsp;
+        <Button
+          className="btn"
+          style={{ color: "#e0f2f1", backgroundColor: "#004d40" }}
+          variant="contained"
+          onClick={() => navigate("/registerUser")}
+        >
           会員登録ボタン
-        </button>
+        </Button>
       </div>
+      <div></div>
     </div>
   );
 };
