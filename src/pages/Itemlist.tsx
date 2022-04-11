@@ -20,31 +20,46 @@ export const ItemList = () => {
   // 表示
   return (
     <div>
-      <h1>Itemlist</h1>
-      <div>
-        <input type="text" />
-        <button type="button">検索</button>
+      <div className="search-wrapper">
+        <div className="container">
+          <form method="post" className="search-form">
+            <input type="text" name="name" className="search-name-input" />
+            <button className="btn search-btn" type="button">
+              検索
+            </button>
+          </form>
+        </div>
       </div>
       {/* mapで一覧表示させる */}
+      {/* reactViewでCSSを適用する */}
       <View
         style={{
-          flex: 1,
-          width: "100%",
+          // 横並びにする
           flexDirection: "row",
+          // はみ出る場合、下に折り返す
+          flexWrap: "wrap",
         }}
       >
         {itemList.map((item: Item) => {
           return (
-            <div className="itemLists">
-              <div>
-                <Link to={"/ItemDetail/" + `${item.id}`}>
-                  <img src={`${item.imagePath}`} alt="images" />
-                </Link>
+            <div className="item-wrapper">
+              <div className="container">
+                <div className="items">
+                  <div className="item">
+                    <div className="item-icon">
+                      <Link to={"/ItemDetail/" + `${item.id}`}>
+                        <img src={`${item.imagePath}`} alt="images" />
+                        <p>{item.name}</p>
+                      </Link>
+                    </div>
+                    <span className="price">M</span>:{item.priceM}
+                    <br />
+                    <span className="price">L</span>:{item.priceL}
+                    <br />
+                    {/* end of itemList */}
+                  </div>
+                </div>
               </div>
-              <p>{item.name}</p>
-              <p>{item.priceM}</p>
-              <p>{item.priceL}</p>
-              {/* end of itemList */}
             </div>
           );
         })}
