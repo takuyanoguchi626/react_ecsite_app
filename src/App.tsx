@@ -6,7 +6,11 @@ function App() {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={OrderComfirm}></Route>
+          <Route path="/" element={<OrderComfirm></OrderComfirm>}></Route>
+          <Route
+            path="/OrderComfirm"
+            element={<OrderComfirm></OrderComfirm>}
+          ></Route>
         </Routes>
       </BrowserRouter>
     </div>
