@@ -1,10 +1,13 @@
 import React, { FC, useEffect, useState } from "react";
-import { UserInfo } from "../types/UserInfo";
+// import { UserInfo } from "../types/UserInfo";
 import axios from "axios";
-// import { format } from "date-fns";
+import { format } from "date-fns";
+import { Navigate, useNavigate } from "react-router-dom";
 // import { CartListTable } from "../components/CartListTable";
 
 export const OrderComfirm: FC = () => {
+  const navigate = useNavigate();
+
   // const [userInfo, setUserInfo] = useState<UserInfo>({
   //   name: "",
   //   mailAddress: "",
@@ -20,16 +23,27 @@ export const OrderComfirm: FC = () => {
   const [zipcode, setZipcode] = useState(0);
   const [address, setAddress] = useState("");
   const [telephone, setTelephone] = useState(0);
-  const [deliveryDate, setDeliveryDate] = useState(new Date());
-  const [deliveryHour, setDeliveryHour] = useState(0);
+  const [deliveryDate, setDeliveryDate] = useState("1111-11-11");
+  const [deliveryHour, setDeliveryHour] = useState("01");
   const [paymentMethod, setPaymentMethod] = useState(0);
 
   const [deliveryTime, setDeliveryTime] = useState("");
+  useEffect(() => {
+    setDeliveryDate((date: string) => {
+      const deliveryDate = format(new Date(date), "yyyy-MM-dd");
+      return deliveryDate;
+    });
+  }, []);
 
-  // format(
-  //   new Date(this.deliveryDate + "T" + this.deliveryHour + ":00:00"),
-  //   "yyyy/MM/dd HH:mm:ss"
-  // );
+  useEffect(() => {
+    setDeliveryTime(() => {
+      const deliveryTime = format(
+        new Date(deliveryDate + "T" + deliveryHour + ":00:00"),
+        "yyyy/MM/dd HH:mm:ss"
+      );
+      return deliveryTime;
+    });
+  }, [deliveryDate, deliveryHour]);
 
   // useEffect(() => {
   //   setUserInfo((userInfo: UserInfo) => {
@@ -74,6 +88,14 @@ export const OrderComfirm: FC = () => {
         orderItemFormList: [], //仮
       }
     );
+    console.log(response.data.status);
+    const status = response.data.status;
+    //   if (status === "success") {
+    //     this.$store.commit("resetUserOrderInfo");
+    //     this.$router.push("/orderFinished");
+    //   } else {
+    //     this.orderMessage = "注文できませんでした。";
+    //   }
   };
 
   return (
@@ -152,7 +174,7 @@ export const OrderComfirm: FC = () => {
                 id="deliveryDate"
                 type="date"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setDeliveryDate(() => new Date(e.target.value))
+                  setDeliveryDate(() => e.target.value)
                 }
               />
             </div>
@@ -162,7 +184,7 @@ export const OrderComfirm: FC = () => {
                 type="radio"
                 value="10"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setDeliveryHour(() => Number(e.target.value))
+                  setDeliveryHour(() => e.target.value)
                 }
               />
               <span>10時</span>
@@ -173,7 +195,7 @@ export const OrderComfirm: FC = () => {
                 type="radio"
                 value="11"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setDeliveryHour(() => Number(e.target.value))
+                  setDeliveryHour(() => e.target.value)
                 }
               />
               <span>11時</span>
@@ -184,7 +206,7 @@ export const OrderComfirm: FC = () => {
                 type="radio"
                 value="12"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setDeliveryHour(() => Number(e.target.value))
+                  setDeliveryHour(() => e.target.value)
                 }
               />
               <span>12時</span>
@@ -195,7 +217,7 @@ export const OrderComfirm: FC = () => {
                 type="radio"
                 value="13"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setDeliveryHour(() => Number(e.target.value))
+                  setDeliveryHour(() => e.target.value)
                 }
               />
               <span>13時</span>
@@ -206,7 +228,7 @@ export const OrderComfirm: FC = () => {
                 type="radio"
                 value="14"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setDeliveryHour(() => Number(e.target.value))
+                  setDeliveryHour(() => e.target.value)
                 }
               />
               <span>14時</span>
@@ -217,7 +239,7 @@ export const OrderComfirm: FC = () => {
                 type="radio"
                 value="15"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setDeliveryHour(() => Number(e.target.value))
+                  setDeliveryHour(() => e.target.value)
                 }
               />
               <span>15時</span>
@@ -228,7 +250,7 @@ export const OrderComfirm: FC = () => {
                 type="radio"
                 value="16"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setDeliveryHour(() => Number(e.target.value))
+                  setDeliveryHour(() => e.target.value)
                 }
               />
               <span>16時</span>
@@ -239,7 +261,7 @@ export const OrderComfirm: FC = () => {
                 type="radio"
                 value="17"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setDeliveryHour(() => Number(e.target.value))
+                  setDeliveryHour(() => e.target.value)
                 }
               />
               <span>17時</span>
@@ -250,7 +272,7 @@ export const OrderComfirm: FC = () => {
                 type="radio"
                 value="18"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setDeliveryHour(() => Number(e.target.value))
+                  setDeliveryHour(() => e.target.value)
                 }
               />
               <span>18時</span>
@@ -286,7 +308,7 @@ export const OrderComfirm: FC = () => {
           </span>
         </div>
         <div>
-          <button type="button">
+          <button type="button" onClick={order}>
             <span>この内容で注文する</span>
           </button>
         </div>
