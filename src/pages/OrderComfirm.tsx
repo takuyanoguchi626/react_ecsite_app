@@ -1,10 +1,10 @@
 import React from "react";
-import { CartListTable } from "../components/CartListTable";
+// import { CartListTable } from "../components/CartListTable";
 
-export default function OrderComFirm() {
+export function OrderComfirm() {
   return (
     <div>
-      <CartListTable></CartListTable>
+      {/* <CartListTable></CartListTable> */}
       <div>
         <h1>注文内容確認</h1>
         <div>
