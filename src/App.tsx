@@ -4,16 +4,26 @@ import Header from "./components/Header";
 import { Login } from "./pages/Login";
 import { Logout } from "./pages/Logout";
 import { Toppage } from "./pages/Toppage";
+import { ItemList } from "./pages/Itemlist";
 
 function App() {
   return (
     <div>
       <BrowserRouter>
+
         <Header />
         <Routes>
           <Route path="/" element={<Toppage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
+          <Route path="/" element={<ItemList />}></Route>
+          {/* <Route path="/ItemList" element={<ItemList />}></Route> */}
+          {/* <Route
+            path="/ItemDetail/:itemId"
+            element={<ItemDetail></ItemDetail>}
+          ></Route>
+          <Route path="/CartList/" element={<CartList></CartList>}></Route> */}
+
         </Routes>
       </BrowserRouter>
     </div>
