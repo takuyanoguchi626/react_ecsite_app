@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { Item } from "../types/Item";
+import { Item } from "../types/item"
 import { Link } from "react-router-dom";
 import { View } from "react-native";
 

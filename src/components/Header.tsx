@@ -21,7 +21,7 @@ const Header = (): JSX.Element => {
             onClick={() => navigate("/")}
           ></img>
           <Typography variant="h6">らくらくPIZZA</Typography>
-          &nbsp; &nbsp;
+
           <Button color="inherit" onClick={() => navigate("/RegisterUser")}>
             ユーザー登録
           </Button>

@@ -9,6 +9,7 @@ export const Toppage = () => {
     <div>
       <h1>THIS IS TOPPAGE</h1>
       <h2>Enjoy our Delicious Pizza</h2>
+      背景を画像にしたりなんやらかんやらする
       <div>
         <Button
           className="btn"
