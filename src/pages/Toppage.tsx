@@ -1,7 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "@material-ui/core/Button";
-import { StatusButton } from "../components/logoutButton";
 
 export const Toppage = () => {
   const navigate = useNavigate();
@@ -12,7 +11,6 @@ export const Toppage = () => {
       <h2>Enjoy our Delicious Pizza</h2>
       背景を画像にしたりなんやらかんやらする
       <div>
-        <StatusButton />
         <Button
           className="btn"
           style={{ color: "#e0f2f1", backgroundColor: "#004d40" }}

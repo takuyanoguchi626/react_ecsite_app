@@ -12,8 +12,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import { StatusButton } from "./components/logoutButton";
 import { StatusProvider } from "./components/providers/statusContext";
+import { userInfoProvider } from "./components/providers/loginInfoContext";
+
 import { Login } from "./pages/Login";
 import { Toppage } from "./pages/Toppage";
 
