@@ -73,6 +73,7 @@ export const OrderComfirm: FC = () => {
   // console.log(userInfo);
 
   const order = async () => {
+    setOrderErrorMessage(() => "");
     const response = await axios.post(
       `http://153.127.48.168:8080/ecsite-api/order`,
       {
@@ -89,7 +90,6 @@ export const OrderComfirm: FC = () => {
         orderItemFormList: [], //仮
       }
     );
-    console.log(response.data.status);
     const status = response.data.status;
     if (status === "success") {
       navigate("/orderFinished");
@@ -308,6 +308,7 @@ export const OrderComfirm: FC = () => {
           </span>
         </div>
         <div>
+          <div>{orderErrorMessage}</div>
           <button type="button" onClick={order}>
             <span>この内容で注文する</span>
           </button>
