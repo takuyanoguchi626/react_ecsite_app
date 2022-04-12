@@ -1,20 +1,28 @@
 import React from "react";
+
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import { Login } from "./pages/Login";
 import { Logout } from "./pages/Logout";
 import { Toppage } from "./pages/Toppage";
+import { ItemList } from "./pages/Itemlist";
+import { Header } from "react-native/Libraries/NewAppScreen";
 
 function App() {
   return (
     <div>
       <BrowserRouter>
-        <Link to="toppage">TOP</Link>　|　
-        <Link to="login">ログイン</Link>　|　<Link to="logout">ログアウト</Link>
-        　|　
+        <Header />
         <Routes>
           <Route path="/toppage" element={<Toppage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
+          <Route path="/" element={<ItemList />}></Route>
+          {/* <Route path="/ItemList" element={<ItemList />}></Route> */}
+          {/* <Route
+            path="/ItemDetail/:itemId"
+            element={<ItemDetail></ItemDetail>}
+          ></Route>
+          <Route path="/CartList/" element={<CartList></CartList>}></Route> */}
         </Routes>
       </BrowserRouter>
     </div>
