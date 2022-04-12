@@ -12,6 +12,7 @@ export const Login = () => {
     mailAddress: "",
     password: "",
   });
+  const [loginErrorMessage, setloginErrorMessage] = useState("");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     let newLoginData = { ...loginData };
@@ -20,33 +21,53 @@ export const Login = () => {
     event.preventDefault();
   };
 
-  useEffect(() => {
-    const submit = async () => {
-      const response = await axios
-        .post("http://153.127.48.168:8080/ecsite-api/user/login", {
-          setloginData,
-        })
-        .then((response) => {
-          console.dir("response" + JSON.stringify(response));
-          if (JSON.stringify(response.status) === "success") {
-            console.log("成功");
-            setloginData(loginData);
-            return;
-          } else if (JSON.stringify(response.status) === "error") {
-            console.log("不一致");
-            alert("メールアドレス、パスワードが一致しません");
-          } else if (JSON.stringify(response.status) === "") {
-            console.log("未記入");
-            alert("メールアドレス、パスワードを記入してください");
-          } else {
-            return;
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
-  });
+  const submitLogin = async () => {
+    setloginErrorMessage(() => "");
+    const response = await axios.post(
+      "http://153.127.48.168:8080/ecsite-api/user/login",
+      { setloginData }
+    );
+    const status = response.data.status;
+    if (status === "success") {
+      console.log("成功");
+      setloginData(loginData);
+      navigate("/ItemList");
+    } else if (status === "error") {
+      setloginErrorMessage("メールアドレス、パスワードが一致しません");
+    } else {
+      setloginErrorMessage("メールアドレス、パスワードを記入してください");
+    }
+  };
+
+  // useEffect(() => {
+  //   const submit = async () => {
+  //     const response = await axios
+  //       .post("http://153.127.48.168:8080/ecsite-api/user/login", {
+  //         setloginData,
+  //       })
+  //       .then((response) => {
+  //         console.dir("response" + JSON.stringify(response));
+  //         if (JSON.stringify(response.status) === "success") {
+  //           console.log("成功");
+  //           setloginData(loginData);
+  //           return;
+  //         } else if (JSON.stringify(response.status) === "error") {
+  //           console.log("不一致");
+  //           setloginErrorMessage("メールアドレス、パスワードが一致しません");
+  //         } else if (JSON.stringify(response.status) === "") {
+  //           console.log("未記入");
+  //           setloginErrorMessage(
+  //             "メールアドレス、パスワードを記入してください"
+  //           );
+  //         } else {
+  //           return;
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   };
+  // });
 
   return (
     <div>
@@ -72,19 +93,15 @@ export const Login = () => {
                 onChange={handleChange}
               />
               <div className="row login-btn">
-                <button
-                  className="btn"
-                  type="button"
-                  onClick={() => navigate("/toppage")}
-                >
-                  ボタン
+                <button className="btn" type="button" onClick={submitLogin}>
+                  ログインする
                 </button>
 
                 <button
                   className="btn"
                   onClick={() => navigate("/registerUser")}
                 >
-                  ユーザー登録
+                  ユーザー登録へ戻る
                 </button>
               </div>
             </form>
