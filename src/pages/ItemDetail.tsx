@@ -3,6 +3,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Item } from "../types/Item";
 import { Topping } from "../types/Topping";
+import { cartListContext } from "../components/providers/CartListProvider";
+import { OrderItem } from "../types/OrderItem";
 
 export const ItemDetail = () => {
   // routerからitemidを取得する
@@ -58,11 +60,33 @@ export const ItemDetail = () => {
   // 数量
   const [quantity, setQuantity] = useState<number>(100);
 
-  // カートにいれる
-  // const cart = useContext(cartListContext);
+  //ショッピングカート
+  const cart = useContext(cartListContext);
 
+  // カートにいれる
+  const pushInCartList = () => {
+    const orderItem: OrderItem = {
+      id: 1, //仮
+      itemId: item.id,
+      orderId: 1, //仮）オーダーのステートを作成し、そのIDを取ってくる
+      quantity: quantity,
+      size: size,
+      item: item,
+      orderToppingList: [],
+    };
+    cart?.setCartList([...cart.cartList, orderItem]);
+    navigate("/CartList/");
+  };
   //画面遷移のメソッド化
   const navigate = useNavigate();
+
+  //合計金額
+  const totalPrices = (item.priceM + 200) * quantity;
+
+  // トッピングの取得
+  // const getToppingValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setToppingList(() => e.target.value);
+  // };
 
   return (
     <div>
@@ -87,12 +111,16 @@ export const ItemDetail = () => {
         onChange={changeSize}
       />
       <label htmlFor="L">L {item?.priceL}円</label>
-      {/* <div>トッピング： 1つにつき Ｍ 200円(税抜) Ｌ 300 円(税抜)</div> */}
+      <div>トッピング： 1つにつき Ｍ 200円(税抜) Ｌ 300 円(税抜)</div>
       {toppingList?.map((topping, index) => {
         return (
           <div>
             <label key={index}>
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                // onChange={(e) => setToppingList(e.target.value)}
+                value={topping.name}
+              />
               <span>{topping.name}</span>
             </label>
           </div>
@@ -104,7 +132,7 @@ export const ItemDetail = () => {
           className="quantity"
           name="quantity"
           id="pizzaQuantity"
-          // onChange={(e) => setQuantity(Number(e.target.value))}
+          onChange={(e) => setQuantity(Number(e.target.value))}
           defaultValue="1"
         >
           <option value="1">1</option>
@@ -121,11 +149,11 @@ export const ItemDetail = () => {
           <option value="12">12</option>
         </select>
       </div>
-      <div>この商品金額：3800円（税抜）</div>
+      <div>この商品金額：{totalPrices}円（税抜）</div>
       <div>
         <button
           onClick={() => {
-            // pushInCartList();
+            pushInCartList();
           }}
         >
           カートに入れる
