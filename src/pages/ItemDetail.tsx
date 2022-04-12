@@ -79,11 +79,15 @@ export const ItemDetail = () => {
     cart?.setCartList([...cart.cartList, orderItem]);
     navigate("/CartList/");
   };
-  //画面遷移のメソッド化
-  const navigate = useNavigate();
 
   //合計金額
   const totalPrices = (item.priceM + 200) * quantity;
+
+  // カートにいれる
+  // const cart = useContext(cartListContext);
+
+  //画面遷移のメソッド化
+  const navigate = useNavigate();
 
   return (
     <div>
