@@ -1,5 +1,4 @@
 import React from "react";
-
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import { Login } from "./pages/Login";
 import { Logout } from "./pages/Logout";
