@@ -62,7 +62,10 @@ export const Login = () => {
                   ログインする
                 </button>
 
-                <button className="btn" onClick={() => navigate("/")}>
+                <button
+                  className="btn"
+                  onClick={() => navigate("/registerUser")}
+                >
                   ユーザー登録へ戻る
                 </button>
               </div>

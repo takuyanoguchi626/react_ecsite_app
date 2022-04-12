@@ -23,7 +23,6 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <StatusProvider>
-      <StatusButton />
       <App />
     </StatusProvider>
   </React.StrictMode>
