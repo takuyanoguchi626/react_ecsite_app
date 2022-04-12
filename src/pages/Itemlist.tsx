@@ -1,13 +1,33 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { Item } from "../types/Item";
+import { Item } from "../types/item";
 import { Link } from "react-router-dom";
 import { View } from "react-native";
 
 export const ItemList = () => {
   const ItemListUrl = "http://153.127.48.168:8080/ecsite-api/item/items/pizza";
   // itemListというstate名で、メソッド名をsetItemListとし、useStateを使用して初期値を設定する。
-  const [itemList, setItemList] = useState([]);
+  const [itemList, setItemList] = useState<Array<Item>>([]);
+  const [showItemList, setShowItemList] = useState<Array<Item>>([]);
+  const itemListLength = itemList.length;
+  const perPage = 6;
+  const numberOfPage = Math.ceil(itemListLength / perPage);
+
+  const changePage = (pageNumber: number) => {
+    setShowItemList(() => {
+      const showItemList = itemList.slice(
+        (pageNumber - 1) * perPage,
+        pageNumber * perPage
+      );
+      return showItemList;
+    });
+  };
+
+  useEffect(() => {
+    changePage(1);
+    console.log("aaa");
+  }, [itemList]);
 
   useEffect(() => {
     // axios呼び出し
@@ -40,14 +60,14 @@ export const ItemList = () => {
           flexWrap: "wrap",
         }}
       >
-        {itemList.map((item: Item) => {
+        {showItemList.map((item: Item) => {
           return (
-            <div className="item-wrapper">
+            <div key={item.id} className="item-wrapper">
               <div className="container">
                 <div className="items">
                   <div className="item">
                     <div className="item-icon">
-                      <Link to={"/ItemDetail/" + `${item.id}`}>
+                      <Link to={`/ItemDetail/${item.id}`}>
                         <img src={`${item.imagePath}`} alt="images" />
                         <p>{item.name}</p>
                       </Link>
@@ -64,6 +84,19 @@ export const ItemList = () => {
           );
         })}
       </View>
+      {[...Array(numberOfPage)].map((num: number, index: number) => {
+        return (
+          <span key={index}>
+            <button
+              onClick={() => {
+                changePage(index + 1);
+              }}
+            >
+              {index + 1}
+            </button>
+          </span>
+        );
+      })}
     </div>
   );
 };

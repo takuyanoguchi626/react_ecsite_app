@@ -25,6 +25,10 @@ export function Logout() {
         {/* onClick={sumbitLogout}> */}
         {/* TOPページに戻る */}
         {/* </button> */}
+
+        <button className="btn" onClick={() => navigate("/")}>
+          TOPページに戻る
+        </button>
       </div>
     </div>
   );

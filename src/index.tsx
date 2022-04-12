@@ -15,6 +15,7 @@ import App from "./App";
 import { StatusButton } from "./components/logoutButton";
 import { StatusProvider } from "./components/providers/statusContext";
 import { Login } from "./pages/Login";
+import { Toppage } from "./pages/Toppage";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
