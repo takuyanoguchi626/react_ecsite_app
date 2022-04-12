@@ -12,6 +12,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
+import { StatusButton } from "./components/logoutButton";
+import { StatusProvider } from "./components/providers/statusContext";
 import { Login } from "./pages/Login";
 
 const root = ReactDOM.createRoot(
@@ -19,6 +21,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <StatusProvider>
+      <StatusButton />
+      <App />
+    </StatusProvider>
   </React.StrictMode>
 );

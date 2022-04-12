@@ -4,30 +4,31 @@ import { Login } from "./pages/Login";
 import { Logout } from "./pages/Logout";
 import { Toppage } from "./pages/Toppage";
 import { ItemList } from "./pages/Itemlist";
-
 import { OrderComfirm } from "./pages/OrderComfirm";
-
 import { OrderFinished } from "./pages/OrderFinished";
+import { UserProvider } from "../src/components/providers/userInforProvider";
 
 function App() {
   return (
     <div>
       <BrowserRouter>
-        <Routes>
-          <Route path="/toppage" element={<Toppage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/logout" element={<Logout />} />
-          <Route path="/" element={<ItemList />}></Route>
-          <Route
-            path="/OrderComfirm"
-            element={<OrderComfirm></OrderComfirm>}
-          ></Route>
-          <Route path="/ItemList" element={<ItemList />}></Route>
-          <Route
-            path="/OrderFinished"
-            element={<OrderFinished></OrderFinished>}
-          ></Route>
-        </Routes>
+        <UserProvider>
+          <Routes>
+            <Route path="/toppage" element={<Toppage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/logout" element={<Logout />} />
+            <Route path="/" element={<ItemList />}></Route>
+            <Route
+              path="/OrderComfirm"
+              element={<OrderComfirm></OrderComfirm>}
+            ></Route>
+            <Route path="/ItemList" element={<ItemList />}></Route>
+            <Route
+              path="/OrderFinished"
+              element={<OrderFinished></OrderFinished>}
+            ></Route>
+          </Routes>
+        </UserProvider>
       </BrowserRouter>
     </div>
   );
