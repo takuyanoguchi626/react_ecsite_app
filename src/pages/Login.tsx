@@ -3,14 +3,16 @@ import { useState, useEffect } from "react";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { User } from "../types/User";
 
 // useEffectを使ったログイン機能;
 export const Login = () => {
   const navigate = useNavigate();
-  const [loginData, setloginData] = useState({
+  const [loginData, setloginData] = useState<User>({
     mailAddress: "",
     password: "",
   });
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     let newLoginData = { ...loginData };
     // newLoginData[event.target.value] = [event.target.value];
