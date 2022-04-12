@@ -20,6 +20,18 @@ export const ItemDetail = () => {
   //商品のトッピング一覧
   const [toppingList, setToppingList] = useState<Array<Topping>>();
 
+  const priceMArray = toppingList?.map((topping, index) => {
+    return topping.priceM;
+  });
+
+  console.log(priceMArray);
+
+  const priceM = priceMArray?.map((price, index) => {
+    return price.valueOf();
+  });
+
+  console.log(priceM);
+
   // 商品一覧
   const [item, setItem] = useState<Item>({
     deleted: false,
@@ -49,8 +61,6 @@ export const ItemDetail = () => {
   // カートにいれる
   // const cart = useContext(cartListContext);
 
-  const pushInCartList = () => {};
-
   //画面遷移のメソッド化
   const navigate = useNavigate();
 
@@ -77,18 +87,19 @@ export const ItemDetail = () => {
         onChange={changeSize}
       />
       <label htmlFor="L">L {item?.priceL}円</label>
-      <div>トッピング： 1つにつき Ｍ 200円(税抜) Ｌ 300円(税抜)</div>
+      {/* <div>トッピング： 1つにつき Ｍ 200円(税抜) Ｌ 300 円(税抜)</div> */}
       {toppingList?.map((topping, index) => {
         return (
-          <label key={index}>
-            <input type="checkbox" />
-            <span>{topping.name}</span>
-          </label>
+          <div>
+            <label key={index}>
+              <input type="checkbox" />
+              <span>{topping.name}</span>
+            </label>
+          </div>
         );
       })}
-
       <div>
-        数量
+        ; 数量
         <select
           className="quantity"
           name="quantity"
@@ -110,7 +121,6 @@ export const ItemDetail = () => {
           <option value="12">12</option>
         </select>
       </div>
-
       <div>この商品金額：3800円（税抜）</div>
       <div>
         <button
@@ -121,7 +131,6 @@ export const ItemDetail = () => {
           カートに入れる
         </button>
       </div>
-
       <div>
         <button
           onClick={() => {
