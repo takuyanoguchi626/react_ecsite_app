@@ -5,6 +5,8 @@ import { Item } from "../types/Item";
 import { Topping } from "../types/Topping";
 import { cartListContext } from "../components/providers/CartListProvider";
 import { OrderItem } from "../types/OrderItem";
+import { ToppingListContext } from "../components/providers/ToppingListProvider";
+import { OrderTopping } from "../types/OrderTopping";
 
 export const ItemDetail = () => {
   // routerからitemidを取得する
@@ -15,24 +17,24 @@ export const ItemDetail = () => {
       .get("http://153.127.48.168:8080/ecsite-api/item/" + itemId)
       .then((response) => {
         setItem(response.data.item);
-        setToppingList(response.data.item.toppingList);
+        // setToppingList(response.data.item.toppingList);
       });
   }, [itemId]);
 
   //商品のトッピング一覧
   const [toppingList, setToppingList] = useState<Array<Topping>>();
+  // const toppingList = useContext(ToppingListContext);
 
-  const priceMArray = toppingList?.map((topping, index) => {
-    return topping.priceM;
-  });
-
-  console.log(priceMArray);
-
-  const priceM = priceMArray?.map((price, index) => {
-    return price.valueOf();
-  });
-
-  console.log(priceM);
+  // トッピングを追加する
+  // const addToppings = () => {
+  //   const orderToppingList: OrderTopping = {
+  //     id: 1,
+  //     toppingId: 1,
+  //     orderItemId: 1,
+  //     Topping:(id:1,name:"",priceL:1,piceM:1,type:"")
+  //   };
+  //   toppingList?.setToppingList([...toppingList.toppingList,orderToppingList])
+  // };
 
   // 商品一覧
   const [item, setItem] = useState<Item>({
@@ -82,11 +84,6 @@ export const ItemDetail = () => {
 
   //合計金額
   const totalPrices = (item.priceM + 200) * quantity;
-
-  // トッピングの取得
-  // const getToppingValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setToppingList(() => e.target.value);
-  // };
 
   return (
     <div>
