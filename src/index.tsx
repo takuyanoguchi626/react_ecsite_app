@@ -13,7 +13,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import { CartListProvider } from "./components/providers/CartListProvider";
-import { ToppingListProvider } from "./components/providers/ToppingListProvider";
 import { Login } from "./pages/Login";
 import { Toppage } from "./pages/Toppage";
 
@@ -24,9 +23,8 @@ root.render(
   <React.StrictMode>
     {/* ProviderのchildrenがAPPになる */}
     <CartListProvider>
-      <ToppingListProvider>
-        <App />
-      </ToppingListProvider>
+      <App />
+      {/* 1個だけじゃないとダメ */}
     </CartListProvider>
   </React.StrictMode>
 );

@@ -5,10 +5,6 @@ import { Item } from "../types/Item";
 import { Topping } from "../types/Topping";
 import { cartListContext } from "../components/providers/CartListProvider";
 import { OrderItem } from "../types/OrderItem";
-import {
-  ToppingListContext,
-  ToppingListProvider,
-} from "../components/providers/ToppingListProvider";
 import { OrderTopping } from "../types/OrderTopping";
 
 export const ItemDetail = () => {
@@ -58,7 +54,6 @@ export const ItemDetail = () => {
   // トッピングを取得する
   const getSelectedTopping = (event: React.ChangeEvent<HTMLInputElement>) => {
     const toppingId: number = Number(event.target.value);
-    console.log(toppingId);
 
     // トッピングをリストに収納
     setselectedToppingIdList((selectedToppingIdList) => [
@@ -70,44 +65,55 @@ export const ItemDetail = () => {
   };
 
   // 数量
-  const [quantity, setQuantity] = useState<number>(100);
+  const [quantity, setQuantity] = useState<number>(1);
 
   //ショッピングカート
   const cart = useContext(cartListContext);
 
   // カートにいれる
   const pushInCartList = () => {
-    // APIのtoppingListをフィルター
+    // 結果を格納する配列
     const filteredToppingList = new Array<Topping>();
+    // 最初の謎の空白行を消す
     filteredToppingList.splice(0);
+    // APIのtoppingListをフィルター
     toppingList?.filter((topping) => {
+      // 選択したトッピングの数繰り返す
       for (let checkedToppingId of selectedToppingIdList) {
+        // APIのトッピングと同じだった場合
         if (topping.id === checkedToppingId) {
+          // 格納用の配列に格納する
           filteredToppingList.push(topping);
           return true;
         }
       }
     });
-    console.log(filteredToppingList);
 
+    // カートにいれるためにOrderTopping型に変換する
     const newOrderToppingList = new Array<OrderTopping>();
 
+    // 選択したトッピングごとに繰り返し、変換用の配列に格納する
+    // //idの採番
+    let orderToppingId = 0;
     for (let orderedToppings of filteredToppingList) {
       const orderTopping = orderedToppings;
+      orderToppingId++;
       newOrderToppingList.push({
-        id: -1,
+        id: orderToppingId,
         toppingId: orderTopping.id,
-        orderItemId: 1,
+        orderItemId: item.id,
         Topping: orderTopping,
       });
     }
     console.log(newOrderToppingList);
 
     // カートに商品を入れる
+    let orderItemId = 0;
+    orderItemId++;
     const orderItem: OrderItem = {
-      id: 1, //仮
+      id: orderItemId,
       itemId: item.id,
-      orderId: 1, //仮）オーダーのステートを作成し、そのIDを取ってくる
+      orderId: 0, //仮）オーダーのステートを作成し、そのIDを取ってくる
       quantity: quantity,
       size: size,
       item: item,
