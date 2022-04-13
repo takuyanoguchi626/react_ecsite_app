@@ -86,7 +86,7 @@ export function Login() {
     <div>
       <h3>ログイン画面</h3>
       {/* 入力フォームのimport */}
-      <InputLogin />
+      {/* <InputLogin /> */}
       {/* ログイン切り替えボタンのimport */}
       <StatusButton />
 
