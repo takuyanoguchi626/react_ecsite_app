@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { Item } from "../types/item";
+import { Item } from "../types/Item";
 import { Link } from "react-router-dom";
 import { View } from "react-native";
 

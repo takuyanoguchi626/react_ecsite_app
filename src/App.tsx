@@ -9,6 +9,8 @@ import { ItemList } from "./pages/Itemlist";
 import { OrderComfirm } from "./pages/OrderComfirm";
 import { OrderFinished } from "./pages/OrderFinished";
 
+import { RegisterInfo } from "../src/components/Register/RegisterInfo";
+
 function App() {
   return (
     <div>
@@ -16,6 +18,8 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Toppage />} />
+
+          <Route path="/registerInfo" element={<RegisterInfo />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/" element={<ItemList />}></Route>
