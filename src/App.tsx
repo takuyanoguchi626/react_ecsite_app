@@ -21,6 +21,7 @@ function App() {
           <Route path="/" element={<ItemList />}></Route>
           <Route path="/OrderComfirm" element={<OrderComfirm></OrderComfirm>} />
           <Route path="/ItemList" element={<ItemList />} />
+          <Route path="/ItemDetail/:itemId" element={<ItemDetail />} />
           <Route
             path="/OrderFinished"
             element={<OrderFinished></OrderFinished>}

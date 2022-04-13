@@ -125,7 +125,14 @@ export const ItemDetail = () => {
   };
 
   //合計金額
-  const totalPrices = (item.priceM + 200) * quantity;
+  const totalPrices = () => {
+    const selectedToppings = selectedToppingIdList.length;
+    if (size === "M") {
+      return item.priceM + 200 * selectedToppings * quantity;
+    } else {
+      return item.priceL + 300 * selectedToppings * quantity;
+    }
+  };
 
   //画面遷移のメソッド化
   const navigate = useNavigate();
@@ -192,7 +199,7 @@ export const ItemDetail = () => {
           <option value="12">12</option>
         </select>
       </div>
-      <div>この商品金額：{totalPrices}円（税抜）</div>
+      <div>この商品金額：{totalPrices()}円（税抜）</div>
       <div>
         <button
           onClick={() => {
