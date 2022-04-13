@@ -8,8 +8,7 @@ import { Toppage } from "./pages/Toppage";
 import { ItemList } from "./pages/Itemlist";
 import { OrderComfirm } from "./pages/OrderComfirm";
 import { OrderFinished } from "./pages/OrderFinished";
-
-import { RegisterInfo } from "../src/components/Register/RegisterInfo";
+import { Content } from "./pages/Content";
 
 function App() {
   return (
@@ -18,8 +17,8 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Toppage />} />
+          <Route path="/content" element={<Content />} />
 
-          <Route path="/registerInfo" element={<RegisterInfo />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/" element={<ItemList />}></Route>

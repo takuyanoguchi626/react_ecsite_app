@@ -22,7 +22,7 @@ const Header = (): JSX.Element => {
           ></img>
           <Typography variant="h6">らくらくPIZZA</Typography>
 
-          <Button color="inherit" onClick={() => navigate("/RegisterUser")}>
+          <Button color="inherit" onClick={() => navigate("/content")}>
             ユーザー登録
           </Button>
           <Button color="inherit" onClick={() => navigate("/Login")}>

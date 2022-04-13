@@ -132,7 +132,7 @@ export function RegisterInfo() {
             <input
               type="submit"
               className="btn btn-primary my-3"
-              value="Send message"
+              value="登録する"
             />
           </form>
         </div>
