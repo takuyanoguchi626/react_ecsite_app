@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 export const StatusButton: React.VFC = () => {
   const auth = useContext(statusContext);
-  console.log(auth);
+
   const handleSignOut = () => {
     auth?.setstatusCheck(false);
     axios.post("http://153.127.48.168:8080/ecsite-api/user/logout");

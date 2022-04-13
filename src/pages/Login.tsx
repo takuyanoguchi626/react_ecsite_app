@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { InputLogin } from "../components/inputLogin";
 import Button from "@material-ui/core/Button";
-import { StatusButton } from "../components/logoutButton";
+import { StatusButton } from "../components/statusButton";
 // useEffectを使ったログイン機能;
 // export const Login = () => {
 //   const navigate = useNavigate();
@@ -85,8 +85,11 @@ export function Login() {
   return (
     <div>
       <h3>ログイン画面</h3>
-
+      {/* 入力フォームのimport */}
+      <InputLogin />
+      {/* ログイン切り替えボタンのimport */}
       <StatusButton />
+
       <div>
         <Button color="inherit" onClick={() => navigate("/")}>
           Topページに戻る

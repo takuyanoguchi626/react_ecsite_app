@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { useNavigate } from "react-router-dom";
 import { Login } from "../pages/Login";
-import { StatusButton } from "../components/logoutButton";
+import { StatusButton } from "../components/statusButton";
 
 const Header = (): JSX.Element => {
   const navigate = useNavigate();

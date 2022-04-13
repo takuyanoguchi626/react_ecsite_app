@@ -15,9 +15,6 @@ import App from "./App";
 import { StatusProvider } from "./components/providers/statusContext";
 import { userInfoProvider } from "./components/providers/loginInfoContext";
 
-import { Login } from "./pages/Login";
-import { Toppage } from "./pages/Toppage";
-
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );

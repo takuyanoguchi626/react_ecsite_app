@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { StatusButton } from "../components/logoutButton";
+import { StatusButton } from "../components/statusButton";
 import Button from "@material-ui/core/Button";
 export function Logout() {
   const navigate = useNavigate();
@@ -21,6 +21,7 @@ export function Logout() {
       <h2>また買いに来てね</h2>
 
       <div>
+        {/* ログイン切り替えボタンのimport */}
         <StatusButton />
         {/* <button className="btn"> */}
         {/* onClick={sumbitLogout}> */}

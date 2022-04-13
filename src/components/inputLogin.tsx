@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { LoginInfoContext } from "./providers/loginInfoContext";
+// import { LoginInfoContext } from "./providers/loginInfoContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Button } from "@material-ui/core";
@@ -8,14 +8,13 @@ export const InputLogin = async () => {
   const navigate = useNavigate();
   const [mailAddress, setmailAddress] = useState("");
   const [password, setpassword] = useState("");
-  const loginData = useContext(LoginInfoContext);
+  //   const loginData = useContext(LoginInfoContext);
 
   const response = await axios.post(
     "http://153.127.48.168:8080/ecsite-api/user/login",
-    useContext(LoginInfoContext)
+    { mailAddress: mailAddress, password: password }
   );
   const status = response.data.status;
-  console.log(status);
 
   if (status === "success") {
     console.log("成功");
