@@ -16,20 +16,19 @@ function App() {
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path="/ItemList/" element={<ItemList></ItemList>}></Route>
+          <Route path="/" element={<Toppage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/ItemList" element={<ItemList />}></Route>
           <Route
             path="/ItemDetail/:itemId"
             element={<ItemDetail></ItemDetail>}
           ></Route>
-          <Route path="/" element={<Toppage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/logout" element={<Logout />} />
-          <Route path="/" element={<ItemList />}></Route>
+          {/* <Route path="/" element={<ItemList />}></Route> */}
           <Route
             path="/OrderComfirm"
             element={<OrderComfirm></OrderComfirm>}
           ></Route>
-          <Route path="/ItemList" element={<ItemList />}></Route>
           <Route
             path="/OrderFinished"
             element={<OrderFinished></OrderFinished>}

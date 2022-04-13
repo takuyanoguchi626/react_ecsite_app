@@ -1,11 +1,14 @@
 import axios from "axios";
 import React, { useState, useEffect, useContext } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, To } from "react-router-dom";
 import { Item } from "../types/Item";
 import { Topping } from "../types/Topping";
 import { cartListContext } from "../components/providers/CartListProvider";
 import { OrderItem } from "../types/OrderItem";
-import { ToppingListContext } from "../components/providers/ToppingListProvider";
+import {
+  ToppingListContext,
+  ToppingListProvider,
+} from "../components/providers/ToppingListProvider";
 import { OrderTopping } from "../types/OrderTopping";
 
 export const ItemDetail = () => {
@@ -17,24 +20,12 @@ export const ItemDetail = () => {
       .get("http://153.127.48.168:8080/ecsite-api/item/" + itemId)
       .then((response) => {
         setItem(response.data.item);
-        // setToppingList(response.data.item.toppingList);
+        setToppingList(response.data.item.toppingList);
       });
   }, [itemId]);
 
   //商品のトッピング一覧
   const [toppingList, setToppingList] = useState<Array<Topping>>();
-  // const toppingList = useContext(ToppingListContext);
-
-  // トッピングを追加する
-  // const addToppings = () => {
-  //   const orderToppingList: OrderTopping = {
-  //     id: 1,
-  //     toppingId: 1,
-  //     orderItemId: 1,
-  //     Topping:(id:1,name:"",priceL:1,piceM:1,type:"")
-  //   };
-  //   toppingList?.setToppingList([...toppingList.toppingList,orderToppingList])
-  // };
 
   // 商品一覧
   const [item, setItem] = useState<Item>({
@@ -59,6 +50,25 @@ export const ItemDetail = () => {
     setSize(() => e.target.value);
   };
 
+  // チェックしたトッピングのリスト
+  const [selectedToppingIdList, setselectedToppingIdList] = useState<
+    Array<number>
+  >([]);
+
+  // トッピングを取得する
+  const getSelectedTopping = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const toppingId: number = Number(event.target.value);
+    console.log(toppingId);
+
+    // トッピングをリストに収納
+    setselectedToppingIdList((selectedToppingIdList) => [
+      // 配列を分解する
+      ...selectedToppingIdList,
+      // 新しい配列を作る
+      toppingId,
+    ]);
+  };
+
   // 数量
   const [quantity, setQuantity] = useState<number>(100);
 
@@ -67,6 +77,33 @@ export const ItemDetail = () => {
 
   // カートにいれる
   const pushInCartList = () => {
+    // APIのtoppingListをフィルター
+    const filteredToppingList = new Array<Topping>();
+    filteredToppingList.splice(0);
+    toppingList?.filter((topping) => {
+      for (let checkedToppingId of selectedToppingIdList) {
+        if (topping.id === checkedToppingId) {
+          filteredToppingList.push(topping);
+          return true;
+        }
+      }
+    });
+    console.log(filteredToppingList);
+
+    const newOrderToppingList = new Array<OrderTopping>();
+
+    for (let orderedToppings of filteredToppingList) {
+      const orderTopping = orderedToppings;
+      newOrderToppingList.push({
+        id: -1,
+        toppingId: orderTopping.id,
+        orderItemId: 1,
+        Topping: orderTopping,
+      });
+    }
+    console.log(newOrderToppingList);
+
+    // カートに商品を入れる
     const orderItem: OrderItem = {
       id: 1, //仮
       itemId: item.id,
@@ -74,17 +111,15 @@ export const ItemDetail = () => {
       quantity: quantity,
       size: size,
       item: item,
-      orderToppingList: [],
+      orderToppingList: newOrderToppingList,
     };
     cart?.setCartList([...cart.cartList, orderItem]);
     navigate("/CartList/");
+    console.log(orderItem);
   };
 
   //合計金額
   const totalPrices = (item.priceM + 200) * quantity;
-
-  // カートにいれる
-  // const cart = useContext(cartListContext);
 
   //画面遷移のメソッド化
   const navigate = useNavigate();
@@ -119,8 +154,9 @@ export const ItemDetail = () => {
             <label key={index}>
               <input
                 type="checkbox"
-                // onChange={(e) => setToppingList(e.target.value)}
-                value={topping.name}
+                // チェックが入った値を取得
+                onChange={getSelectedTopping}
+                value={topping.id}
               />
               <span>{topping.name}</span>
             </label>

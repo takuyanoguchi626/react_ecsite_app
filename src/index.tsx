@@ -24,10 +24,9 @@ root.render(
   <React.StrictMode>
     {/* ProviderのchildrenがAPPになる */}
     <CartListProvider>
-      <App />
+      <ToppingListProvider>
+        <App />
+      </ToppingListProvider>
     </CartListProvider>
-    <ToppingListProvider>
-      <App />
-    </ToppingListProvider>
   </React.StrictMode>
 );

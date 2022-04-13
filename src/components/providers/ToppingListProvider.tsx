@@ -1,6 +1,6 @@
 import React, { createContext, ReactNode, useState } from "react";
 import { OrderTopping } from "../../types/OrderTopping";
-import { Topping } from "../../types/Topping-2";
+import { Topping } from "../../types/Topping";
 
 // propsの型定義
 type props = {
