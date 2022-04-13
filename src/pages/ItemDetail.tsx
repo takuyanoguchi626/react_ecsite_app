@@ -128,9 +128,11 @@ export const ItemDetail = () => {
   const totalPrices = () => {
     const selectedToppings = selectedToppingIdList.length;
     if (size === "M") {
-      return item.priceM + 200 * selectedToppings * quantity;
+      const toppingPrice = selectedToppings * 200;
+      return (item.priceM + toppingPrice) * quantity;
     } else {
-      return item.priceL + 300 * selectedToppings * quantity;
+      const toppingPrice = selectedToppings * 300;
+      return (item.priceL + toppingPrice) * quantity;
     }
   };
 
