@@ -1,4 +1,4 @@
-import { Item } from "../types/Item";
+import { Item } from "./Item";
 import { OrderTopping } from "./OrderTopping";
 
 export type OrderItem = {
