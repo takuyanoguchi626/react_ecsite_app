@@ -14,8 +14,8 @@ export const OrderComfirm: FC = () => {
     zipCode: 0,
     address: "",
     telephone: 0,
-    deliveryDate: "",
-    deliveryHour: 0,
+    deliveryDate: "1111-11-11",
+    deliveryHour: 88,
     paymentMethod: 0,
   });
   //配達時間の表示の為の配列
@@ -23,17 +23,17 @@ export const OrderComfirm: FC = () => {
   //注文のAPIの配達日時フォーマット
   const [deliveryTime, setDeliveryTime] = useState("");
   //deliveryDateとdeliveryHourを注文のAPIのフォーマットに整形
-  // useEffect(() => {
-  //   setDeliveryTime(() => {
-  //     const deliveryTime = format(
-  //       new Date(
-  //         userInfo.deliveryDate + "T" + userInfo.deliveryHour + ":00:00"
-  //       ),
-  //       "yyyy/MM/dd HH:mm:ss"
-  //     );
-  //     return deliveryTime;
-  //   });
-  // }, [userInfo.deliveryDate, userInfo.deliveryHour]);
+  useEffect(() => {
+    setDeliveryTime(() => {
+      const deliveryTime = format(
+        new Date(
+          userInfo.deliveryDate + "T" + userInfo.deliveryHour + ":00:00"
+        ),
+        "yyyy/MM/dd HH:mm:ss"
+      );
+      return deliveryTime;
+    });
+  }, [userInfo.deliveryDate, userInfo.deliveryHour]);
   //注文失敗時のエラーメッセージ
   const [orderErrorMessage, setOrderErrorMessage] = useState("");
   /**
