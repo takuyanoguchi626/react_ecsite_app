@@ -10,6 +10,8 @@ import { OrderFinished } from "./pages/OrderFinished";
 import { RegisterInfo } from "./pages/RegisterUser";
 import { AfterRegister } from "./pages/AfterRegister";
 // import { Content } from "./pages/Content";
+import { CartList } from "./pages/CartList";
+import { ItemDetail } from "./pages/ItemDetail";
 
 function App() {
   return (
@@ -23,9 +25,10 @@ function App() {
           <Route path="/AfterRegister" element={<AfterRegister />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
-          <Route path="/" element={<ItemList />}></Route>
           <Route path="/OrderComfirm" element={<OrderComfirm></OrderComfirm>} />
           <Route path="/ItemList" element={<ItemList />} />
+          <Route path="/ItemDetail/:itemId" element={<ItemDetail />} />
+          <Route path="/CartList/" element={<CartList />} />
           <Route
             path="/OrderFinished"
             element={<OrderFinished></OrderFinished>}
