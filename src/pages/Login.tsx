@@ -16,23 +16,21 @@ export const Login = () => {
   const auth = useContext(statusContext);
 
   const submitLogin = async () => {
+    console.log(mailAddress, password);
     setloginErrorMessage(() => "");
     const response = await axios.post(
       "http://153.127.48.168:8080/ecsite-api/user/login",
       { mailAddress: mailAddress, password: password }
     );
     const status = response.data.status;
-    console.log(mailAddress + password);
-
+    console.dir("responce:" + JSON.stringify(response));
     if (status === "success") {
       console.log("成功");
       auth?.setstatusCheck(true);
       navigate("/ItemList");
     } else if (status === "error") {
-      console.log("1");
-      alert("メールアドレス、パスワードが一致しません");
+      alert("メールアドレス、またはパスワードが間違っています");
     } else {
-      console.log("2");
       alert("メールアドレス、パスワードを記入してください");
     }
   };

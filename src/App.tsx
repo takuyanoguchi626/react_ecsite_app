@@ -8,6 +8,7 @@ import { ItemList } from "./pages/Itemlist";
 import { OrderComfirm } from "./pages/OrderComfirm";
 import { OrderFinished } from "./pages/OrderFinished";
 import { RegisterInfo } from "./pages/RegisterUser";
+import { AfterRegister } from "./pages/AfterRegister";
 // import { Content } from "./pages/Content";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path="/" element={<Toppage />} />
           {/* <Route path="/content" element={<Content />} /> */}
           <Route path="/registerUser" element={<RegisterInfo />} />
+          <Route path="/AfterRegister" element={<AfterRegister />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/" element={<ItemList />}></Route>

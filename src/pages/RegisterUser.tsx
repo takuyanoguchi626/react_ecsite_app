@@ -23,7 +23,7 @@ export function RegisterInfo() {
 
   const [registerData, setregisterData] = useState<User>({
     name: "山田太郎",
-    mailAddress: "a@taro",
+    mailAddress: "d@gmail.com",
     password: "password",
     zipcode: "123-4567",
     address: "新宿三丁目",
@@ -47,7 +47,7 @@ export function RegisterInfo() {
 
     if (status === "success") {
       console.log("成功");
-      navigate("/ItemList");
+      navigate("/AfterRegister");
       auth?.setstatusCheck(true);
     } else if (response.data.errorCode === "E-01") {
       console.log("そのメールアドレスはすでに使われています");
