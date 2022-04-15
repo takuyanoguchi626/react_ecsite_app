@@ -35,7 +35,7 @@ const Header = (): JSX.Element => {
           <Button color="inherit" onClick={() => navigate("/OrderHistory")}>
             注文履歴
           </Button>
-          <Button color="inherit" onClick={() => navigate("/OrderConfirm")}>
+          <Button color="inherit" onClick={() => navigate("/OrderComfirm")}>
             注文確認画面
           </Button>
           <StatusButton />

@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-=======
-
-import { Item } from "./Item";
->>>>>>> develop
 import { Item } from "../types/Item";
 import { OrderTopping } from "./OrderTopping";
 

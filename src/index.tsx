@@ -12,7 +12,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-
 import { CartListProvider } from "./components/providers/CartListProvider";
 import { OrderProvider } from "./components/providers/OrderProvider";
 import { Login } from "./pages/Login";

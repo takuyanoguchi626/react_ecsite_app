@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 import * as React from "react";
-import { useState, useContext, FC } from "react";
+import { useState } from "react";
 import axios from "axios";
-import { Navigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 interface User {
   id: number;
@@ -39,16 +39,17 @@ export const RegisterInfo = () => {
   });
 
   const UserInfo = async () => {
+    const navigate = useNavigate();
     const response = await axios.post(
       "http://153.127.48.168:8080/ecsite-api/user",
       {
         registerData,
       }
     );
-    console.dir("responce:" + JSON.stringify(response));
     const status = response.data.status;
     if (status === "success") {
       console.log("成功");
+      navigate("/ItemList");
     } else if (status.errorCode === "E-01") {
       console.log("そのメールアドレスはすでに使われています");
       alert("そのメールアドレスはすでに使われています");
@@ -212,7 +213,8 @@ export const RegisterInfo = () => {
               <input
                 type="submit"
                 className="btn btn-primary my-3"
-                value="この内容で大丈夫"
+                value="情報承認"
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 onClick={UserInfo}
               />
             </form>
