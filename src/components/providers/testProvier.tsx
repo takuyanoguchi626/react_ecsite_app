@@ -1,5 +1,7 @@
 import React from "react";
 
+import React from "react";
+
 export type Size = {
   priceM: number;
   priceL: number;
