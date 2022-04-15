@@ -48,7 +48,6 @@ export function RegisterInfo() {
     if (status === "success") {
       console.log("成功");
       navigate("/AfterRegister");
-      auth?.setstatusCheck(true);
     } else if (response.data.errorCode === "E-01") {
       console.log("そのメールアドレスはすでに使われています");
       alert("そのメールアドレスはすでに使われています");
