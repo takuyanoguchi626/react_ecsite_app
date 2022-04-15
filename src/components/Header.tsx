@@ -5,6 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { useNavigate } from "react-router-dom";
 import { Login } from "../pages/Login";
+import { StatusButton } from "../components/statusButton";
 
 const Header = (): JSX.Element => {
   const navigate = useNavigate();
@@ -34,6 +35,10 @@ const Header = (): JSX.Element => {
           <Button color="inherit" onClick={() => navigate("/OrderHistory")}>
             注文履歴
           </Button>
+          <Button color="inherit" onClick={() => navigate("/OrderConfirm")}>
+            注文確認画面
+          </Button>
+          <StatusButton />
         </Toolbar>
       </AppBar>
     </div>

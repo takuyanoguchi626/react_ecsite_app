@@ -12,14 +12,16 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import { Login } from "./pages/Login";
-import { Toppage } from "./pages/Toppage";
+import { StatusProvider } from "./components/providers/statusContext";
+import { userInfoProvider } from "./components/providers/loginInfoContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <StatusProvider>
+      <App />
+    </StatusProvider>
   </React.StrictMode>
 );
