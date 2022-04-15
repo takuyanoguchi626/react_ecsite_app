@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect, useContext } from "react";
-import { useParams, useNavigate, To } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Item } from "../types/Item";
 import { Topping } from "../types/Topping";
 import { cartListContext } from "../components/providers/CartListProvider";
@@ -8,7 +8,7 @@ import { OrderItem } from "../types/OrderItem";
 import { OrderTopping } from "../types/OrderTopping";
 import { orderContext } from "../components/providers/OrderProvider";
 import { Order } from "../types/Order";
-import { User } from "../types/User";
+// import { User } from "../types/User";
 
 export const ItemDetail = () => {
   // routerからitemidを取得する

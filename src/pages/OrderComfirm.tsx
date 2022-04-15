@@ -3,6 +3,7 @@ import React, { FC, useEffect, useState } from "react";
 import axios from "axios";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import { CartListTable } from "../components/CartListTable";
 // import { CartListTable } from "../components/CartListTable";
 
 export const OrderComfirm: FC = () => {
@@ -100,7 +101,7 @@ export const OrderComfirm: FC = () => {
 
   return (
     <div>
-      {/* <CartListTable></CartListTable> */}
+      <CartListTable></CartListTable>
       <div>
         <h2>お届け先情報</h2>
         <div>

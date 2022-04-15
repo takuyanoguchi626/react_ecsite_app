@@ -20,10 +20,5 @@ export const OrderItemSize: FC<props> = (props) => {
     console.log("サイズのコンポーネント");
   }, [orderItemSize, priceM, priceL]);
 
-  return (
-    <>
-      <span>&nbsp;{orderItemSize}</span>&nbsp;&nbsp;
-      {price}
-    </>
-  );
+  return <>{price}円</>;
 };
