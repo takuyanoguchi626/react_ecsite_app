@@ -1,37 +1,28 @@
-import { useForm } from "react-hook-form";
-import * as React from "react";
-import { useState } from "react";
 import axios from "axios";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { User } from "../../types/User";
+// import { User } from "../types/User";
 
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  password: string;
-  zipcode: string;
-  address: string;
-  telephone: string;
-}
-
-export const RegisterInfo = () => {
+export function RegisterInfo() {
+  const navigate = useNavigate();
   const {
     register,
+    handleSubmit,
     formState: { errors },
     reset,
     trigger,
   } = useForm();
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(registerData);
-    reset();
+  const onSubmit = (data: any) => {
+    console.log(data);
+    // reset();
   };
 
   const [registerData, setregisterData] = useState<User>({
-    id: 0,
     name: "山田太郎",
-    email: "taro@taro",
+    mailAddress: "taro@taro",
     password: "password",
     zipcode: "123-4567",
     address: "新宿三丁目",
@@ -39,188 +30,192 @@ export const RegisterInfo = () => {
   });
 
   const UserInfo = async () => {
-    const navigate = useNavigate();
+    console.log("練習");
+
     const response = await axios.post(
       "http://153.127.48.168:8080/ecsite-api/user",
       {
-        registerData,
+        name: "山田太郎",
+        email: "taro@taro",
+        password: "password",
+        zipcode: "123-4567",
+        address: "新宿三丁目",
+        telephone: "123-4567-8910",
       }
     );
     const status = response.data.status;
+    console.dir("responce:" + JSON.stringify(response));
+    console.log(response.data.errorCode);
+
     if (status === "success") {
       console.log("成功");
       navigate("/ItemList");
-    } else if (status.errorCode === "E-01") {
+    } else if (response.data.errorCode === "E-01") {
       console.log("そのメールアドレスはすでに使われています");
       alert("そのメールアドレスはすでに使われています");
     } else {
       console.log("登録できませんでした");
       alert("登録できませんでした");
     }
+  };
+  // console.log(watch());
 
-    return (
-      <div className="container pt-5">
-        <div className="row justify-content-sm-center pt-5">
-          <div className="col-sm-6 shadow round pb-3">
-            <h1 className="text-center pt-3 text-secondary">会員登録画面</h1>
-            <form onSubmit={onSubmit}>
-              <div className="form-group">
-                <label className="col-form-label">名前:</label>
-                <input
-                  type="text"
-                  className={`form-control ${errors.name && "invalid"}`}
-                  {...register("name", { required: "Name is Required" })}
-                  value={registerData.name}
-                  onKeyUp={(e) => {
-                    setregisterData({
-                      ...registerData,
-                      name: e.currentTarget.value,
-                    });
-                    trigger("name");
-                    console.log(e.currentTarget.value);
-                  }}
-                />
-                {errors.name && (
-                  <small className="text-danger">{errors.name.message}</small>
-                )}
-              </div>
+  // console.log(errors.name)
 
-              <div className="form-group">
-                <label className="col-form-label">Email:</label>
-                <input
-                  type="text"
-                  className={`form-control ${errors.email && "invalid"}`}
-                  {...register("email", {
-                    required: "Email is Required",
-                    pattern: {
-                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: "Invalid email address",
-                    },
-                  })}
-                  value={registerData.email}
-                  onKeyUp={(e) => {
-                    setregisterData({
-                      ...registerData,
-                      email: e.currentTarget.value,
-                    });
-                    trigger("email");
-                  }}
-                />
-                {errors.email && (
-                  <small className="text-danger">{errors.email.message}</small>
-                )}
-              </div>
-              <div className="form-group">
-                <label className="col-form-label">電話番号:</label>
-                <input
-                  type="text"
-                  className={`form-control ${errors.telephone && "invalid"}`}
-                  {...register("telephone", {
-                    required: "Phone is Required",
-                    pattern: {
-                      value:
-                        /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/,
-                      message: "Invalid phone no",
-                    },
-                  })}
-                  value={registerData.telephone}
-                  onKeyUp={(e) => {
-                    setregisterData({
-                      ...registerData,
-                      telephone: e.currentTarget.value,
-                    });
-                    trigger("telephone");
-                  }}
-                />
-                {errors.telephone && (
-                  <small className="text-danger">
-                    {errors.telephone.message}
-                  </small>
-                )}
-              </div>
-
-              <div className="form-group">
-                <label className="col-form-label">パスワード:</label>
-                <input
-                  type="text"
-                  className={`form-control ${errors.password && "invalid"}`}
-                  {...register("password", {
-                    required: "Password is Required",
-                  })}
-                  value={registerData.password}
-                  onKeyUp={(e) => {
-                    setregisterData({
-                      ...registerData,
-                      password: e.currentTarget.value,
-                    });
-                    trigger("password");
-                  }}
-                />
-                {errors.password && (
-                  <small className="text-danger">
-                    {errors.password.message}
-                  </small>
-                )}
-              </div>
-
-              <div className="form-group">
-                <label className="col-form-label">郵便番号:</label>
-                <input
-                  type="text"
-                  className={`form-control ${errors.zipcode && "invalid"}`}
-                  {...register("zipcode", {
-                    required: "zipcode is Required",
-                  })}
-                  value={registerData.zipcode}
-                  onKeyUp={(e) => {
-                    setregisterData({
-                      ...registerData,
-                      zipcode: e.currentTarget.value,
-                    });
-                    trigger("zipcode");
-                  }}
-                />
-                {errors.zipcode && (
-                  <small className="text-danger">
-                    {errors.zipcode.message}
-                  </small>
-                )}
-              </div>
-              <div className="form-group">
-                <label className="col-form-label">住所:</label>
-                <input
-                  type="text"
-                  className={`form-control ${errors.address && "invalid"}`}
-                  {...register("address", {
-                    required: "address is Required",
-                  })}
-                  value={registerData.address}
-                  onKeyUp={(e) => {
-                    setregisterData({
-                      ...registerData,
-                      address: e.currentTarget.value,
-                    });
-                    trigger("address");
-                  }}
-                />
-                {errors.address && (
-                  <small className="text-danger">
-                    {errors.address.message}
-                  </small>
-                )}
-              </div>
-
+  return (
+    <div className="container pt-5">
+      <div className="row justify-content-sm-center pt-5">
+        <div className="col-sm-6 shadow round pb-3">
+          <h1 className="text-center pt-3 text-secondary">Example Form</h1>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="form-group">
+              <label className="col-form-label">名前:</label>
               <input
-                type="submit"
-                className="btn btn-primary my-3"
-                value="情報承認"
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                onClick={UserInfo}
+                type="text"
+                className={`form-control ${errors.name && "invalid"}`}
+                {...register("name", { required: "Name is Required" })}
+                value={registerData.name}
+                onKeyUp={(e) => {
+                  setregisterData({
+                    ...registerData,
+                    name: e.currentTarget.value,
+                  });
+                  trigger("name");
+                  console.log(e.currentTarget.value);
+                }}
               />
-            </form>
-          </div>
+              {errors.name && (
+                <small className="text-danger">{errors.name.message}</small>
+              )}
+            </div>
+
+            <div className="form-group">
+              <label className="col-form-label">Email:</label>
+              <input
+                type="text"
+                className={`form-control ${errors.mailAddress && "invalid"}`}
+                {...register("mailAddress", {
+                  required: "Email is Required",
+                  // pattern: {
+                  //   message: "Invalid email address",
+                  // },
+                })}
+                value={registerData.mailAddress}
+                onKeyUp={(e) => {
+                  setregisterData({
+                    ...registerData,
+                    mailAddress: e.currentTarget.value,
+                  });
+                  trigger("mailAddress");
+                }}
+              />
+              {errors.mailAddress && (
+                <small className="text-danger">
+                  {errors.mailAddress.message}
+                </small>
+              )}
+            </div>
+            <div className="form-group">
+              <label className="col-form-label">電話番号:</label>
+              <input
+                type="text"
+                className={`form-control ${errors.telephone && "invalid"}`}
+                {...register("telephone", {
+                  required: "Phone is Required",
+                  // pattern: {
+                  //   message: "Invalid phone no",
+                  // },
+                })}
+                value={registerData.telephone}
+                onKeyUp={(e) => {
+                  setregisterData({
+                    ...registerData,
+                    telephone: e.currentTarget.value,
+                  });
+                  trigger("telephone");
+                }}
+              />
+              {errors.telephone && (
+                <small className="text-danger">
+                  {errors.telephone.message}
+                </small>
+              )}
+            </div>
+
+            <div className="form-group">
+              <label className="col-form-label">パスワード:</label>
+              <input
+                type="text"
+                className={`form-control ${errors.password && "invalid"}`}
+                {...register("password", {
+                  required: "Password is Required",
+                })}
+                value={registerData.password}
+                onKeyUp={(e) => {
+                  setregisterData({
+                    ...registerData,
+                    password: e.currentTarget.value,
+                  });
+                  trigger("password");
+                }}
+              />
+              {errors.password && (
+                <small className="text-danger">{errors.password.message}</small>
+              )}
+            </div>
+
+            <div className="form-group">
+              <label className="col-form-label">郵便番号:</label>
+              <input
+                type="text"
+                className={`form-control ${errors.zipcode && "invalid"}`}
+                {...register("zipcode", {
+                  required: "zipcode is Required",
+                })}
+                value={registerData.zipcode}
+                onKeyUp={(e) => {
+                  setregisterData({
+                    ...registerData,
+                    zipcode: e.currentTarget.value,
+                  });
+                  trigger("zipcode");
+                }}
+              />
+              {errors.zipcode && (
+                <small className="text-danger">{errors.zipcode.message}</small>
+              )}
+            </div>
+            <div className="form-group">
+              <label className="col-form-label">住所:</label>
+              <input
+                type="text"
+                className={`form-control ${errors.address && "invalid"}`}
+                {...register("address", {
+                  required: "address is Required",
+                })}
+                value={registerData.address}
+                onKeyUp={(e) => {
+                  setregisterData({
+                    ...registerData,
+                    address: e.currentTarget.value,
+                  });
+                  trigger("address");
+                }}
+              />
+              {errors.address && (
+                <small className="text-danger">{errors.address.message}</small>
+              )}
+            </div>
+
+            <input
+              type="submit"
+              className="btn btn-primary my-3"
+              value="送信"
+              onClick={UserInfo}
+            />
+          </form>
         </div>
       </div>
-    );
-  };
-};
+    </div>
+  );
+}

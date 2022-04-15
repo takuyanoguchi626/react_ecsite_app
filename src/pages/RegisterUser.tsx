@@ -1,11 +1,13 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { statusContext } from "../components/providers/statusContext";
 import { User } from "../types/User";
 
 export function RegisterInfo() {
   const navigate = useNavigate();
+  const auth = useContext(statusContext);
   const {
     register,
     handleSubmit,
@@ -21,7 +23,7 @@ export function RegisterInfo() {
 
   const [registerData, setregisterData] = useState<User>({
     name: "山田太郎",
-    mailAddress: "taro@taro",
+    mailAddress: "a@taro",
     password: "password",
     zipcode: "123-4567",
     address: "新宿三丁目",
@@ -29,26 +31,24 @@ export function RegisterInfo() {
   });
 
   const UserInfo = async () => {
-    console.log("練習");
-
     const response = await axios.post(
       "http://153.127.48.168:8080/ecsite-api/user",
       {
-        name: "山田太郎",
-        email: "taro@taro",
-        password: "password",
-        zipcode: "123-4567",
-        address: "新宿三丁目",
-        telephone: "123-4567-8910",
+        name: registerData.name,
+        email: registerData.mailAddress,
+        password: registerData.password,
+        zipcode: registerData.zipcode,
+        address: registerData.address,
+        telephone: registerData.telephone,
       }
     );
     const status = response.data.status;
     console.dir("responce:" + JSON.stringify(response));
-    console.log(response.data.errorCode);
 
     if (status === "success") {
       console.log("成功");
       navigate("/ItemList");
+      auth?.setstatusCheck(true);
     } else if (response.data.errorCode === "E-01") {
       console.log("そのメールアドレスはすでに使われています");
       alert("そのメールアドレスはすでに使われています");
@@ -65,7 +65,7 @@ export function RegisterInfo() {
     <div className="container pt-5">
       <div className="row justify-content-sm-center pt-5">
         <div className="col-sm-6 shadow round pb-3">
-          <h1 className="text-center pt-3 text-secondary">Example Form</h1>
+          <h1 className="text-center pt-3 text-secondary">会員登録フォーム</h1>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="form-group">
               <label className="col-form-label">名前:</label>
@@ -89,7 +89,7 @@ export function RegisterInfo() {
             </div>
 
             <div className="form-group">
-              <label className="col-form-label">Email:</label>
+              <label className="col-form-label">メールアドレス:</label>
               <input
                 type="text"
                 className={`form-control ${errors.mailAddress && "invalid"}`}
