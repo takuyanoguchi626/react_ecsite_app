@@ -1,4 +1,5 @@
 import React from "react";
+import { ItemDetail } from "./pages/ItemDetail";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import { Login } from "./pages/Login";
@@ -22,11 +23,11 @@ function App() {
           <Route path="/" element={<ItemList />}></Route>
           <Route path="/OrderComfirm" element={<OrderComfirm></OrderComfirm>} />
           <Route path="/ItemList" element={<ItemList />} />
+          <Route path="/ItemDetail/:itemId" element={<ItemDetail />} />
           <Route
             path="/OrderFinished"
             element={<OrderFinished></OrderFinished>}
           />
-
           {/* <Route path="/CartList/" element={<CartList />} /> */}
         </Routes>
       </BrowserRouter>
