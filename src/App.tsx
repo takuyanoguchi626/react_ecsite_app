@@ -9,6 +9,7 @@ import { ItemList } from "./pages/Itemlist";
 import { OrderComfirm } from "./pages/OrderComfirm";
 import { OrderFinished } from "./pages/OrderFinished";
 import { RegisterUser } from "./pages/RegisterUser";
+import { CartList } from "./pages/CartList";
 
 function App() {
   return (
@@ -20,10 +21,11 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/registerUser" element={<RegisterUser />} />
-          <Route path="/" element={<ItemList />}></Route>
+          {/* <Route path="/" element={<ItemList />} /> */}
           <Route path="/OrderComfirm" element={<OrderComfirm></OrderComfirm>} />
           <Route path="/ItemList" element={<ItemList />} />
           <Route path="/ItemDetail/:itemId" element={<ItemDetail />} />
+          <Route path="/CartList/" element={<CartList />} />
           <Route
             path="/OrderFinished"
             element={<OrderFinished></OrderFinished>}

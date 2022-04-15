@@ -1,77 +1,44 @@
 import React, { FC, useEffect, useState } from "react";
-// import { UserInfo } from "../types/UserInfo";
+import { UserInfo } from "../types/UserInfo";
 import axios from "axios";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
-// import { CartListTable } from "../components/CartListTable";
+import { CartListTable } from "../components/CartListTable";
 
 export const OrderComfirm: FC = () => {
   const navigate = useNavigate();
-
-  // const [userInfo, setUserInfo] = useState<UserInfo>({
-  //   name: "",
-  //   mailAddress: "",
-  //   zipCode: 0,
-  //   address: "",
-  //   telephone: 0,
-  //   deliveryDate: new Date(),
-  //   deliveryHour: 0,
-  //   paymentMethod: 0,
-  // });
-  const [name, setName] = useState("");
-  const [mailAddress, setMailAddress] = useState("");
-  const [zipcode, setZipcode] = useState(0);
-  const [address, setAddress] = useState("");
-  const [telephone, setTelephone] = useState(0);
-  const [deliveryDate, setDeliveryDate] = useState("1111-11-11");
-  const [deliveryHour, setDeliveryHour] = useState("01");
-  const [paymentMethod, setPaymentMethod] = useState(0);
-  const [orderErrorMessage, setOrderErrorMessage] = useState("");
-
+  //ユーザーが入力した情報
+  const [userInfo, setUserInfo] = useState<UserInfo>({
+    name: "",
+    mailAddress: "",
+    zipCode: 0,
+    address: "",
+    telephone: 0,
+    deliveryDate: "1111-11-11",
+    deliveryHour: 88,
+    paymentMethod: 0,
+  });
+  //配達時間の表示の為の配列
+  const deliveryHourArr = [10, 11, 12, 13, 14, 15, 16, 17, 18];
+  //注文のAPIの配達日時フォーマット
   const [deliveryTime, setDeliveryTime] = useState("");
-  useEffect(() => {
-    setDeliveryDate((date: string) => {
-      const deliveryDate = format(new Date(date), "yyyy-MM-dd");
-      return deliveryDate;
-    });
-  }, []);
-
+  //deliveryDateとdeliveryHourを注文のAPIのフォーマットに整形
   useEffect(() => {
     setDeliveryTime(() => {
       const deliveryTime = format(
-        new Date(deliveryDate + "T" + deliveryHour + ":00:00"),
+        new Date(
+          userInfo.deliveryDate + "T" + userInfo.deliveryHour + ":00:00"
+        ),
         "yyyy/MM/dd HH:mm:ss"
       );
       return deliveryTime;
     });
-  }, [deliveryDate, deliveryHour]);
-
-  // useEffect(() => {
-  //   setUserInfo((userInfo: UserInfo) => {
-  //     return {
-  //       name: name,
-  //       mailAddress: mailAddress,
-  //       zipCode: zipcode,
-  //       address: address,
-  //       telephone: telephone,
-  //       deliveryDate: deliveryDate,
-  //       deliveryHour: deliveryHour,
-  //       paymentMethod: paymentMethod,
-  //     };
-  //   });
-  // }, [
-  //   name,
-  //   mailAddress,
-  //   zipcode,
-  //   address,
-  //   telephone,
-  //   deliveryDate,
-  //   deliveryHour,
-  //   paymentMethod,
-  // ]);
-
-  // console.log(userInfo);
-
+  }, [userInfo.deliveryDate, userInfo.deliveryHour]);
+  //注文失敗時のエラーメッセージ
+  const [orderErrorMessage, setOrderErrorMessage] = useState("");
+  /**
+   * 商品を注文する.
+   */
   const order = async () => {
     setOrderErrorMessage(() => "");
     const response = await axios.post(
@@ -80,13 +47,13 @@ export const OrderComfirm: FC = () => {
         userId: 0, //仮
         status: 0, //仮
         totalPrice: 1000, //仮
-        destinationName: name,
-        destinationEmail: mailAddress,
-        destinationZipcode: zipcode,
-        destinationAddress: address,
-        destinationTel: telephone,
+        destinationName: userInfo.name,
+        destinationEmail: userInfo.mailAddress,
+        destinationZipcode: userInfo.zipCode,
+        destinationAddress: userInfo.address,
+        destinationTel: userInfo.telephone,
         deliveryTime: deliveryTime,
-        paymentMethod: paymentMethod,
+        paymentMethod: userInfo.paymentMethod,
         orderItemFormList: [], //仮
       }
     );
@@ -100,7 +67,7 @@ export const OrderComfirm: FC = () => {
 
   return (
     <div>
-      {/* <CartListTable></CartListTable> */}
+      <CartListTable></CartListTable>
       <div>
         <h2>お届け先情報</h2>
         <div>
@@ -111,7 +78,7 @@ export const OrderComfirm: FC = () => {
                 id="name"
                 type="text"
                 onChange={(e) => {
-                  setName(() => e.target.value);
+                  setUserInfo({ ...userInfo, name: e.target.value });
                 }}
               />
             </div>
@@ -123,7 +90,7 @@ export const OrderComfirm: FC = () => {
                 id="email"
                 type="email"
                 onChange={(e) => {
-                  setMailAddress(() => e.target.value);
+                  setUserInfo({ ...userInfo, mailAddress: e.target.value });
                 }}
               />
             </div>
@@ -135,7 +102,7 @@ export const OrderComfirm: FC = () => {
                 id="zipcode"
                 type="number"
                 onChange={(e) => {
-                  setZipcode(() => Number(e.target.value));
+                  setUserInfo({ ...userInfo, zipCode: Number(e.target.value) });
                 }}
               />
               <button type="button">
@@ -150,7 +117,7 @@ export const OrderComfirm: FC = () => {
                 id="address"
                 type="text"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setAddress(() => e.target.value)
+                  setUserInfo({ ...userInfo, address: e.target.value })
                 }
               />
             </div>
@@ -162,7 +129,10 @@ export const OrderComfirm: FC = () => {
                 id="tel"
                 type="tel"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setTelephone(() => Number(e.target.value))
+                  setUserInfo({
+                    ...userInfo,
+                    telephone: Number(e.target.value),
+                  })
                 }
               />
             </div>
@@ -173,110 +143,35 @@ export const OrderComfirm: FC = () => {
               <input
                 id="deliveryDate"
                 type="date"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setDeliveryDate(() => e.target.value)
-                }
+                // onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                //   setUserInfo(() => {
+                //     console.log(e.target.value);
+
+                //     const deliveryDate = format(
+                //       new Date(e.target.value),
+                //       "yyyy-MM-dd"
+                //     );
+                //     return { ...userInfo, deliveryDate: deliveryDate };
+                //   })
+                // }
               />
             </div>
-            <label>
-              <input
-                name="deliveryTime"
-                type="radio"
-                value="10"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setDeliveryHour(() => e.target.value)
-                }
-              />
-              <span>10時</span>
-            </label>
-            <label>
-              <input
-                name="deliveryTime"
-                type="radio"
-                value="11"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setDeliveryHour(() => e.target.value)
-                }
-              />
-              <span>11時</span>
-            </label>
-            <label>
-              <input
-                name="deliveryTime"
-                type="radio"
-                value="12"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setDeliveryHour(() => e.target.value)
-                }
-              />
-              <span>12時</span>
-            </label>
-            <label>
-              <input
-                name="deliveryTime"
-                type="radio"
-                value="13"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setDeliveryHour(() => e.target.value)
-                }
-              />
-              <span>13時</span>
-            </label>
-            <label>
-              <input
-                name="deliveryTime"
-                type="radio"
-                value="14"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setDeliveryHour(() => e.target.value)
-                }
-              />
-              <span>14時</span>
-            </label>
-            <label>
-              <input
-                name="deliveryTime"
-                type="radio"
-                value="15"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setDeliveryHour(() => e.target.value)
-                }
-              />
-              <span>15時</span>
-            </label>
-            <label>
-              <input
-                name="deliveryTime"
-                type="radio"
-                value="16"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setDeliveryHour(() => e.target.value)
-                }
-              />
-              <span>16時</span>
-            </label>
-            <label>
-              <input
-                name="deliveryTime"
-                type="radio"
-                value="17"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setDeliveryHour(() => e.target.value)
-                }
-              />
-              <span>17時</span>
-            </label>
-            <label>
-              <input
-                name="deliveryTime"
-                type="radio"
-                value="18"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setDeliveryHour(() => e.target.value)
-                }
-              />
-              <span>18時</span>
-            </label>
+            {deliveryHourArr.map((time: number, index: number) => (
+              <label key={index}>
+                <input
+                  name="deliveryTime"
+                  type="radio"
+                  value={time}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setUserInfo({
+                      ...userInfo,
+                      deliveryHour: Number(e.target.value),
+                    })
+                  }
+                />
+                <span>{time}時</span>
+              </label>
+            ))}
           </div>
         </div>
 
@@ -289,7 +184,10 @@ export const OrderComfirm: FC = () => {
                 type="radio"
                 value="1"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setPaymentMethod(() => Number(e.target.value))
+                  setUserInfo({
+                    ...userInfo,
+                    paymentMethod: Number(e.target.value),
+                  })
                 }
               />
               <span>代金引換</span>
@@ -300,7 +198,10 @@ export const OrderComfirm: FC = () => {
                 type="radio"
                 value="2"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setPaymentMethod(() => Number(e.target.value))
+                  setUserInfo({
+                    ...userInfo,
+                    paymentMethod: Number(e.target.value),
+                  })
                 }
               />
               <span>クレジットカード</span>

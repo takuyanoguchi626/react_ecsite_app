@@ -6,7 +6,7 @@ export type UserInfo = {
   address?: string;
   telephone?: number;
   itemTotalPrice?: number;
-  deliveryDate?: Date;
+  deliveryDate?: string;
   deliveryHour?: number;
   paymentMethod?: number;
 };
