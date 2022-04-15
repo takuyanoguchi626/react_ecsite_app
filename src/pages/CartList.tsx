@@ -2,17 +2,10 @@ import { useNavigate } from "react-router-dom";
 
 import { useContext } from "react";
 import { cartListContext } from "../components/providers/CartListProvider";
-import { OrderItemSize } from "../components/OrderItemSize";
-import { CalcTotalPrice } from "../components/CalcTotalPrice";
 import { CartListTable } from "../components/CartListTable";
 
 export const CartList = () => {
   const navigate = useNavigate();
-
-  const cart = useContext(cartListContext);
-
-  const cartList = cart?.cartList;
-  console.log(cartList);
 
   return (
     <>
@@ -31,7 +24,7 @@ export const CartList = () => {
             <button
               type="button"
               onClick={() => {
-                navigate("/orderComfirm/");
+                navigate("/OrderComfirm/");
               }}
             >
               <span>注文に進む</span>
@@ -39,7 +32,7 @@ export const CartList = () => {
             <div>
               <button
                 onClick={() => {
-                  navigate("/itemList/");
+                  navigate("/ItemList/");
                 }}
               >
                 商品一覧に戻る
