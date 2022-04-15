@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext, useState } from "react";
 import { Grid } from "@material-ui/core";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
@@ -7,6 +7,9 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { RegisterInfo } from "../components/Register/RegisterInfo";
 import { RegisterConfirm } from "../components/Register/RegisterConfirm";
+import { User } from "../types/User";
+
+// export const RegisterData = createContext<User | undefined>(undefined);
 
 function getSteps() {
   return ["入力画面", "確認画面"];
@@ -23,7 +26,20 @@ function getStepContent(stepIndex: number) {
   }
 }
 export function Content() {
-  const [activeStep, setActiveStep] = React.useState(0);
+  //   const sampleRegister: User = {
+  //     id: 1,
+  //     name: "string",
+  //     email: "string",
+  //     password: "string",
+  //     zipcode: "string",
+  //     address: "string",
+  //     telephone: "string",
+  //   };
+
+  //   const [inputUserData, setinputUserData] = useState("");
+  //   const value = { inputUserData, setinputUserData };
+
+  const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -45,6 +61,9 @@ export function Content() {
             </Step>
           ))}
         </Stepper>
+        {/* <RegisterData.Provider value={sampleRegister}>
+          {getStepContent(activeStep)};
+        </RegisterData.Provider> */}
         {activeStep === steps.length ? (
           <div>
             <Typography>全ステップの表示を完了</Typography>

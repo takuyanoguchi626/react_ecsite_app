@@ -24,7 +24,7 @@ export const Toppage = () => {
           className="btn"
           style={{ color: "#e0f2f1", backgroundColor: "#004d40" }}
           variant="contained"
-          onClick={() => navigate("/registerUser")}
+          onClick={() => navigate("/content")}
         >
           会員登録ボタン
         </Button>
