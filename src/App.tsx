@@ -10,6 +10,7 @@ import { OrderComfirm } from "./pages/OrderComfirm";
 import { OrderFinished } from "./pages/OrderFinished";
 import { RegisterUser } from "./pages/RegisterUser";
 import { CartList } from "./pages/CartList";
+import { Footer } from "./components/Footer";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           />
           {/* <Route path="/CartList/" element={<CartList />} /> */}
         </Routes>
+        <Footer />
       </BrowserRouter>
     </div>
   );
