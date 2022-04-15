@@ -8,17 +8,17 @@ import "../css/footer.css";
 export const Footer = () => {
   const navigate = useNavigate();
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar
-        position="static"
-        sx={{ color: "#e0f2f1", backgroundColor: "#004d40", height: 300 }}
-      >
+    <AppBar
+      position="static"
+      sx={{ color: "#e0f2f1", backgroundColor: "#004d40", height: 400 }}
+    >
+      <Box sx={{ flexGrow: 0 }} pt={2} pb={4}>
         <Grid
           container
           spacing={0}
           direction="row"
           justifyContent="center"
-          alignItems="center"
+          alignItems="flex-start"
         >
           <Grid item xs={4} md={2} className="grid">
             <div>ヘルプ</div>
@@ -54,6 +54,8 @@ export const Footer = () => {
             ></img>
           </Grid>
         </Grid>
+      </Box>
+      <Box sx={{ flexGrow: 0 }} pt={2}>
         <AppBar position="static" sx={{ backgroundColor: "#f0e68c" }}>
           <div className="iconList">
             <span className="iconWraper">
@@ -86,10 +88,10 @@ export const Footer = () => {
             </span>
           </div>
         </AppBar>
-        <div className="copyright">
-          Copyright Domino's Pizza Japan, Inc. All Rights Reserved.
-        </div>
-      </AppBar>
-    </Box>
+      </Box>
+      <div className="copyright">
+        Copyright Domino's Pizza Japan, Inc. All Rights Reserved.
+      </div>
+    </AppBar>
   );
 };
