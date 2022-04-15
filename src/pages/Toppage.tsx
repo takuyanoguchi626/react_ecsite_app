@@ -17,7 +17,7 @@ export const Toppage = () => {
           variant="contained"
           onClick={() => navigate("/login")}
         >
-          ログイン
+          ログインしてからオーダーを開始する
         </Button>
         &nbsp; &nbsp;
         <Button
@@ -26,7 +26,7 @@ export const Toppage = () => {
           variant="contained"
           onClick={() => navigate("/registerUser")}
         >
-          会員登録ボタン
+          会員登録する
         </Button>
       </div>
       <div></div>
