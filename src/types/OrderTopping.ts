@@ -1,4 +1,4 @@
-import { Topping } from "./topping";
+import { Topping } from "./Topping";
 
 export type OrderTopping = {
   id: number;
