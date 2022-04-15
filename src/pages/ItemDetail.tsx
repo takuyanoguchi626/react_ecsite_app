@@ -6,6 +6,9 @@ import { Topping } from "../types/Topping";
 import { cartListContext } from "../components/providers/CartListProvider";
 import { OrderItem } from "../types/OrderItem";
 import { OrderTopping } from "../types/OrderTopping";
+import { orderContext } from "../components/providers/OrderProvider";
+import { Order } from "../types/Order";
+import { User } from "../types/User";
 
 export const ItemDetail = () => {
   // routerからitemidを取得する
@@ -69,6 +72,10 @@ export const ItemDetail = () => {
 
   //ショッピングカート
   const cart = useContext(cartListContext);
+  // order情報
+  const order = useContext(orderContext);
+  // order情報格納用の配列
+  const orderItemInfo = new Array<OrderItem>();
 
   // カートにいれる
   const pushInCartList = () => {
@@ -105,7 +112,6 @@ export const ItemDetail = () => {
         Topping: orderTopping,
       });
     }
-    console.log(newOrderToppingList);
 
     // カートに商品を入れる
     let orderItemId = 0;
@@ -121,7 +127,34 @@ export const ItemDetail = () => {
     };
     cart?.setCartList([...cart.cartList, orderItem]);
     navigate("/CartList/");
-    console.log(orderItem);
+    orderItemInfo.push(orderItem);
+
+    // OrderProviderに送信
+    const formattedOrderItem: Order = {
+      id: 1,
+      userId: 1,
+      status: 1,
+      totalPrice: totalPrices(),
+      orderDate: new Date(),
+      distinationName: "",
+      distinationEmail: "",
+      distinationZipcode: "",
+      distinationAddress: "",
+      distinationTel: "",
+      deliveryTime: new Date(),
+      paymentMethod: 1,
+      user: {
+        id: 1,
+        name: "",
+        email: "",
+        password: "",
+        zipcode: "",
+        address: "",
+        telephone: "",
+      },
+      orderItemList: orderItemInfo,
+    };
+    order?.setOrderInfo([...order.orderInfo, formattedOrderItem]);
   };
 
   //合計金額
