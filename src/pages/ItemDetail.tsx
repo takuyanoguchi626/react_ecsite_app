@@ -146,7 +146,7 @@ export const ItemDetail = () => {
       user: {
         id: 1,
         name: "",
-        email: "",
+        mailAddress: "",
         password: "",
         zipcode: "",
         address: "",
