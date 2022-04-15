@@ -11,7 +11,13 @@ export const AfterRegister = () => {
     <div>
       <h1>会員登録ありがとうございます！</h1>
       <h3>このままログインしお買い物を続けますか？</h3>
-      <Button className="btn" onClick={() => navigate("/itemList")}>
+      <Button
+        className="btn"
+        onClick={() => {
+          navigate("/itemList");
+          auth?.setstatusCheck(true);
+        }}
+      >
         はい
       </Button>
       <Button

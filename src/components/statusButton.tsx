@@ -7,9 +7,12 @@ import { useNavigate } from "react-router-dom";
 export const StatusButton: React.VFC = () => {
   const auth = useContext(statusContext);
 
-  const handleSignOut = () => {
+  const handleSignOut = async () => {
+    const response = await axios.post(
+      "http://153.127.48.168:8080/ecsite-api/user/logout"
+    );
+    console.dir("response:" + JSON.stringify(response));
     auth?.setstatusCheck(false);
-    axios.post("http://153.127.48.168:8080/ecsite-api/user/logout");
     console.log("ログアウトしてTOPページへ飛ぶ");
   };
 
