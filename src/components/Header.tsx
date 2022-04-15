@@ -23,7 +23,7 @@ const Header = (): JSX.Element => {
           ></img>
           <Typography variant="h6">らくらくPIZZA</Typography>
 
-          <Button color="inherit" onClick={() => navigate("/RegisterUser")}>
+          <Button color="inherit" onClick={() => navigate("/content")}>
             ユーザー登録
           </Button>
           <Button color="inherit" onClick={() => navigate("/Login")}>
@@ -35,7 +35,7 @@ const Header = (): JSX.Element => {
           <Button color="inherit" onClick={() => navigate("/OrderHistory")}>
             注文履歴
           </Button>
-          <Button color="inherit" onClick={() => navigate("/OrderConfirm")}>
+          <Button color="inherit" onClick={() => navigate("/OrderCofirm")}>
             注文確認画面
           </Button>
           <StatusButton />

@@ -19,17 +19,16 @@ import { Toppage } from "./pages/Toppage";
 import { StatusProvider } from "./components/providers/statusContext";
 import { userInfoProvider } from "./components/providers/loginInfoContext";
 
-
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
     {/* ProviderのchildrenがAPPになる */}
-     <StatusProvider>
-    <CartListProvider>
-      <App />
-</CartListProvider>
-       </StatusProvider>
+    <StatusProvider>
+      <CartListProvider>
+        <App />
+      </CartListProvider>
+    </StatusProvider>
   </React.StrictMode>
 );
