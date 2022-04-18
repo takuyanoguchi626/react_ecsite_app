@@ -54,7 +54,12 @@ export const ItemRecommendation = () => {
                   <img src={`${item.imagePath}`} alt="images" />
                 </Link>
               </div>
-              <span>{item.name}</span>;
+              <span>{item.name}</span>
+              <div>
+                <Link to={`/itemDetail/${item.id}`}>
+                  <button type="button">注文する</button>
+                </Link>
+              </div>
             </div>
           );
         })}
