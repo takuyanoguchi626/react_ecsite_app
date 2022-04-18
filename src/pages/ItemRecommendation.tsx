@@ -20,7 +20,7 @@ export const ItemRecommendation = () => {
   // ランダム用のID作成
   const randomID: number[] = [];
 
-  for (let i = 0; i <= itemList.length - 1; i++) {
+  for (let i = 0; i <= itemList.length; i++) {
     randomID.push(Math.random());
   }
 
