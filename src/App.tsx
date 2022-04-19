@@ -13,6 +13,7 @@ import { AfterRegister } from "./pages/AfterRegister";
 import { CartList } from "./pages/CartList";
 import { Footer } from "./components/Footer";
 import { ItemDetail } from "./pages/ItemDetail";
+import { ItemRecommendation } from "./pages/ItemRecommendation";
 
 function App() {
   return (
@@ -33,6 +34,10 @@ function App() {
           <Route
             path="/OrderFinished"
             element={<OrderFinished></OrderFinished>}
+          />
+          <Route
+            path="/ItemRecommendation"
+            element={<ItemRecommendation></ItemRecommendation>}
           />
 
           {/* <Route path="/CartList/" element={<CartList />} /> */}

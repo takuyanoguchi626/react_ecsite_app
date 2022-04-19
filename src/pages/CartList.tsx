@@ -32,7 +32,7 @@ export const CartList = () => {
             <div>
               <button
                 onClick={() => {
-                  navigate("/ItemList/");
+                  navigate("/OrderConfirm/");
                 }}
               >
                 商品一覧に戻る
