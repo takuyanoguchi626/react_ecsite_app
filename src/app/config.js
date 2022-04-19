@@ -2,7 +2,6 @@
 import { initializeApp } from "firebase/app";
 import firebase from "firebase/app";
 import "firebase/firestore"; //firestoreを使う場合
-import "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -18,10 +17,10 @@ const firebaseConfig = {
   measurementId: "G-NCCCSEST4N",
 };
 
-export const providerGoogle = new firebase.auth.GoogleAuthProvider();
-export const providerFacebook = new firebase.auth.FacebookAuthProvider();
-export const providerTwitter = new firebase.auth.TwitterAuthProvider();
-export const db = firebase.firestore(); //firestroeを使う場合
+// export const providerGoogle = new firebase.auth.GoogleAuthProvider();
+// export const providerFacebook = new firebase.auth.FacebookAuthProvider();
+// export const providerTwitter = new firebase.auth.TwitterAuthProvider();
+// export const db = firebase.firestore(); //firestroeを使う場合
 export const app = initializeApp(firebaseConfig); //firebaseとの認証
 
-export default firebase;
+// export default firebase;

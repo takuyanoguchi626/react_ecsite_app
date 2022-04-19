@@ -6,9 +6,17 @@ import { useNavigate } from "react-router-dom";
 import { InputLogin } from "../components/inputLogin";
 import Button from "@material-ui/core/Button";
 import { statusContext } from "../components/providers/statusContext";
-import { app, providerTwitter } from "../app/config";
+import { app } from "../app/config";
 import "firebase/auth";
-import { getAuth, signInWithPopup, TwitterAuthProvider } from "firebase/auth";
+import {
+  getAuth,
+  signInWithRedirect,
+  signInWithPopup,
+  getRedirectResult,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import "firebase/auth";
+import { TwitterAuthProvider } from "firebase/auth";
 
 // useEffectを使ったログイン機能;
 export const Login = () => {
@@ -39,11 +47,20 @@ export const Login = () => {
     }
   };
 
+  const authrization = getAuth(app);
+  const providerTwitter = new TwitterAuthProvider();
+
   const loginWithTwitter = () => {
-    signInWithPopup(getAuth(app), providerTwitter)
+    getRedirectResult(authrization);
+
+    // signInWithEmailAndPassword(authrization, "test@email.com", "testForNow");
+    // signInWithRedirect(authrization, providerTwitter);
+
+    signInWithPopup(authrization, providerTwitter)
       .then((result) => {
         // This gives you a the Twitter OAuth 1.0 Access Token and Secret.
         // You can use these server side with your app's credentials to access the Twitter API.
+
         const credential = TwitterAuthProvider.credentialFromResult(result);
         const token =
           "AAAAAAAAAAAAAAAAAAAAAHKVbgEAAAAAJJpqFfpODHZ2wns61kM2A0xhwTU%3Dub5sjpNFxKgb8zrU32ceZI7bo8ZB6j70Tz55vdc0EBX7Q9VaR0";
@@ -52,6 +69,8 @@ export const Login = () => {
         // The signed-in user info.
         const user = result.user;
         // ...
+
+        console.log(result);
       })
       .catch((error) => {
         // Handle Errors here.
@@ -62,6 +81,8 @@ export const Login = () => {
         // The AuthCredential type that was used.
         const credential = TwitterAuthProvider.credentialFromError(error);
         // ...
+
+        console.log(error);
       });
   };
 
