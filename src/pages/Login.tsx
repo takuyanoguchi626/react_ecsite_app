@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { InputLogin } from "../components/inputLogin";
 import Button from "@material-ui/core/Button";
 import { statusContext } from "../components/providers/statusContext";
-import { app, providerTwitter } from "../../app/config";
+import { app, providerTwitter } from "../app/config";
 import "firebase/auth";
 import { getAuth, signInWithPopup, TwitterAuthProvider } from "firebase/auth";
 
