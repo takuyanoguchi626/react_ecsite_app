@@ -6,6 +6,10 @@ import { useNavigate } from "react-router-dom";
 import { InputLogin } from "../components/inputLogin";
 import Button from "@material-ui/core/Button";
 import { statusContext } from "../components/providers/statusContext";
+import { app, providerTwitter } from "../../app/config";
+import "firebase/auth";
+import { getAuth, signInWithPopup, TwitterAuthProvider } from "firebase/auth";
+
 // useEffectを使ったログイン機能;
 export const Login = () => {
   const navigate = useNavigate();
@@ -33,6 +37,32 @@ export const Login = () => {
     } else {
       alert("メールアドレス、パスワードを記入してください");
     }
+  };
+
+  const loginWithTwitter = () => {
+    signInWithPopup(getAuth(app), providerTwitter)
+      .then((result) => {
+        // This gives you a the Twitter OAuth 1.0 Access Token and Secret.
+        // You can use these server side with your app's credentials to access the Twitter API.
+        const credential = TwitterAuthProvider.credentialFromResult(result);
+        const token =
+          "AAAAAAAAAAAAAAAAAAAAAHKVbgEAAAAAJJpqFfpODHZ2wns61kM2A0xhwTU%3Dub5sjpNFxKgb8zrU32ceZI7bo8ZB6j70Tz55vdc0EBX7Q9VaR0";
+        const secret = "KnRmItqime2PDuvsPmSRCFupa0HchU2pfYzp9QroI8cT1zIgwy";
+
+        // The signed-in user info.
+        const user = result.user;
+        // ...
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.email;
+        // The AuthCredential type that was used.
+        const credential = TwitterAuthProvider.credentialFromError(error);
+        // ...
+      });
   };
 
   return (
@@ -68,6 +98,9 @@ export const Login = () => {
                 >
                   ユーザー登録へ戻る
                 </Button>
+                <button type="button" onClick={loginWithTwitter}>
+                  Twitterでログインする
+                </button>
               </div>
             </form>
           </div>{" "}
