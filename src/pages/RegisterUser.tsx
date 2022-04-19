@@ -1,9 +1,15 @@
+import { Input, InputAdornment, TextField } from "@material-ui/core";
 import axios from "axios";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { statusContext } from "../components/providers/statusContext";
 import { User } from "../types/User";
+import LockIcon from "@mui/icons-material/Lock";
+import EmailIcon from "@mui/icons-material/Email";
+import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
+import PhoneIcon from "@mui/icons-material/Phone";
+import HomeIcon from "@mui/icons-material/Home";
 
 export function RegisterInfo() {
   const navigate = useNavigate();
@@ -67,8 +73,12 @@ export function RegisterInfo() {
           <h1 className="text-center pt-3 text-secondary">会員登録フォーム</h1>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="form-group">
-              <label className="col-form-label">名前:</label>
-              <input
+              <label className="col-form-label">
+                <EmojiPeopleIcon />
+              </label>
+
+              <Input
+                required
                 type="text"
                 className={`form-control ${errors.name && "invalid"}`}
                 {...register("name", { required: "Name is Required" })}
@@ -88,8 +98,10 @@ export function RegisterInfo() {
             </div>
 
             <div className="form-group">
-              <label className="col-form-label">メールアドレス:</label>
-              <input
+              <label className="col-form-label">
+                <EmailIcon />
+              </label>
+              <Input
                 type="text"
                 className={`form-control ${errors.mailAddress && "invalid"}`}
                 {...register("mailAddress", {
@@ -114,8 +126,10 @@ export function RegisterInfo() {
               )}
             </div>
             <div className="form-group">
-              <label className="col-form-label">電話番号:</label>
-              <input
+              <label className="col-form-label">
+                <PhoneIcon />
+              </label>
+              <Input
                 type="text"
                 className={`form-control ${errors.telephone && "invalid"}`}
                 {...register("telephone", {
@@ -141,8 +155,10 @@ export function RegisterInfo() {
             </div>
 
             <div className="form-group">
-              <label className="col-form-label">パスワード:</label>
-              <input
+              <label className="col-form-label">
+                <LockIcon />
+              </label>
+              <Input
                 type="text"
                 className={`form-control ${errors.password && "invalid"}`}
                 {...register("password", {
@@ -164,7 +180,7 @@ export function RegisterInfo() {
 
             <div className="form-group">
               <label className="col-form-label">郵便番号:</label>
-              <input
+              <Input
                 type="text"
                 className={`form-control ${errors.zipcode && "invalid"}`}
                 {...register("zipcode", {
@@ -184,8 +200,10 @@ export function RegisterInfo() {
               )}
             </div>
             <div className="form-group">
-              <label className="col-form-label">住所:</label>
-              <input
+              <label className="col-form-label">
+                <HomeIcon />
+              </label>
+              <Input
                 type="text"
                 className={`form-control ${errors.address && "invalid"}`}
                 {...register("address", {

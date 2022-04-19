@@ -4,8 +4,8 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { useNavigate } from "react-router-dom";
-import { Login } from "../pages/Login";
 import { StatusButton } from "../components/statusButton";
+import Box, { BoxProps } from "@mui/material/Box";
 
 const Header = (): JSX.Element => {
   const navigate = useNavigate();
@@ -22,23 +22,28 @@ const Header = (): JSX.Element => {
             onClick={() => navigate("/")}
           ></img>
           <Typography variant="h6">らくらくPIZZA</Typography>
-
-          <Button color="inherit" onClick={() => navigate("/content")}>
-            ユーザー登録
-          </Button>
-          <Button color="inherit" onClick={() => navigate("/Login")}>
-            Login
-          </Button>
-          <Button color="inherit" onClick={() => navigate("/ItemList")}>
-            商品一覧
-          </Button>
-          <Button color="inherit" onClick={() => navigate("/OrderHistory")}>
-            注文履歴
-          </Button>
-          <Button color="inherit" onClick={() => navigate("/OrderCofirm")}>
-            注文確認画面
-          </Button>
-          <StatusButton />
+          <Box
+            sx={{
+              justifyContent: "flex-end",
+              p: 1,
+              m: 1,
+              borderRadius: 1,
+            }}
+          >
+            <Button color="inherit" onClick={() => navigate("/registerUser")}>
+              ユーザー登録
+            </Button>
+            <StatusButton />
+            <Button color="inherit" onClick={() => navigate("/ItemList")}>
+              商品一覧
+            </Button>
+            <Button color="inherit" onClick={() => navigate("/OrderHistory")}>
+              注文履歴
+            </Button>
+            <Button color="inherit" onClick={() => navigate("/OrderCofirm")}>
+              注文確認画面
+            </Button>
+          </Box>
         </Toolbar>
       </AppBar>
     </div>
