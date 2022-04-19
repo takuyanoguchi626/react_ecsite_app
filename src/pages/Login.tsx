@@ -16,7 +16,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import "firebase/auth";
-import { TwitterAuthProvider } from "firebase/auth";
+import { TwitterAuthProvider, FacebookAuthProvider } from "firebase/auth";
 
 // useEffectを使ったログイン機能;
 export const Login = () => {
@@ -86,6 +86,27 @@ export const Login = () => {
       });
   };
 
+  const providerFacebook = new FacebookAuthProvider();
+
+  const loginWithFacebook = () => {
+    signInWithPopup(authrization, providerFacebook)
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.email;
+        // The AuthCredential type that was used.
+        const credential = TwitterAuthProvider.credentialFromError(error);
+        // ...
+
+        console.log(error);
+      });
+  };
+
   return (
     <div>
       <div className="top-wrapper">
@@ -121,6 +142,9 @@ export const Login = () => {
                 </Button>
                 <button type="button" onClick={loginWithTwitter}>
                   Twitterでログインする
+                </button>
+                <button type="button" onClick={loginWithFacebook}>
+                  Facebookでログインする
                 </button>
               </div>
             </form>
