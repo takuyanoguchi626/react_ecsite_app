@@ -1,4 +1,5 @@
 import { createTheme } from "@material-ui/core/styles";
+import shape from "@material-ui/core/styles/shape";
 import "../index.css";
 
 // フォントを設定
@@ -18,6 +19,7 @@ export const theme = createTheme({
     fontWeightMedium: 500,
     fontWeightBold: 700,
   },
+
   palette: {
     primary: {
       main: "#009688",
@@ -27,5 +29,8 @@ export const theme = createTheme({
       default: "#FFEBCD",
     },
     text: { primary: "#663300" },
+  },
+  shape: {
+    borderRadius: 40,
   },
 });

@@ -1,4 +1,10 @@
-import { Input, InputAdornment, TextField } from "@material-ui/core";
+import {
+  Button,
+  Grid,
+  Input,
+  InputAdornment,
+  TextField,
+} from "@material-ui/core";
 import axios from "axios";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -68,170 +74,183 @@ export function RegisterInfo() {
 
   return (
     <div className="container pt-5">
-      <div className="row justify-content-sm-center pt-5">
-        <div className="col-sm-6 shadow round pb-3">
-          <h1 className="text-center pt-3 text-secondary">会員登録フォーム</h1>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="form-group">
-              <label className="col-form-label">
-                <EmojiPeopleIcon />
-              </label>
+      <Grid container justifyContent="center" alignItems="flex-start">
+        <Grid container justifyContent="center" alignItems="flex-start">
+          <h1>会員登録フォーム</h1>
+        </Grid>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="form-group">
+            <label className="col-form-label">
+              <EmojiPeopleIcon />
+            </label>
 
-              <Input
-                required
-                type="text"
-                className={`form-control ${errors.name && "invalid"}`}
-                {...register("name", { required: "Name is Required" })}
-                value={registerData.name}
-                onKeyUp={(e) => {
-                  setregisterData({
-                    ...registerData,
-                    name: e.currentTarget.value,
-                  });
-                  trigger("name");
-                  console.log(e.currentTarget.value);
-                }}
-              />
-              {errors.name && (
-                <small className="text-danger">{errors.name.message}</small>
-              )}
-            </div>
-
-            <div className="form-group">
-              <label className="col-form-label">
-                <EmailIcon />
-              </label>
-              <Input
-                type="text"
-                className={`form-control ${errors.mailAddress && "invalid"}`}
-                {...register("mailAddress", {
-                  required: "Email is Required",
-                  // pattern: {
-                  //   message: "Invalid email address",
-                  // },
-                })}
-                value={registerData.mailAddress}
-                onKeyUp={(e) => {
-                  setregisterData({
-                    ...registerData,
-                    mailAddress: e.currentTarget.value,
-                  });
-                  trigger("mailAddress");
-                }}
-              />
-              {errors.mailAddress && (
-                <small className="text-danger">
-                  {errors.mailAddress.message}
-                </small>
-              )}
-            </div>
-            <div className="form-group">
-              <label className="col-form-label">
-                <PhoneIcon />
-              </label>
-              <Input
-                type="text"
-                className={`form-control ${errors.telephone && "invalid"}`}
-                {...register("telephone", {
-                  required: "Phone is Required",
-                  // pattern: {
-                  //   message: "Invalid phone no",
-                  // },
-                })}
-                value={registerData.telephone}
-                onKeyUp={(e) => {
-                  setregisterData({
-                    ...registerData,
-                    telephone: e.currentTarget.value,
-                  });
-                  trigger("telephone");
-                }}
-              />
-              {errors.telephone && (
-                <small className="text-danger">
-                  {errors.telephone.message}
-                </small>
-              )}
-            </div>
-
-            <div className="form-group">
-              <label className="col-form-label">
-                <LockIcon />
-              </label>
-              <Input
-                type="text"
-                className={`form-control ${errors.password && "invalid"}`}
-                {...register("password", {
-                  required: "Password is Required",
-                })}
-                value={registerData.password}
-                onKeyUp={(e) => {
-                  setregisterData({
-                    ...registerData,
-                    password: e.currentTarget.value,
-                  });
-                  trigger("password");
-                }}
-              />
-              {errors.password && (
-                <small className="text-danger">{errors.password.message}</small>
-              )}
-            </div>
-
-            <div className="form-group">
-              <label className="col-form-label">郵便番号:</label>
-              <Input
-                type="text"
-                className={`form-control ${errors.zipcode && "invalid"}`}
-                {...register("zipcode", {
-                  required: "zipcode is Required",
-                })}
-                value={registerData.zipcode}
-                onKeyUp={(e) => {
-                  setregisterData({
-                    ...registerData,
-                    zipcode: e.currentTarget.value,
-                  });
-                  trigger("zipcode");
-                }}
-              />
-              {errors.zipcode && (
-                <small className="text-danger">{errors.zipcode.message}</small>
-              )}
-            </div>
-            <div className="form-group">
-              <label className="col-form-label">
-                <HomeIcon />
-              </label>
-              <Input
-                type="text"
-                className={`form-control ${errors.address && "invalid"}`}
-                {...register("address", {
-                  required: "address is Required",
-                })}
-                value={registerData.address}
-                onKeyUp={(e) => {
-                  setregisterData({
-                    ...registerData,
-                    address: e.currentTarget.value,
-                  });
-                  trigger("address");
-                }}
-              />
-              {errors.address && (
-                <small className="text-danger">{errors.address.message}</small>
-              )}
-            </div>
-
-            <input
-              type="submit"
-              className="btn btn-primary my-3"
-              value="送信"
-              onClick={UserInfo}
+            <Input
+              required
+              type="text"
+              className={`form-control ${errors.name && "invalid"}`}
+              {...register("name", { required: "Name is Required" })}
+              value={registerData.name}
+              onKeyUp={(e) => {
+                setregisterData({
+                  ...registerData,
+                  name: e.currentTarget.value,
+                });
+                trigger("name");
+                console.log(e.currentTarget.value);
+              }}
             />
-          </form>
-        </div>
-      </div>
+            {errors.name && (
+              <small className="text-danger">{errors.name.message}</small>
+            )}
+          </div>
+
+          <div className="form-group">
+            {/* <Grid container spacing={3}> */}
+            {/* <Grid alignItems="flex-start" xs={2} spacing={2}> */}
+            <label className="col-form-label">
+              <EmailIcon />
+            </label>
+            {/* </Grid> */}
+            {/* <Grid alignItems="flex-start" xs={2} spacing={2}> */}
+            <Input
+              type="text"
+              className={`form-control ${errors.mailAddress && "invalid"}`}
+              {...register("mailAddress", {
+                required: "Email is Required",
+                // pattern: {
+                //   message: "Invalid email address",
+                // },
+              })}
+              value={registerData.mailAddress}
+              onKeyUp={(e) => {
+                setregisterData({
+                  ...registerData,
+                  mailAddress: e.currentTarget.value,
+                });
+                trigger("mailAddress");
+              }}
+            />
+            {errors.mailAddress && (
+              <small className="text-danger">
+                {errors.mailAddress.message}
+              </small>
+            )}
+            {/* </Grid> */}
+            {/* </Grid> */}
+          </div>
+
+          <div className="form-group">
+            {/* <Grid container spacing={3}> */}
+            {/* <Grid alignItems="flex-start" xs={2} spacing={2}> */}
+            <label className="col-form-label">
+              <PhoneIcon />
+            </label>
+            {/* </Grid> */}
+            {/* <Grid alignItems="flex-start" xs={2} spacing={2}> */}
+            <Input
+              type="text"
+              className={`form-control ${errors.telephone && "invalid"}`}
+              {...register("telephone", {
+                required: "Phone is Required",
+                // pattern: {
+                //   message: "Invalid phone no",
+                // },
+              })}
+              value={registerData.telephone}
+              onKeyUp={(e) => {
+                setregisterData({
+                  ...registerData,
+                  telephone: e.currentTarget.value,
+                });
+                trigger("telephone");
+              }}
+            />
+            {errors.telephone && (
+              <small className="text-danger">{errors.telephone.message}</small>
+            )}
+            {/* </Grid> */}
+            {/* </Grid> */}
+          </div>
+
+          <div className="form-group">
+            <label className="col-form-label">
+              <LockIcon />
+            </label>
+            <Input
+              type="text"
+              className={`form-control ${errors.password && "invalid"}`}
+              {...register("password", {
+                required: "Password is Required",
+              })}
+              value={registerData.password}
+              onKeyUp={(e) => {
+                setregisterData({
+                  ...registerData,
+                  password: e.currentTarget.value,
+                });
+                trigger("password");
+              }}
+            />
+            {errors.password && (
+              <small className="text-danger">{errors.password.message}</small>
+            )}
+          </div>
+
+          <div className="form-group">
+            <label className="col-form-label">郵便番号:</label>
+            <Input
+              type="text"
+              className={`form-control ${errors.zipcode && "invalid"}`}
+              {...register("zipcode", {
+                required: "zipcode is Required",
+              })}
+              value={registerData.zipcode}
+              onKeyUp={(e) => {
+                setregisterData({
+                  ...registerData,
+                  zipcode: e.currentTarget.value,
+                });
+                trigger("zipcode");
+              }}
+            />
+            {errors.zipcode && (
+              <small className="text-danger">{errors.zipcode.message}</small>
+            )}
+          </div>
+          <div className="form-group">
+            <label className="col-form-label">
+              <HomeIcon />
+            </label>
+            <Input
+              type="text"
+              className={`form-control ${errors.address && "invalid"}`}
+              {...register("address", {
+                required: "address is Required",
+              })}
+              value={registerData.address}
+              onKeyUp={(e) => {
+                setregisterData({
+                  ...registerData,
+                  address: e.currentTarget.value,
+                });
+                trigger("address");
+              }}
+            />
+            {errors.address && (
+              <small className="text-danger">{errors.address.message}</small>
+            )}
+          </div>
+
+          <Button
+            color="inherit"
+            type="submit"
+            className="btn btn-primary my-3"
+            onClick={UserInfo}
+          >
+            送信
+          </Button>
+        </form>
+      </Grid>
     </div>
   );
 }
