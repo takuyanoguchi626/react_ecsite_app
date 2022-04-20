@@ -1,15 +1,22 @@
 import { createTheme } from "@material-ui/core/styles";
+import "../index.css";
 
 // フォントを設定
 const fontFamily = [
+  "Kaisei Decol",
+  "Hachi Maru Pop",
+  "Yusei Magic",
   "Noto Sans JP",
   "sans-serif",
-  "kaisei",
   // 使用したいフォントを以降に羅列してください
 ].join(",");
+
 export const theme = createTheme({
   typography: {
-    fontFamily: fontFamily,
+    fontFamily: "Kaisei Decol",
+    fontWeightLight: 400,
+    fontWeightMedium: 500,
+    fontWeightBold: 700,
   },
   palette: {
     primary: {
