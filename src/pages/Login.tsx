@@ -51,43 +51,45 @@ export const Login = () => {
           <Grid container justifyContent="center" alignItems="flex-start">
             <h1>ログイン画面</h1>
           </Grid>
-          <form>
-            <label htmlFor="mailAddress">
-              <EmailIcon />
-            </label>
-            <Input
-              type="text"
-              className="mailAddress"
-              id="mailAddress"
-              onChange={(event) => setmailAddress(() => event.target.value)}
-            />
-            <br></br>
-            <label htmlFor="password">
-              <LockIcon />
-            </label>
-            <Input
-              type="text"
-              className="password"
-              id="password"
-              onChange={(event) => setpassword(() => event.target.value)}
-            />
-            <div className="row login-btn">
-              <Button
-                className="btn"
-                style={{ fontWeight: 700 }}
-                onClick={submitLogin}
-              >
-                ログインする
-              </Button>
-              <Button
-                className="btn"
-                style={{ fontWeight: 700 }}
-                onClick={() => navigate("/registerUser")}
-              >
-                ユーザー登録へ戻る
-              </Button>
-            </div>
-          </form>
+          <span className="container">
+            <form>
+              <label htmlFor="mailAddress">
+                <EmailIcon />
+              </label>
+              <Input
+                type="text"
+                className="mailAddress"
+                id="mailAddress"
+                onChange={(event) => setmailAddress(() => event.target.value)}
+              />
+              <br></br>
+              <label htmlFor="password">
+                <LockIcon />
+              </label>
+              <Input
+                type="text"
+                className="password"
+                id="password"
+                onChange={(event) => setpassword(() => event.target.value)}
+              />
+              <div className="row login-btn">
+                <Button
+                  className="btn"
+                  style={{ fontWeight: 700 }}
+                  onClick={submitLogin}
+                >
+                  ログインする
+                </Button>
+                <Button
+                  className="btn"
+                  style={{ fontWeight: 700 }}
+                  onClick={() => navigate("/registerUser")}
+                >
+                  まずはユーザー登録
+                </Button>
+              </div>
+            </form>
+          </span>
         </Grid>
       </div>{" "}
     </div>

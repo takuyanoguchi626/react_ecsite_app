@@ -3,3 +3,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&display=swap");
 /* 'Yusei Magic' */
 @import url("https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap");
+
+.container {
+  position: relative;
+  background-color: whitesmoke;
+  padding: 20px;
+  border-radius: 30px;
+  padding: 1.5rem 2.5rem;
+  border: 4px dotted #000;
+}

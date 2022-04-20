@@ -17,11 +17,14 @@ const Header = (): JSX.Element => {
       >
         <Toolbar>
           <img
-            src="../img_pizza/header_logo.png"
+            src="../pizzaLOGO.png"
             alt="PIZZA"
+            width="40"
             onClick={() => navigate("/")}
           ></img>
-          <Typography variant="h6">らくらくPIZZA</Typography>
+          <Typography variant="h5">
+            宅配ピザ（出前・デリバリーピザ）の らくらくPIZZA
+          </Typography>
           <Box
             sx={{
               justifyContent: "flex-end",
