@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import { Login } from "./pages/Login";
 import { Logout } from "./pages/Logout";
@@ -11,11 +11,14 @@ import { RegisterInfo } from "./pages/RegisterUser";
 import { AfterRegister } from "./pages/AfterRegister";
 // import { Content } from "./pages/Content";
 import { CartList } from "./pages/CartList";
+import { Footer } from "./components/Footer";
 import { ItemDetail } from "./pages/ItemDetail";
+
 // デザイン関連のインポート
 import { ThemeProvider } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { theme } from "../src/css/theme";
+import { ItemRecommendation } from "./pages/ItemRecommendation";
 
 function App() {
   return (
@@ -41,6 +44,10 @@ function App() {
             <Route
               path="/OrderFinished"
               element={<OrderFinished></OrderFinished>}
+            />
+            <Route
+              path="/ItemRecommendation"
+              element={<ItemRecommendation></ItemRecommendation>}
             />
 
             {/* <Route path="/CartList/" element={<CartList />} /> */}

@@ -1,0 +1,20 @@
+.creditIcon {
+  /* height: 300px; */
+  /* width: 600px; */
+  width: 100%;
+}
+
+.iconWraper {
+  /* height: 300px; */
+  width: 60px;
+}
+
+.iconList {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.copyright {
+  text-align: center;
+}
