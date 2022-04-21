@@ -4,9 +4,11 @@ import axios from "axios";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { CartListTable } from "../components/CartListTable";
+import { useTotalPrice } from "../hooks/useTotalPrice";
 
 export const OrderComfirm: FC = () => {
   const navigate = useNavigate();
+  const totalPrice = useTotalPrice();
   //ユーザーが入力した情報
   const [userInfo, setUserInfo] = useState<UserInfo>({
     name: "",
@@ -15,14 +17,14 @@ export const OrderComfirm: FC = () => {
     address: "",
     telephone: 0,
     deliveryDate: "1111-11-11",
-    deliveryHour: 88,
+    deliveryHour: 12,
     paymentMethod: 0,
   });
   //配達時間の表示の為の配列
   const deliveryHourArr = [10, 11, 12, 13, 14, 15, 16, 17, 18];
   //注文のAPIの配達日時フォーマット
   const [deliveryTime, setDeliveryTime] = useState("");
-  //deliveryDateとdeliveryHourを注文のAPIのフォーマットに整形
+  // deliveryDateとdeliveryHourを注文のAPIのフォーマットに整形
   useEffect(() => {
     setDeliveryTime(() => {
       const deliveryTime = format(
@@ -45,8 +47,8 @@ export const OrderComfirm: FC = () => {
       `http://153.127.48.168:8080/ecsite-api/order`,
       {
         userId: 0, //仮
-        status: 0, //仮
-        totalPrice: 1000, //仮
+        status: 0,
+        totalPrice: totalPrice.finallyTotalPrice,
         destinationName: userInfo.name,
         destinationEmail: userInfo.mailAddress,
         destinationZipcode: userInfo.zipCode,
@@ -174,7 +176,6 @@ export const OrderComfirm: FC = () => {
             ))}
           </div>
         </div>
-
         <h2>お支払い方法</h2>
         <div>
           <span>
