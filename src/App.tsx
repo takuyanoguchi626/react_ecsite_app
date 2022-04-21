@@ -52,6 +52,7 @@ function App() {
 
             {/* <Route path="/CartList/" element={<CartList />} /> */}
           </Routes>
+          <Footer></Footer>
         </BrowserRouter>
       </ThemeProvider>
     </div>
