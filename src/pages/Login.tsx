@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { InputLogin } from "../components/inputLogin";
 import Button from "@material-ui/core/Button";
 import { statusContext } from "../components/providers/statusContext";
-<<<<<<< HEAD
 import { app } from "../app/config";
 import "firebase/auth";
 import {
@@ -18,11 +17,9 @@ import {
 } from "firebase/auth";
 import "firebase/auth";
 import { TwitterAuthProvider, FacebookAuthProvider } from "firebase/auth";
-=======
 import { Box, Grid, Input, Typography } from "@material-ui/core";
 import LockIcon from "@mui/icons-material/Lock";
 import EmailIcon from "@mui/icons-material/Email";
->>>>>>> develop
 
 // useEffectを使ったログイン機能;
 export const Login = () => {
@@ -53,9 +50,14 @@ export const Login = () => {
     }
   };
 
+  // firebase認証
   const authrization = getAuth(app);
+  // ツイッター認証
   const providerTwitter = new TwitterAuthProvider();
 
+  /**
+   * ツイッターでのログイン
+   */
   const loginWithTwitter = () => {
     getRedirectResult(authrization);
 
@@ -64,52 +66,43 @@ export const Login = () => {
 
     signInWithPopup(authrization, providerTwitter)
       .then((result) => {
-        // This gives you a the Twitter OAuth 1.0 Access Token and Secret.
-        // You can use these server side with your app's credentials to access the Twitter API.
-
-        const credential = TwitterAuthProvider.credentialFromResult(result);
-        const token =
-          "AAAAAAAAAAAAAAAAAAAAAHKVbgEAAAAAJJpqFfpODHZ2wns61kM2A0xhwTU%3Dub5sjpNFxKgb8zrU32ceZI7bo8ZB6j70Tz55vdc0EBX7Q9VaR0";
-        const secret = "KnRmItqime2PDuvsPmSRCFupa0HchU2pfYzp9QroI8cT1zIgwy";
-
-        // The signed-in user info.
-        const user = result.user;
-        // ...
-
-        console.log(result);
+        if (result.operationType === "signIn") {
+          console.log("twitterログイン成功");
+          auth?.setstatusCheck(true);
+          navigate("/ItemList");
+        }
       })
       .catch((error) => {
         // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.email;
-        // The AuthCredential type that was used.
-        const credential = TwitterAuthProvider.credentialFromError(error);
-        // ...
-
         console.log(error);
+        alert(
+          `"Twitterでログインできませんでした。"+"エラーメッセージ："+${errorMessage}`
+        );
       });
   };
 
+  // facebook認証
   const providerFacebook = new FacebookAuthProvider();
 
   const loginWithFacebook = () => {
     signInWithPopup(authrization, providerFacebook)
       .then((result) => {
-        console.log(result);
+        if (result.operationType === "signIn") {
+          console.log("twitterログイン成功");
+          auth?.setstatusCheck(true);
+          navigate("/ItemList");
+        }
       })
       .catch((error) => {
         // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.email;
-        // The AuthCredential type that was used.
-        const credential = TwitterAuthProvider.credentialFromError(error);
-        // ...
-
         console.log(error);
+        alert(
+          `"Twitterでログインできませんでした。"+"エラーメッセージ："+${errorMessage}`
+        );
       });
   };
 
