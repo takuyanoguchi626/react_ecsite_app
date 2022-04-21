@@ -28,5 +28,9 @@ export const useTotalPrice = () => {
     }
   }
 
-  return { totalPrice };
+  const TAXRate = 0.1;
+  const TAXOfTotalPrice = totalPrice * TAXRate;
+  const finallyTotalPrice = totalPrice + TAXOfTotalPrice;
+
+  return { totalPrice, TAXOfTotalPrice, finallyTotalPrice };
 };

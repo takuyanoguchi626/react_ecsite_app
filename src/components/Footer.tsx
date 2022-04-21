@@ -2,11 +2,9 @@ import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import { Grid } from "@material-ui/core";
-import { useNavigate } from "react-router-dom";
 import "../css/footer.css";
 
 export const Footer = () => {
-  const navigate = useNavigate();
   return (
     <AppBar
       position="static"
@@ -86,7 +84,7 @@ export const Footer = () => {
         </AppBar>
       </Box>
       <div className="copyright">
-        Copyright Domino's Pizza Japan, Inc. All Rights Reserved.
+        Copyright rakuraku Pizza Japan, Inc. All Rights Reserved.
       </div>
     </AppBar>
   );
