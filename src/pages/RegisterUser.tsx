@@ -1,9 +1,21 @@
+import {
+  Button,
+  Grid,
+  Input,
+  InputAdornment,
+  TextField,
+} from "@material-ui/core";
 import axios from "axios";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { statusContext } from "../components/providers/statusContext";
 import { User } from "../types/User";
+import LockIcon from "@mui/icons-material/Lock";
+import EmailIcon from "@mui/icons-material/Email";
+import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
+import PhoneIcon from "@mui/icons-material/Phone";
+import HomeIcon from "@mui/icons-material/Home";
 
 export function RegisterInfo() {
   const navigate = useNavigate();
@@ -61,14 +73,20 @@ export function RegisterInfo() {
   // console.log(errors.name)
 
   return (
-    <div className="container pt-5">
-      <div className="row justify-content-sm-center pt-5">
-        <div className="col-sm-6 shadow round pb-3">
-          <h1 className="text-center pt-3 text-secondary">会員登録フォーム</h1>
-          <form onSubmit={handleSubmit(onSubmit)}>
+    <div className="register">
+      <Grid container justifyContent="center" alignItems="flex-start">
+        <Grid container justifyContent="center" alignItems="flex-start">
+          <h1>会員登録フォーム</h1>
+        </Grid>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <span className="container">
             <div className="form-group">
-              <label className="col-form-label">名前:</label>
-              <input
+              <label className="col-form-label">
+                <EmojiPeopleIcon />
+              </label>
+
+              <Input
+                required
                 type="text"
                 className={`form-control ${errors.name && "invalid"}`}
                 {...register("name", { required: "Name is Required" })}
@@ -88,8 +106,14 @@ export function RegisterInfo() {
             </div>
 
             <div className="form-group">
-              <label className="col-form-label">メールアドレス:</label>
-              <input
+              {/* <Grid container spacing={3}> */}
+              {/* <Grid alignItems="flex-start" xs={2} spacing={2}> */}
+              <label className="col-form-label">
+                <EmailIcon />
+              </label>
+              {/* </Grid> */}
+              {/* <Grid alignItems="flex-start" xs={2} spacing={2}> */}
+              <Input
                 type="text"
                 className={`form-control ${errors.mailAddress && "invalid"}`}
                 {...register("mailAddress", {
@@ -112,10 +136,19 @@ export function RegisterInfo() {
                   {errors.mailAddress.message}
                 </small>
               )}
+              {/* </Grid> */}
+              {/* </Grid> */}
             </div>
+
             <div className="form-group">
-              <label className="col-form-label">電話番号:</label>
-              <input
+              {/* <Grid container spacing={3}> */}
+              {/* <Grid alignItems="flex-start" xs={2} spacing={2}> */}
+              <label className="col-form-label">
+                <PhoneIcon />
+              </label>
+              {/* </Grid> */}
+              {/* <Grid alignItems="flex-start" xs={2} spacing={2}> */}
+              <Input
                 type="text"
                 className={`form-control ${errors.telephone && "invalid"}`}
                 {...register("telephone", {
@@ -138,11 +171,15 @@ export function RegisterInfo() {
                   {errors.telephone.message}
                 </small>
               )}
+              {/* </Grid> */}
+              {/* </Grid> */}
             </div>
 
             <div className="form-group">
-              <label className="col-form-label">パスワード:</label>
-              <input
+              <label className="col-form-label">
+                <LockIcon />
+              </label>
+              <Input
                 type="text"
                 className={`form-control ${errors.password && "invalid"}`}
                 {...register("password", {
@@ -163,8 +200,10 @@ export function RegisterInfo() {
             </div>
 
             <div className="form-group">
-              <label className="col-form-label">郵便番号:</label>
-              <input
+              <label className="col-form-label">
+                <img src="../zipcodeIcon.png" width="30" alt="" />
+              </label>
+              <Input
                 type="text"
                 className={`form-control ${errors.zipcode && "invalid"}`}
                 {...register("zipcode", {
@@ -184,8 +223,10 @@ export function RegisterInfo() {
               )}
             </div>
             <div className="form-group">
-              <label className="col-form-label">住所:</label>
-              <input
+              <label className="col-form-label">
+                <HomeIcon />
+              </label>
+              <Input
                 type="text"
                 className={`form-control ${errors.address && "invalid"}`}
                 {...register("address", {
@@ -205,15 +246,17 @@ export function RegisterInfo() {
               )}
             </div>
 
-            <input
+            <Button
+              color="inherit"
               type="submit"
               className="btn btn-primary my-3"
-              value="送信"
               onClick={UserInfo}
-            />
-          </form>
-        </div>
-      </div>
+            >
+              送信
+            </Button>
+          </span>
+        </form>
+      </Grid>
     </div>
   );
 }

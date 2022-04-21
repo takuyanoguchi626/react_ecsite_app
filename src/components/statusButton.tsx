@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 export const StatusButton: React.VFC = () => {
   const auth = useContext(statusContext);
+  const navigate = useNavigate();
 
   const handleSignOut = async () => {
     const response = await axios.post(
@@ -18,6 +19,7 @@ export const StatusButton: React.VFC = () => {
 
   const handleSignIn = () => {
     auth?.setstatusCheck(true);
+    navigate("/login");
     console.log("ログイン画面へいく");
   };
 

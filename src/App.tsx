@@ -14,31 +14,47 @@ import { CartList } from "./pages/CartList";
 import { Footer } from "./components/Footer";
 import { ItemDetail } from "./pages/ItemDetail";
 
+// デザイン関連のインポート
+import { ThemeProvider } from "@material-ui/core";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import { theme } from "../src/css/theme";
+import { ItemRecommendation } from "./pages/ItemRecommendation";
+
 function App() {
   return (
     <div>
-      <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Toppage />} />
-          {/* <Route path="/content" element={<Content />} /> */}
-          <Route path="/registerUser" element={<RegisterInfo />} />
-          <Route path="/AfterRegister" element={<AfterRegister />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/logout" element={<Logout />} />
-          <Route path="/OrderComfirm" element={<OrderComfirm></OrderComfirm>} />
-          <Route path="/ItemList" element={<ItemList />} />
-          <Route path="/ItemDetail/:itemId" element={<ItemDetail />} />
-          <Route path="/CartList/" element={<CartList />} />
-          <Route
-            path="/OrderFinished"
-            element={<OrderFinished></OrderFinished>}
-          />
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <BrowserRouter>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Toppage />} />
+            {/* <Route path="/content" element={<Content />} /> */}
+            <Route path="/registerUser" element={<RegisterInfo />} />
+            <Route path="/AfterRegister" element={<AfterRegister />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/logout" element={<Logout />} />
+            <Route
+              path="/OrderComfirm"
+              element={<OrderComfirm></OrderComfirm>}
+            />
+            <Route path="/ItemList" element={<ItemList />} />
+            <Route path="/ItemDetail/:itemId" element={<ItemDetail />} />
+            <Route path="/CartList/" element={<CartList />} />
+            <Route
+              path="/OrderFinished"
+              element={<OrderFinished></OrderFinished>}
+            />
+            <Route
+              path="/ItemRecommendation"
+              element={<ItemRecommendation></ItemRecommendation>}
+            />
 
-          {/* <Route path="/CartList/" element={<CartList />} /> */}
-        </Routes>
-        <Footer />
-      </BrowserRouter>
+            {/* <Route path="/CartList/" element={<CartList />} /> */}
+          </Routes>
+          <Footer></Footer>
+        </BrowserRouter>
+      </ThemeProvider>
     </div>
   );
 }
