@@ -59,11 +59,6 @@ export const Login = () => {
    * ツイッターでのログイン
    */
   const loginWithTwitter = () => {
-    getRedirectResult(authrization);
-
-    // signInWithEmailAndPassword(authrization, "test@email.com", "testForNow");
-    // signInWithRedirect(authrization, providerTwitter);
-
     signInWithPopup(authrization, providerTwitter)
       .then((result) => {
         if (result.operationType === "signIn") {
@@ -90,7 +85,7 @@ export const Login = () => {
     signInWithPopup(authrization, providerFacebook)
       .then((result) => {
         if (result.operationType === "signIn") {
-          console.log("twitterログイン成功");
+          console.log("facebookログイン成功");
           auth?.setstatusCheck(true);
           navigate("/ItemList");
         }
