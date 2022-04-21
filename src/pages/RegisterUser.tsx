@@ -78,8 +78,8 @@ export function RegisterInfo() {
         <Grid container justifyContent="center" alignItems="flex-start">
           <h1>会員登録フォーム</h1>
         </Grid>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <span className="container">
+        <span className="containers">
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="form-group">
               <label className="col-form-label">
                 <EmojiPeopleIcon />
@@ -106,13 +106,10 @@ export function RegisterInfo() {
             </div>
 
             <div className="form-group">
-              {/* <Grid container spacing={3}> */}
-              {/* <Grid alignItems="flex-start" xs={2} spacing={2}> */}
               <label className="col-form-label">
                 <EmailIcon />
               </label>
-              {/* </Grid> */}
-              {/* <Grid alignItems="flex-start" xs={2} spacing={2}> */}
+
               <Input
                 type="text"
                 className={`form-control ${errors.mailAddress && "invalid"}`}
@@ -136,18 +133,13 @@ export function RegisterInfo() {
                   {errors.mailAddress.message}
                 </small>
               )}
-              {/* </Grid> */}
-              {/* </Grid> */}
             </div>
 
             <div className="form-group">
-              {/* <Grid container spacing={3}> */}
-              {/* <Grid alignItems="flex-start" xs={2} spacing={2}> */}
               <label className="col-form-label">
                 <PhoneIcon />
               </label>
-              {/* </Grid> */}
-              {/* <Grid alignItems="flex-start" xs={2} spacing={2}> */}
+
               <Input
                 type="text"
                 className={`form-control ${errors.telephone && "invalid"}`}
@@ -171,8 +163,6 @@ export function RegisterInfo() {
                   {errors.telephone.message}
                 </small>
               )}
-              {/* </Grid> */}
-              {/* </Grid> */}
             </div>
 
             <div className="form-group">
@@ -245,17 +235,18 @@ export function RegisterInfo() {
                 <small className="text-danger">{errors.address.message}</small>
               )}
             </div>
-
-            <Button
-              color="inherit"
-              type="submit"
-              className="btn btn-primary my-3"
-              onClick={UserInfo}
-            >
-              送信
-            </Button>
-          </span>
-        </form>
+            <Grid container justifyContent="center" alignItems="flex-start">
+              <Button
+                color="inherit"
+                type="submit"
+                className="btn btn-primary my-3"
+                onClick={UserInfo}
+              >
+                送信
+              </Button>
+            </Grid>
+          </form>
+        </span>
       </Grid>
     </div>
   );

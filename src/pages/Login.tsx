@@ -51,7 +51,7 @@ export const Login = () => {
           <Grid container justifyContent="center" alignItems="flex-start">
             <h1>ログイン画面</h1>
           </Grid>
-          <span className="container">
+          <span className="containers">
             <form>
               <label htmlFor="mailAddress">
                 <EmailIcon />
