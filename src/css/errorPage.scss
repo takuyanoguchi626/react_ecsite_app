@@ -1,0 +1,22 @@
+.errorImage {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  font-size: 30px;
+  opacity: 0.8;
+  background-image: url("../../public/img/pizza_background.jpg");
+  color: rgb(0, 0, 0);
+  padding: 20%;
+  font-weight: bold;
+}
+
+.errorMessage {
+  text-align: center;
+  font-size: 30px;
+  position: absolute;
+  margin: 10%;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}

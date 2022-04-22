@@ -19,6 +19,7 @@ import { ThemeProvider } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { theme } from "../src/css/theme";
 import { ItemRecommendation } from "./pages/ItemRecommendation";
+import { ErrorPage } from "./pages/ErrorPage";
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
               path="/ItemRecommendation"
               element={<ItemRecommendation></ItemRecommendation>}
             />
+            <Route path="/ErrorPage" element={<ErrorPage />} />
 
             {/* <Route path="/CartList/" element={<CartList />} /> */}
           </Routes>
