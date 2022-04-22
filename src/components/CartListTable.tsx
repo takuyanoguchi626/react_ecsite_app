@@ -1,9 +1,16 @@
-import React, { useContext } from "react";
+import React, { FC, useContext } from "react";
 import { CalcTotalPrice } from "./CalcTotalPrice";
 import { OrderItemSize } from "./OrderItemSize";
 import { cartListContext } from "./providers/CartListProvider";
+import { DeleteEditButton } from "../components/DeleteEditButton";
 
-export const CartListTable = () => {
+type props = {
+  hasButton: boolean;
+};
+
+export const CartListTable: FC<props> = (props) => {
+  const { hasButton } = props;
+
   const cart = useContext(cartListContext);
 
   const cartList = cart?.cartList;
@@ -58,9 +65,20 @@ export const CartListTable = () => {
                 </div>
               </td>
               <td>
-                <button type="button">
-                  <span>削除</span>
-                </button>
+                {(() => {
+                  if (hasButton) {
+                    return (
+                      <>
+                        <button type="button">
+                          <span>削除</span>
+                        </button>
+                        <button type="button">
+                          <span>編集</span>
+                        </button>
+                      </>
+                    );
+                  }
+                })()}
               </td>
             </tr>
           ))}
