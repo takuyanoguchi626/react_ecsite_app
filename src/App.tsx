@@ -51,8 +51,7 @@ function App() {
               element={<ItemRecommendation></ItemRecommendation>}
             />
             <Route path="/ErrorPage" element={<ErrorPage />} />
-
-            {/* <Route path="/CartList/" element={<CartList />} /> */}
+            <Route path="/*" element={<ErrorPage />} />
           </Routes>
           <Footer></Footer>
         </BrowserRouter>

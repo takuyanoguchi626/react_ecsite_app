@@ -15,6 +15,7 @@ export const ErrorPage = () => {
           <p>申し訳ありません、ページが見つかりませんでした…</p>
           <br />
           <img
+            className="hedgehog"
             src="img/error_image.png"
             alt="test"
             style={{
