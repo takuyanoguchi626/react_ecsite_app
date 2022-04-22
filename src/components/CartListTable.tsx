@@ -1,8 +1,8 @@
 import React, { FC, useContext } from "react";
+import { Item } from "../types/Item";
 import { CalcTotalPrice } from "./CalcTotalPrice";
 import { OrderItemSize } from "./OrderItemSize";
 import { cartListContext } from "./providers/CartListProvider";
-import { DeleteEditButton } from "../components/DeleteEditButton";
 
 type props = {
   hasButton: boolean;
@@ -12,8 +12,15 @@ export const CartListTable: FC<props> = (props) => {
   const { hasButton } = props;
 
   const cart = useContext(cartListContext);
-
   const cartList = cart?.cartList;
+
+  const deleteCartItem = (index: number) => {
+    cart?.setCartList((cartList) => {
+      const cartList2 = [...cartList];
+      cartList2?.splice(index, 1);
+      return cartList2;
+    });
+  };
 
   return (
     <div>
@@ -69,7 +76,12 @@ export const CartListTable: FC<props> = (props) => {
                   if (hasButton) {
                     return (
                       <>
-                        <button type="button">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            deleteCartItem(index);
+                          }}
+                        >
                           <span>削除</span>
                         </button>
                         <button type="button">
