@@ -6,6 +6,17 @@ import { useNavigate } from "react-router-dom";
 import { InputLogin } from "../components/inputLogin";
 import Button from "@material-ui/core/Button";
 import { statusContext } from "../components/providers/statusContext";
+import { app } from "../app/config";
+import "firebase/auth";
+import {
+  getAuth,
+  signInWithRedirect,
+  signInWithPopup,
+  getRedirectResult,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import "firebase/auth";
+import { TwitterAuthProvider, FacebookAuthProvider } from "firebase/auth";
 import { Box, Grid, Input, Typography } from "@material-ui/core";
 import LockIcon from "@mui/icons-material/Lock";
 import EmailIcon from "@mui/icons-material/Email";
@@ -39,6 +50,58 @@ export const Login = () => {
     }
   };
 
+  // firebase認証
+  const authrization = getAuth(app);
+  // ツイッター認証
+  const providerTwitter = new TwitterAuthProvider();
+
+  /**
+   * ツイッターでのログイン
+   */
+  const loginWithTwitter = () => {
+    signInWithPopup(authrization, providerTwitter)
+      .then((result) => {
+        if (result.operationType === "signIn") {
+          console.log(result);
+          console.log("twitterログイン成功");
+          auth?.setstatusCheck(true);
+          navigate("/ItemList");
+        }
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(error);
+        alert(
+          `"Twitterでログインできませんでした。"+"エラーメッセージ："+${errorMessage}`
+        );
+      });
+  };
+
+  // facebook認証
+  const providerFacebook = new FacebookAuthProvider();
+
+  const loginWithFacebook = () => {
+    signInWithPopup(authrization, providerFacebook)
+      .then((result) => {
+        if (result.operationType === "signIn") {
+          console.log("facebookログイン成功");
+          auth?.setstatusCheck(true);
+          navigate("/ItemList");
+        }
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(error);
+        alert(
+          `"Twitterでログインできませんでした。"+"エラーメッセージ："+${errorMessage}`
+        );
+      });
+  };
+
   return (
     <div>
       <div className="top-wrapper">
@@ -52,43 +115,81 @@ export const Login = () => {
             <h1>ログイン画面</h1>
           </Grid>
           <span className="container">
-            <form>
-              <label htmlFor="mailAddress">
-                <EmailIcon />
-              </label>
-              <Input
-                type="text"
-                className="mailAddress"
-                id="mailAddress"
-                onChange={(event) => setmailAddress(() => event.target.value)}
-              />
-              <br></br>
-              <label htmlFor="password">
-                <LockIcon />
-              </label>
-              <Input
-                type="text"
-                className="password"
-                id="password"
-                onChange={(event) => setpassword(() => event.target.value)}
-              />
-              <div className="row login-btn">
-                <Button
-                  className="btn"
-                  style={{ fontWeight: 700 }}
-                  onClick={submitLogin}
-                >
+            <div className="loginParameters" style={{ display: "flex" }}>
+              <form>
+                <div style={{ fontWeight: 700, padding: "30px" }}>
                   ログインする
-                </Button>
+                </div>
+                <label htmlFor="mailAddress">
+                  <EmailIcon />
+                </label>
+                <Input
+                  type="text"
+                  className="mailAddress"
+                  id="mailAddress"
+                  onChange={(event) => setmailAddress(() => event.target.value)}
+                />
+                <br></br>
+                <label htmlFor="password">
+                  <LockIcon />
+                </label>
+                <Input
+                  type="text"
+                  className="password"
+                  id="password"
+                  onChange={(event) => setpassword(() => event.target.value)}
+                />
+                <div className="row login-btn">
+                  <Button
+                    className="btn"
+                    style={{ fontWeight: 700 }}
+                    onClick={submitLogin}
+                  >
+                    ログインする
+                  </Button>
+                  <Button
+                    className="btn"
+                    style={{ fontWeight: 700 }}
+                    onClick={() => navigate("/registerUser")}
+                  >
+                    まずはユーザー登録
+                  </Button>
+                </div>
+              </form>
+              <br />
+              <div className="SNSLogin">
+                <div style={{ fontWeight: 700, padding: "30px" }}>
+                  SNSアカウントでログインする
+                </div>
                 <Button
                   className="btn"
                   style={{ fontWeight: 700 }}
-                  onClick={() => navigate("/registerUser")}
+                  type="button"
+                  onClick={loginWithTwitter}
                 >
-                  まずはユーザー登録
+                  <img
+                    src="\img\twitter_login.png"
+                    alt="twitter"
+                    style={{ width: "30px", margin: "10px" }}
+                  />
+                  Twitterでログインする
+                </Button>
+                <br />
+                <Button
+                  className="btn"
+                  style={{ fontWeight: 700 }}
+                  type="button"
+                  onClick={loginWithFacebook}
+                >
+                  <img
+                    src="\img\facebook_login.png"
+                    alt="twitter"
+                    style={{ width: "30px", margin: "10px" }}
+                  />
+                  Facebookでログインする
                 </Button>
               </div>
-            </form>
+            </div>
           </span>
         </Grid>
       </div>{" "}
