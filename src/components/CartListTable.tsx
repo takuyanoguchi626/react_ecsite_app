@@ -1,5 +1,4 @@
 import React, { FC, useContext } from "react";
-import { Item } from "../types/Item";
 import { CalcTotalPrice } from "./CalcTotalPrice";
 import { OrderItemSize } from "./OrderItemSize";
 import { cartListContext } from "./providers/CartListProvider";
