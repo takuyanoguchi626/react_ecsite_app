@@ -9,6 +9,7 @@ import {
   Grid,
   Typography,
 } from "@material-ui/core";
+import PhoneIcon from "@mui/icons-material/Phone";
 
 export const Toppage = () => {
   const navigate = useNavigate();
@@ -35,25 +36,24 @@ export const Toppage = () => {
         </Grid>
         <br></br>
 
-        <Box sx={{ flexGrow: 0 }} pt={2} pb={4}>
-          <Grid
-            container
-            spacing={0}
-            direction="row"
-            justifyContent="center"
-            alignItems="flex-start"
-          >
-            <Grid item xs={6}>
+        {/* デリバリーなら大徳というプロモーションバナー */}
+        <img src="../promotion.png" alt="" width="70%" />
+
+        {/* CTRをまとめたセクション */}
+        <table>
+          <tr>.</tr>
+          <tr>
+            <td align="center">
               <Button
                 className="btn"
                 style={{ color: "#e0f2f1", backgroundColor: "#004d40" }}
                 variant="contained"
                 onClick={() => navigate("/login")}
               >
-                ログインしてからオーダーを開始する
+                ログインする
               </Button>
-            </Grid>
-            <Grid item xs={4}>
+            </td>
+            <td align="center">
               <Button
                 className="btn"
                 style={{ color: "#e0f2f1", backgroundColor: "#004d40" }}
@@ -62,15 +62,19 @@ export const Toppage = () => {
               >
                 会員登録する
               </Button>
-            </Grid>
-            <Grid item xs={10}>
+            </td>
+          </tr>
+          <tr>
+            <td colSpan={2} align="center">
               <Typography variant="h6">
                 <div>
                   ﾟ･*:.｡. .｡.:*･゜まずはここからチェックﾟ･*:.｡. .｡.:*･゜ﾟ
                 </div>
               </Typography>
-            </Grid>
-            <Grid item xs={5}>
+            </td>
+          </tr>
+          <tr>
+            <td colSpan={2} align="center">
               <Button
                 className="btn"
                 style={{ color: "#e0f2f1", backgroundColor: "#004d40" }}
@@ -79,36 +83,90 @@ export const Toppage = () => {
               >
                 メニューを見る
               </Button>
-            </Grid>
-          </Grid>
-        </Box>
-        <br />
-        <Grid xs={10} spacing={2} direction="row">
-          <Box sx={{ mt: 2, pt: 2, marginBottom: 2 }}>
-            <Card>
-              <Grid xs={2}>
-                <CardMedia
-                  component="img"
-                  height="20%"
-                  src="../italianMan.png"
-                />
-              </Grid>
-              <CardContent>
-                <Grid xs={8}>
-                  <Typography variant="h5">
-                    ナポリピッツァを日本に広めた功労者 <br></br>
-                    サルヴァトーレ・クオモがプロデュースするピッツェリア
-                  </Typography>
-                  <Typography variant="h6">
-                    イタリアの窯職人が作ったピッツァ窯の中で焼き上げるナポリピッツァは、薄生地なのにもちもちで、薪のかおりが香ばしい逸品です。
-                    ご家族、仲間同士のディナーやパーティに、わいわい楽しくイタリアンスタイルでお楽しみ下さい。
-                  </Typography>
-                </Grid>
-              </CardContent>
-            </Card>
-          </Box>
-        </Grid>
-        <div></div>
+            </td>
+          </tr>
+          <tr>.</tr>
+        </table>
+
+        {/* 創業者をPRするセクション */}
+        <Card>
+          <table>
+            <tr>
+              <th rowSpan={2}>
+                {" "}
+                <img src="../italianMan.png" alt="" width="200" />
+              </th>
+
+              <td>
+                {" "}
+                <Typography variant="h5">
+                  ナポリピッツァを日本に広めた功労者 <br></br>
+                  サルヴァトーレ・クオモがプロデュースするピッツェリア
+                </Typography>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                {" "}
+                <Typography variant="h6">
+                  イタリアの窯職人が作ったピッツァ窯の中で焼き上げるナポリピッツァは、薄生地なのにもちもちで、薪のかおりが香ばしい逸品です。
+                  ご家族、仲間同士のディナーやパーティに、わいわい楽しくイタリアンスタイルでお楽しみ下さい。
+                </Typography>
+              </td>
+            </tr>
+          </table>
+        </Card>
+        <br></br>
+
+        {/* 住所、問い合わせ先とバナーを合わせたセクション */}
+        <table>
+          <tr>.</tr>
+          <tr>
+            <td colSpan={2}>〒150-0032 東京都渋谷区鶯谷町19-19 第三叶ビル1F</td>
+            <td rowSpan={2}>
+              {" "}
+              <img src="../banner1.png" alt="" width="350" />
+            </td>
+          </tr>
+          <tr>
+            <td colSpan={2}>
+              {" "}
+              東急東横線「代官山駅」から徒歩約10分
+              <br />
+              JR線「渋谷駅」南口から徒歩約10分
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <Typography variant="h6">
+                {" "}
+                <PhoneIcon />
+                ご予約お問い合わせ
+              </Typography>
+            </td>
+            <td>
+              <Typography variant="h6">03-1234-5678&nbsp;&nbsp;</Typography>
+            </td>
+            <td rowSpan={2}>
+              {" "}
+              <img src="../banner2.png" alt="" width="350" />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <Typography variant="h6">
+                {" "}
+                <PhoneIcon />
+                デリバリー専用ダイアル
+              </Typography>
+            </td>
+            <td>
+              <Typography variant="h6">03-9876-5432&nbsp;&nbsp;</Typography>
+            </td>
+          </tr>
+          <tr>.</tr>
+        </table>
       </Grid>
     </div>
   );
