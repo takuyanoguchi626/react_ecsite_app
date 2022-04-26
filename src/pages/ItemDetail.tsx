@@ -154,7 +154,7 @@ export const ItemDetail = () => {
       },
       orderItemList: orderItemInfo,
     };
-    order?.setOrderInfo([...order.orderInfo, formattedOrderItem]);
+    // order?.setOrderInfo([...order.orderInfo, formattedOrderItem]);
   };
 
   //合計金額

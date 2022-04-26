@@ -1,13 +1,18 @@
 import React, { FC, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { OrderItem } from "../types/OrderItem";
 import { CalcTotalPrice } from "./CalcTotalPrice";
 import { OrderItemSize } from "./OrderItemSize";
 import { cartListContext } from "./providers/CartListProvider";
+import { EditContext } from "./providers/EditProvider";
 
 type props = {
   hasButton: boolean;
 };
 
 export const CartListTable: FC<props> = (props) => {
+  const navigate = useNavigate();
+
   const { hasButton } = props;
 
   const cart = useContext(cartListContext);
@@ -19,6 +24,14 @@ export const CartListTable: FC<props> = (props) => {
       cartList2?.splice(index, 1);
       return cartList2;
     });
+  };
+
+  const editOrderItem = useContext(EditContext);
+
+  const edit = (orderItem: OrderItem, index: number) => {
+    editOrderItem?.setEditOrderItem(orderItem);
+    editOrderItem?.setIndex(index);
+    navigate("/EditCartItem/");
   };
 
   return (
@@ -83,7 +96,12 @@ export const CartListTable: FC<props> = (props) => {
                         >
                           <span>削除</span>
                         </button>
-                        <button type="button">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            edit(orderItem, index);
+                          }}
+                        >
                           <span>編集</span>
                         </button>
                       </>
