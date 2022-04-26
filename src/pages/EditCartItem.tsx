@@ -5,6 +5,7 @@ import { OrderItem } from "../types/OrderItem";
 import { OrderTopping } from "../types/OrderTopping";
 import { orderContext } from "../components/providers/OrderProvider";
 import { EditContext } from "../components/providers/EditProvider";
+import { CalcTotalPrice } from "../components/CalcTotalPrice";
 
 export const EditCartItem = () => {
   //画面遷移のメソッド化
@@ -33,7 +34,9 @@ export const EditCartItem = () => {
   //サイズを変更するメソッド
   const changeSize = (e: React.ChangeEvent<HTMLInputElement>) => {
     setHasSize(!hasSize);
-    setSize(() => e.target.value);
+    const size2 = e.target.value;
+    setSize(() => size2);
+    changeTotalPrice();
   };
 
   // チェックしたトッピングのIDリスト
@@ -58,15 +61,10 @@ export const EditCartItem = () => {
 
     if (event.target.checked === true) {
       const toppingId: number = Number(event.target.value);
+      const selectedToppingIdList2 = selectedToppingIdList;
+      selectedToppingIdList2.push(toppingId);
       // トッピングをリストに収納
-      setselectedToppingIdList((selectedToppingIdList) => {
-        return [
-          // 配列を分解する
-          ...selectedToppingIdList,
-          // 新しい配列を作る
-          toppingId,
-        ];
-      });
+      setselectedToppingIdList(() => selectedToppingIdList2);
     } else {
       const selectedToppingIdList2 = selectedToppingIdList;
       for (let i = 0; i < selectedToppingIdList2.length; i++) {
@@ -90,8 +88,6 @@ export const EditCartItem = () => {
 
   //ショッピングカート
   const cart = useContext(cartListContext);
-  // order情報
-  const order = useContext(orderContext);
 
   // カートにいれる
   const pushInCartList = () => {
@@ -108,7 +104,6 @@ export const EditCartItem = () => {
         return false;
       }
     );
-    console.log(filteredToppingList);
 
     // カートにいれるためにOrderTopping型に変換する
     const newOrderToppingList = new Array<OrderTopping>();
@@ -128,7 +123,6 @@ export const EditCartItem = () => {
         orderToppingId++;
       }
     }
-    console.log(newOrderToppingList);
 
     // カートに商品を入れる
     if (
@@ -154,17 +148,28 @@ export const EditCartItem = () => {
     }
   };
 
-  //合計金額
-  //   const totalPrices = () => {
-  //     const selectedToppings = selectedToppingIdList.length;
-  //     if (size === "M") {
-  //       const toppingPrice = selectedToppings * 200;
-  //       return (orderItem.item.priceM + toppingPrice) * quantity;
-  //     } else {
-  //       const toppingPrice = selectedToppings * 300;
-  //       return (orderItem.item.priceL + toppingPrice) * quantity;
-  //     }
-  //   };
+  // 合計金額
+  const [totalPrice, setTotalPrice] = useState<number>(0);
+
+  const changeTotalPrice = () => {
+    setTotalPrice(() => {
+      if (orderItem !== undefined) {
+        const selectedToppings = selectedToppingIdList.length;
+        if (size === "M") {
+          const toppingPrice = selectedToppings * 200;
+          return (orderItem.item.priceM + toppingPrice) * quantity;
+        } else if (size === "L") {
+          const toppingPrice = selectedToppings * 300;
+          return (orderItem.item.priceL + toppingPrice) * quantity;
+        }
+      }
+      return 0;
+    });
+  };
+
+  useEffect(() => {
+    changeTotalPrice();
+  }, [size, quantity]);
 
   return (
     <div>
@@ -177,7 +182,9 @@ export const EditCartItem = () => {
         type="radio"
         value="M"
         checked={hasSize}
-        onChange={changeSize}
+        onChange={(e) => {
+          changeSize(e);
+        }}
       />
       <label htmlFor="M"> M {orderItem?.item?.priceM}円</label>
       <input
@@ -186,7 +193,9 @@ export const EditCartItem = () => {
         type="radio"
         value="L"
         checked={!hasSize}
-        onChange={changeSize}
+        onChange={(e) => {
+          changeSize(e);
+        }}
       />
       <label htmlFor="L">L {orderItem?.item?.priceL}円</label>
       <div>トッピング： 1つにつき Ｍ 200円(税抜) Ｌ 300 円(税抜)</div>
@@ -204,7 +213,10 @@ export const EditCartItem = () => {
                 defaultChecked={checked}
                 type="checkbox"
                 // チェックが入った値を取得
-                onChange={getSelectedTopping}
+                onChange={(e) => {
+                  getSelectedTopping(e);
+                  changeTotalPrice();
+                }}
                 value={topping.id}
               />
               <span>{topping.name}</span>
@@ -218,7 +230,10 @@ export const EditCartItem = () => {
           className="quantity"
           name="quantity"
           id="pizzaQuantity"
-          onChange={(e) => setQuantity(Number(e.target.value))}
+          onChange={(e) => {
+            setQuantity(Number(e.target.value));
+            changeTotalPrice();
+          }}
           defaultValue={Number(orderItem?.quantity)}
         >
           <option value="1">1</option>
@@ -235,7 +250,7 @@ export const EditCartItem = () => {
           <option value="12">12</option>
         </select>
       </div>
-      <div>この商品金額：{0}円（税抜）</div>
+      <div>この商品金額： {totalPrice}円（税抜）</div>
       <div>
         <button
           onClick={() => {
