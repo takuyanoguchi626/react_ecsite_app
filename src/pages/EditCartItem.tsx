@@ -1,13 +1,9 @@
-import axios from "axios";
 import React, { useState, useEffect, useContext, FC } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { Item } from "../types/Item";
-import { Topping } from "../types/Topping";
+import { useNavigate } from "react-router-dom";
 import { cartListContext } from "../components/providers/CartListProvider";
 import { OrderItem } from "../types/OrderItem";
 import { OrderTopping } from "../types/OrderTopping";
 import { orderContext } from "../components/providers/OrderProvider";
-import { Order } from "../types/Order";
 import { EditContext } from "../components/providers/EditProvider";
 
 export const EditCartItem = () => {
@@ -25,7 +21,8 @@ export const EditCartItem = () => {
   useEffect(() => {
     setSize(orderItem?.size);
   }, []);
-  // サイズ選択
+
+  // サイズ表示
   const [hasSize, setHasSize] = useState(true);
   //デフォルトのサイズ表示を設定
   useEffect(() => {
@@ -33,7 +30,7 @@ export const EditCartItem = () => {
       setHasSize(!hasSize);
     }
   }, []);
-  //チェックボックス変更するメソッド
+  //サイズを変更するメソッド
   const changeSize = (e: React.ChangeEvent<HTMLInputElement>) => {
     setHasSize(!hasSize);
     setSize(() => e.target.value);
@@ -43,7 +40,7 @@ export const EditCartItem = () => {
   const [selectedToppingIdList, setselectedToppingIdList] = useState<
     Array<number>
   >([]);
-  //トッピングIDリストを編集するもののIDリストに置き換える
+  //トッピングIDリストの初期値を編集するもののIDリストで上書きする
   useEffect(() => {
     const idArr = new Array<number>();
     if (orderItem !== undefined) {
@@ -52,9 +49,10 @@ export const EditCartItem = () => {
       }
     }
     setselectedToppingIdList(idArr);
+    console.log(idArr);
   }, []);
 
-  // トッピングを取得する
+  //選択したトッピングのIDをトッピングIDリストに格納する
   const getSelectedTopping = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log(event.target.checked);
 
@@ -70,15 +68,13 @@ export const EditCartItem = () => {
         ];
       });
     } else {
-      setselectedToppingIdList((selectedToppingIdList) => {
-        const selectedToppingIdList2 = selectedToppingIdList;
-        for (let i = 0; i < selectedToppingIdList2.length; i++) {
-          if (selectedToppingIdList2[i] === Number(event.target.value)) {
-            selectedToppingIdList2.splice(i, 1);
-          }
+      const selectedToppingIdList2 = selectedToppingIdList;
+      for (let i = 0; i < selectedToppingIdList2.length; i++) {
+        if (selectedToppingIdList2[i] === Number(event.target.value)) {
+          selectedToppingIdList2.splice(i, 1);
         }
-        return selectedToppingIdList2;
-      });
+      }
+      setselectedToppingIdList(() => selectedToppingIdList2);
     }
     console.log("トッピングを選択" + selectedToppingIdList);
   };
@@ -96,8 +92,6 @@ export const EditCartItem = () => {
   const cart = useContext(cartListContext);
   // order情報
   const order = useContext(orderContext);
-  // order情報格納用の配列
-  const orderItemInfo = new Array<OrderItem>();
 
   // カートにいれる
   const pushInCartList = () => {
@@ -114,6 +108,7 @@ export const EditCartItem = () => {
         return false;
       }
     );
+    console.log(filteredToppingList);
 
     // カートにいれるためにOrderTopping型に変換する
     const newOrderToppingList = new Array<OrderTopping>();
@@ -122,8 +117,8 @@ export const EditCartItem = () => {
     // //idの採番
     let orderToppingId = 0;
     if (filteredToppingList !== undefined && orderItem !== undefined) {
-      for (let orderedToppings of filteredToppingList) {
-        const orderTopping = orderedToppings;
+      for (let topping of filteredToppingList) {
+        const orderTopping = topping;
         newOrderToppingList.push({
           id: orderToppingId,
           toppingId: orderTopping.id,
@@ -133,25 +128,27 @@ export const EditCartItem = () => {
         orderToppingId++;
       }
     }
+    console.log(newOrderToppingList);
 
     // カートに商品を入れる
     if (
       orderItem !== undefined &&
-      order?.orderInfo !== undefined &&
       size !== undefined &&
       editOrderItem?.index !== undefined
     ) {
       const orderItem2: OrderItem = {
         id: orderItem?.id,
         itemId: orderItem.item.id,
-        orderId: order?.orderInfo?.id, //仮）オーダーのステートを作成し、そのIDを取ってくる
+        orderId: orderItem.orderId, //仮）オーダーのステートを作成し、そのIDを取ってくる
         quantity: quantity,
         size: size,
         item: orderItem.item,
         orderToppingList: newOrderToppingList,
       };
       cart?.setCartList((cartList) => {
-        return cartList.splice(editOrderItem?.index, 1, orderItem2);
+        const cartList2 = cartList;
+        cartList2.splice(editOrderItem?.index, 1, orderItem2);
+        return cartList2;
       });
       navigate("/CartList/");
     }
@@ -204,6 +201,7 @@ export const EditCartItem = () => {
           <div>
             <label key={index}>
               <input
+                defaultChecked={checked}
                 type="checkbox"
                 // チェックが入った値を取得
                 onChange={getSelectedTopping}

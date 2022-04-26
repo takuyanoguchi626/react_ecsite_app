@@ -12,12 +12,12 @@ type props = {
 
 export const CartListTable: FC<props> = (props) => {
   const navigate = useNavigate();
-
+  //削除、編集ボタンを表示するかのflag
   const { hasButton } = props;
-
+  //ショッピングカートの商品を取得
   const cart = useContext(cartListContext);
   const cartList = cart?.cartList;
-
+  //商品を削除する
   const deleteCartItem = (index: number) => {
     cart?.setCartList((cartList) => {
       const cartList2 = [...cartList];
@@ -25,7 +25,7 @@ export const CartListTable: FC<props> = (props) => {
       return cartList2;
     });
   };
-
+  //編集する商品を格納するcontextを取得
   const editOrderItem = useContext(EditContext);
 
   const edit = (orderItem: OrderItem, index: number) => {
@@ -65,7 +65,6 @@ export const CartListTable: FC<props> = (props) => {
               </td>
               <td>
                 <ul>
-                  {/* まだトッピングリストは取得してない */}
                   {orderItem.orderToppingList.map((orderTopping) => (
                     <li>
                       {orderTopping.Topping.name}
