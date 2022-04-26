@@ -25,14 +25,12 @@ export const QuestionForm = () => {
         address: userAddress,
         userId: userId,
         message: message,
+        Date: new Date(),
       });
     } catch (error) {
       console.log(error);
     }
   };
-
-  console.log(db);
-  console.log(collection(db, "questionForm"));
 
   return (
     <div style={{ textAlign: "center" }}>
