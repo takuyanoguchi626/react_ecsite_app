@@ -14,6 +14,9 @@ export const ItemList = () => {
   const perPage = 6;
   const numberOfPage = Math.ceil(itemListLength / perPage);
 
+  // Add middleware to authenticate requests
+  // app.use(myMiddleware);
+
   const changePage = (pageNumber: number) => {
     setShowItemList(() => {
       const showItemList = itemList.slice(
