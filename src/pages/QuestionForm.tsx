@@ -13,7 +13,7 @@ export const QuestionForm = () => {
 
   //   ユーザー情報
   const [userName, setUserName] = useState("");
-  const [userAddress, setUserAddress] = useState("");
+  const [userMailAddress, setUserMailAddress] = useState("");
   const [userId, setUserId] = useState("");
   const [message, setMessage] = useState("");
 
@@ -22,7 +22,7 @@ export const QuestionForm = () => {
     try {
       await addDoc(docRef, {
         name: userName,
-        address: userAddress,
+        mailaddress: userMailAddress,
         userId: userId,
         message: message,
         Date: new Date(),
@@ -46,13 +46,13 @@ export const QuestionForm = () => {
             onChange={(e) => setUserName(e.target.value)}
           />
           <br />
-          住所
+          メールアドレス
           <br />
           <input
             type="text"
-            name="address"
-            id="address"
-            onChange={(e) => setUserAddress(e.target.value)}
+            name="mailaddress"
+            id="mailaddress"
+            onChange={(e) => setUserMailAddress(e.target.value)}
           />
           <br />
           ユーザーID
