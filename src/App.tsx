@@ -20,6 +20,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { theme } from "../src/css/theme";
 import { ItemRecommendation } from "./pages/ItemRecommendation";
 import { ErrorPage } from "./pages/ErrorPage";
+import { EditCartItem } from "./pages/EditCartItem";
 
 function App() {
   return (
@@ -52,6 +53,10 @@ function App() {
             />
             <Route path="/ErrorPage" element={<ErrorPage />} />
             <Route path="/*" element={<ErrorPage />} />
+            <Route
+              path="/EditCartItem/"
+              element={<EditCartItem></EditCartItem>}
+            ></Route>
           </Routes>
           <Footer></Footer>
         </BrowserRouter>

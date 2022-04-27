@@ -69,7 +69,7 @@ export const OrderComfirm: FC = () => {
 
   return (
     <div>
-      <CartListTable></CartListTable>
+      <CartListTable hasButton={false}></CartListTable>
       <div>
         <h2>お届け先情報</h2>
         <div>

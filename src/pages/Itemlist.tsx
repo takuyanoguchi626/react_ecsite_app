@@ -37,6 +37,12 @@ export const ItemList = () => {
     });
   }, []);
 
+  const aaa = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.target.checked = !e.target.checked;
+  };
+
+  const [che, setChe] = useState(true);
+
   // 表示
   return (
     <div>
@@ -49,6 +55,16 @@ export const ItemList = () => {
             </button>
           </form>
         </div>
+      </div>
+      <div>
+        <input
+          type="checkbox"
+          checked={che}
+          onChange={(e) => aaa(e)}
+          onClick={() => {
+            setChe((che) => !che);
+          }}
+        />
       </div>
       {/* mapで一覧表示させる */}
       {/* reactViewでCSSを適用する */}

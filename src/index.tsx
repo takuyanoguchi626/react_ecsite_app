@@ -18,6 +18,7 @@ import { Login } from "./pages/Login";
 import { Toppage } from "./pages/Toppage";
 import { StatusProvider } from "./components/providers/statusContext";
 import { userInfoProvider } from "./components/providers/loginInfoContext";
+import { EditProvider } from "./components/providers/EditProvider";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -25,10 +26,12 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     {/* ProviderのchildrenがAPPになる */}
-    <StatusProvider>
-      <CartListProvider>
-        <App />
-      </CartListProvider>
-    </StatusProvider>
+    <EditProvider>
+      <StatusProvider>
+        <CartListProvider>
+          <App />
+        </CartListProvider>
+      </StatusProvider>
+    </EditProvider>
   </React.StrictMode>
 );

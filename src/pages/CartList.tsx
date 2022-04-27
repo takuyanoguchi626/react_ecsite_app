@@ -15,7 +15,7 @@ export const CartList = () => {
         <div>
           <h1>ショッピングカート</h1>
           <div>
-            <CartListTable></CartListTable>
+            <CartListTable hasButton={true}></CartListTable>
           </div>
           <div>
             <div>消費税：{totalPrice.TAXOfTotalPrice}円</div>
