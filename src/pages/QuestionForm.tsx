@@ -5,8 +5,11 @@ import { app } from "../app/config";
 import { collection, addDoc } from "firebase/firestore";
 import { getFirestore } from "firebase/firestore";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const QuestionForm = () => {
+  const navigate = useNavigate();
+
   // firestore認証
   const db = getFirestore(app);
   const docRef = collection(db, "questionForm");
@@ -27,6 +30,7 @@ export const QuestionForm = () => {
         message: message,
         Date: new Date(),
       });
+      navigate("/QuestionCompleted");
     } catch (error) {
       console.log(error);
     }
