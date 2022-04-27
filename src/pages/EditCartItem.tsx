@@ -1,13 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useContext, FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { cartListContext } from "../components/providers/CartListProvider";
 import { OrderItem } from "../types/OrderItem";
 import { OrderTopping } from "../types/OrderTopping";
-import { orderContext } from "../components/providers/OrderProvider";
 import { EditContext } from "../components/providers/EditProvider";
-import { CalcTotalPrice } from "../components/CalcTotalPrice";
 
-export const EditCartItem = () => {
+export const EditCartItem: FC = () => {
   //画面遷移のメソッド化
   const navigate = useNavigate();
 
@@ -257,7 +256,7 @@ export const EditCartItem = () => {
             pushInCartList();
           }}
         >
-          カートに入れる
+          編集する
         </button>
       </div>
       <div>

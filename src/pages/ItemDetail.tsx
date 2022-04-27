@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import axios from "axios";
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
@@ -7,26 +8,24 @@ import { cartListContext } from "../components/providers/CartListProvider";
 import { OrderItem } from "../types/OrderItem";
 import { OrderTopping } from "../types/OrderTopping";
 import { orderContext } from "../components/providers/OrderProvider";
-import { Order } from "../types/Order";
-// import { User } from "../types/User";
+import { IdContext } from "../components/providers/IdProvider";
 
 export const ItemDetail = () => {
   // routerからitemidを取得する
   const { itemId } = useParams();
-
+  //APIから商品詳細の情報を取得
   useEffect(() => {
     axios
       .get("http://153.127.48.168:8080/ecsite-api/item/" + itemId)
       .then((response) => {
-        setItem(response.data.item);
-        setToppingList(response.data.item.toppingList);
+        const item = response.data.item;
+        setItem(() => item);
+        changeTotalPrice2(item);
+        setToppingList(() => response.data.item.toppingList);
       });
   }, [itemId]);
 
-  //商品のトッピング一覧
-  const [toppingList, setToppingList] = useState<Array<Topping>>();
-
-  // 商品一覧
+  // 商品情報
   const [item, setItem] = useState<Item>({
     deleted: false,
     description: "",
@@ -38,6 +37,8 @@ export const ItemDetail = () => {
     toppingList: [],
     type: "",
   });
+  //商品のトッピング一覧
+  const [toppingList, setToppingList] = useState<Array<Topping>>();
 
   // サイズの初期値
   const [size, setSize] = useState<string>("M");
@@ -54,17 +55,23 @@ export const ItemDetail = () => {
     Array<number>
   >([]);
 
-  // トッピングを取得する
+  // トッピングを選択、選択解除した際にトッピングIDを格納、削除する
   const getSelectedTopping = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const toppingId: number = Number(event.target.value);
-
-    // トッピングをリストに収納
-    setselectedToppingIdList((selectedToppingIdList) => [
-      // 配列を分解する
-      ...selectedToppingIdList,
-      // 新しい配列を作る
-      toppingId,
-    ]);
+    if (event.target.checked === true) {
+      const toppingId: number = Number(event.target.value);
+      const selectedToppingIdList2 = selectedToppingIdList;
+      selectedToppingIdList2.push(toppingId);
+      setselectedToppingIdList(() => selectedToppingIdList2);
+    } else {
+      const selectedToppingIdList2 = selectedToppingIdList;
+      for (let i = 0; i < selectedToppingIdList2.length; i++) {
+        if (selectedToppingIdList2[i] === Number(event.target.value)) {
+          selectedToppingIdList2.splice(i, 1);
+        }
+      }
+      setselectedToppingIdList(() => selectedToppingIdList2);
+    }
+    changeTotalPrice();
   };
 
   // 数量
@@ -74,52 +81,43 @@ export const ItemDetail = () => {
   const cart = useContext(cartListContext);
   // order情報
   const order = useContext(orderContext);
-  // order情報格納用の配列
-  const orderItemInfo = new Array<OrderItem>();
+  //ID管理からIDを取得
+  const id = useContext(IdContext);
 
   // カートにいれる
   const pushInCartList = () => {
-    // 結果を格納する配列
-    const filteredToppingList = new Array<Topping>();
-    // 最初の謎の空白行を消す
-    filteredToppingList.splice(0);
-    // APIのtoppingListをフィルター
-    toppingList?.filter((topping) => {
+    //選択したトッピングのIDでトッピング一覧を絞り込み
+    const filteredToppingList = item?.toppingList?.filter((topping) => {
       // 選択したトッピングの数繰り返す
       for (let checkedToppingId of selectedToppingIdList) {
         // APIのトッピングと同じだった場合
         if (topping.id === checkedToppingId) {
-          // 格納用の配列に格納する
-          filteredToppingList.push(topping);
           return true;
         }
       }
+      return false;
     });
 
-    // カートにいれるためにOrderTopping型に変換する
+    // カートにいれるためにOrderTopping型に変換したオーダートッピング一覧
     const newOrderToppingList = new Array<OrderTopping>();
 
     // 選択したトッピングごとに繰り返し、変換用の配列に格納する
-    // //idの採番
-    let orderToppingId = 0;
-    for (let orderedToppings of filteredToppingList) {
-      const orderTopping = orderedToppings;
-      orderToppingId++;
+    for (let topping of filteredToppingList) {
+      const orderTopping = topping;
       newOrderToppingList.push({
-        id: orderToppingId,
+        id: Number(id?.orderToppingId),
         toppingId: orderTopping.id,
         orderItemId: item.id,
         Topping: orderTopping,
       });
+      id?.setOrderToppingId((orderToppingId) => orderToppingId++);
     }
 
     // カートに商品を入れる
-    let orderItemId = 0;
-    orderItemId++;
     const orderItem: OrderItem = {
-      id: orderItemId,
+      id: Number(id?.orderItemId),
       itemId: item.id,
-      orderId: 0, //仮）オーダーのステートを作成し、そのIDを取ってくる
+      orderId: Number(order?.orderInfo.id),
       quantity: quantity,
       size: size,
       item: item,
@@ -127,47 +125,42 @@ export const ItemDetail = () => {
     };
     cart?.setCartList([...cart.cartList, orderItem]);
     navigate("/CartList/");
-    orderItemInfo.push(orderItem);
-
-    // OrderProviderに送信
-    const formattedOrderItem: Order = {
-      id: 1,
-      userId: 1,
-      status: 1,
-      totalPrice: totalPrices(),
-      orderDate: new Date(),
-      distinationName: "",
-      distinationEmail: "",
-      distinationZipcode: "",
-      distinationAddress: "",
-      distinationTel: "",
-      deliveryTime: new Date(),
-      paymentMethod: 1,
-      user: {
-        id: 1,
-        name: "",
-        mailAddress: "",
-        password: "",
-        zipcode: "",
-        address: "",
-        telephone: "",
-      },
-      orderItemList: orderItemInfo,
-    };
-    // order?.setOrderInfo([...order.orderInfo, formattedOrderItem]);
   };
 
-  //合計金額
-  const totalPrices = () => {
-    const selectedToppings = selectedToppingIdList.length;
-    if (size === "M") {
-      const toppingPrice = selectedToppings * 200;
-      return (item.priceM + toppingPrice) * quantity;
-    } else {
-      const toppingPrice = selectedToppings * 300;
-      return (item.priceL + toppingPrice) * quantity;
-    }
+  // 合計金額
+  const [totalPrice, setTotalPrice] = useState<number>(1);
+
+  const changeTotalPrice = () => {
+    setTotalPrice(() => {
+      const selectedToppings = selectedToppingIdList.length;
+      if (size === "M") {
+        const toppingPrice = selectedToppings * 200;
+        return (item.priceM + toppingPrice) * quantity;
+      } else if (size === "L") {
+        const toppingPrice = selectedToppings * 300;
+        return (item.priceL + toppingPrice) * quantity;
+      }
+      return 2;
+    });
   };
+  //初回レンダリング時の特例のメソッド
+  const changeTotalPrice2 = (item: Item) => {
+    setTotalPrice(() => {
+      const selectedToppings = selectedToppingIdList.length;
+      if (size === "M") {
+        const toppingPrice = selectedToppings * 200;
+        return (item.priceM + toppingPrice) * quantity;
+      } else if (size === "L") {
+        const toppingPrice = selectedToppings * 300;
+        return (item.priceL + toppingPrice) * quantity;
+      }
+      return 2;
+    });
+  };
+
+  useEffect(() => {
+    changeTotalPrice();
+  }, [size, quantity]);
 
   //画面遷移のメソッド化
   const navigate = useNavigate();
@@ -234,7 +227,7 @@ export const ItemDetail = () => {
           <option value="12">12</option>
         </select>
       </div>
-      <div>この商品金額：{totalPrices()}円（税抜）</div>
+      <div>この商品金額：{totalPrice}円（税抜）</div>
       <div>
         <button
           onClick={() => {
