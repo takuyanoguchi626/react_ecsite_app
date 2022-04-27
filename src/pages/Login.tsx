@@ -114,6 +114,7 @@ export const Login = () => {
           <Grid container justifyContent="center" alignItems="flex-start">
             <h1>ログイン画面</h1>
           </Grid>
+
           <span className="container">
             <div className="loginParameters" style={{ display: "flex" }}>
               <form>
@@ -161,6 +162,7 @@ export const Login = () => {
                 <div style={{ fontWeight: 700, padding: "30px" }}>
                   SNSアカウントでログインする
                 </div>
+
                 <Button
                   className="btn"
                   style={{ fontWeight: 700 }}
