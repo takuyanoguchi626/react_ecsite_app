@@ -1,0 +1,22 @@
+.questionResult {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  font-size: 30px;
+  background-image: url("../../public/img/pizza_background.jpg");
+  background-size: auto;
+  background-blend-mode: lighten;
+  padding: 20%;
+  font-weight: bold;
+  position: relative;
+  text-align: center;
+  position: relative;
+  left: auto;
+  top: auto;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.questionResult .message {
+  color: black;
+}
+/*# sourceMappingURL=questionCompleted.css.map */
