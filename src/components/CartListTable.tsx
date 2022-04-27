@@ -1,12 +1,38 @@
-import React, { useContext } from "react";
+import React, { FC, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { OrderItem } from "../types/OrderItem";
 import { CalcTotalPrice } from "./CalcTotalPrice";
 import { OrderItemSize } from "./OrderItemSize";
 import { cartListContext } from "./providers/CartListProvider";
+import { EditContext } from "./providers/EditProvider";
 
-export const CartListTable = () => {
+type props = {
+  hasButton: boolean;
+};
+
+export const CartListTable: FC<props> = (props) => {
+  const navigate = useNavigate();
+  //削除、編集ボタンを表示するかのflag
+  const { hasButton } = props;
+  //ショッピングカートの商品を取得
   const cart = useContext(cartListContext);
-
   const cartList = cart?.cartList;
+  //商品を削除する
+  const deleteCartItem = (index: number) => {
+    cart?.setCartList((cartList) => {
+      const cartList2 = [...cartList];
+      cartList2?.splice(index, 1);
+      return cartList2;
+    });
+  };
+  //編集する商品を格納するcontextを取得
+  const editOrderItem = useContext(EditContext);
+
+  const edit = (orderItem: OrderItem, index: number) => {
+    editOrderItem?.setEditOrderItem(orderItem);
+    editOrderItem?.setIndex(index);
+    navigate("/EditCartItem/");
+  };
 
   return (
     <div>
@@ -39,7 +65,6 @@ export const CartListTable = () => {
               </td>
               <td>
                 <ul>
-                  {/* まだトッピングリストは取得してない */}
                   {orderItem.orderToppingList.map((orderTopping) => (
                     <li>
                       {orderTopping.Topping.name}
@@ -58,9 +83,30 @@ export const CartListTable = () => {
                 </div>
               </td>
               <td>
-                <button type="button">
-                  <span>削除</span>
-                </button>
+                {(() => {
+                  if (hasButton) {
+                    return (
+                      <>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            deleteCartItem(index);
+                          }}
+                        >
+                          <span>削除</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            edit(orderItem, index);
+                          }}
+                        >
+                          <span>編集</span>
+                        </button>
+                      </>
+                    );
+                  }
+                })()}
               </td>
             </tr>
           ))}

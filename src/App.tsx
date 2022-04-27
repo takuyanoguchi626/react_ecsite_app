@@ -22,6 +22,7 @@ import { ItemRecommendation } from "./pages/ItemRecommendation";
 import { ErrorPage } from "./pages/ErrorPage";
 import { QuestionForm } from "./pages/QuestionForm";
 import { QuestionCompleted } from "./pages/QuestionCompleted";
+import { EditCartItem } from "./pages/EditCartItem";
 
 function App() {
   return (
@@ -56,6 +57,10 @@ function App() {
             <Route path="/*" element={<ErrorPage />} />
             <Route path="/QuestionForm" element={<QuestionForm />} />
             <Route path="/QuestionCompleted" element={<QuestionCompleted />} />
+            <Route
+              path="/EditCartItem/"
+              element={<EditCartItem></EditCartItem>}
+            ></Route>
           </Routes>
           <Footer></Footer>
         </BrowserRouter>
