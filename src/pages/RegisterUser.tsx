@@ -16,6 +16,10 @@ import EmailIcon from "@mui/icons-material/Email";
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 import PhoneIcon from "@mui/icons-material/Phone";
 import HomeIcon from "@mui/icons-material/Home";
+import { collection, addDoc } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
+import { app } from "../app/config";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 export function RegisterInfo() {
   const navigate = useNavigate();
@@ -59,6 +63,7 @@ export function RegisterInfo() {
 
     if (status === "success") {
       console.log("成功");
+      registerUserInfoToServer();
       navigate("/AfterRegister");
     } else if (response.data.errorCode === "E-01") {
       console.log("そのメールアドレスはすでに使われています");
@@ -66,6 +71,36 @@ export function RegisterInfo() {
     } else {
       console.log("登録できませんでした");
       alert("登録できませんでした");
+    }
+  };
+  // firebaseへ送信
+  // firestore認証
+  const db = getFirestore(app);
+  const docRef = collection(db, "userInformation");
+  const authenication = getAuth();
+
+  const mailAddress = registerData.mailAddress;
+  const password = registerData.password;
+  //   ユーザー情報をfirebaseに送る
+  const registerUserInfoToServer = async () => {
+    try {
+      if (mailAddress !== undefined && password !== undefined) {
+        // firebaseへ登録
+        createUserWithEmailAndPassword(authenication, mailAddress, password);
+      } else {
+        console.log("error");
+        return;
+      }
+      await addDoc(docRef, {
+        name: registerData.name,
+        email: registerData.mailAddress,
+        password: registerData.password,
+        zipcode: registerData.zipcode,
+        address: registerData.address,
+        telephone: registerData.telephone,
+      });
+    } catch (error) {
+      console.log(error);
     }
   };
   // console.log(watch());
@@ -91,7 +126,7 @@ export function RegisterInfo() {
                 className={`form-control ${errors.name && "invalid"}`}
                 {...register("name", { required: "Name is Required" })}
                 value={registerData.name}
-                onKeyUp={(e) => {
+                onChange={(e) => {
                   setregisterData({
                     ...registerData,
                     name: e.currentTarget.value,
@@ -120,7 +155,7 @@ export function RegisterInfo() {
                   // },
                 })}
                 value={registerData.mailAddress}
-                onKeyUp={(e) => {
+                onChange={(e) => {
                   setregisterData({
                     ...registerData,
                     mailAddress: e.currentTarget.value,
@@ -150,7 +185,7 @@ export function RegisterInfo() {
                   // },
                 })}
                 value={registerData.telephone}
-                onKeyUp={(e) => {
+                onChange={(e) => {
                   setregisterData({
                     ...registerData,
                     telephone: e.currentTarget.value,
@@ -174,9 +209,10 @@ export function RegisterInfo() {
                 className={`form-control ${errors.password && "invalid"}`}
                 {...register("password", {
                   required: "Password is Required",
+                  minLength: 6,
                 })}
                 value={registerData.password}
-                onKeyUp={(e) => {
+                onChange={(e) => {
                   setregisterData({
                     ...registerData,
                     password: e.currentTarget.value,
@@ -200,7 +236,7 @@ export function RegisterInfo() {
                   required: "zipcode is Required",
                 })}
                 value={registerData.zipcode}
-                onKeyUp={(e) => {
+                onChange={(e) => {
                   setregisterData({
                     ...registerData,
                     zipcode: e.currentTarget.value,
@@ -223,7 +259,7 @@ export function RegisterInfo() {
                   required: "address is Required",
                 })}
                 value={registerData.address}
-                onKeyUp={(e) => {
+                onChange={(e) => {
                   setregisterData({
                     ...registerData,
                     address: e.currentTarget.value,

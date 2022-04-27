@@ -12,6 +12,7 @@ import {
   getAuth,
   signInWithRedirect,
   signInWithPopup,
+  createUserWithEmailAndPassword,
   getRedirectResult,
   signInWithEmailAndPassword,
 } from "firebase/auth";
@@ -20,6 +21,8 @@ import { TwitterAuthProvider, FacebookAuthProvider } from "firebase/auth";
 import { Box, Grid, Input, Typography } from "@material-ui/core";
 import LockIcon from "@mui/icons-material/Lock";
 import EmailIcon from "@mui/icons-material/Email";
+import { collection, addDoc } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 
 // useEffectを使ったログイン機能;
 export const Login = () => {
@@ -29,6 +32,12 @@ export const Login = () => {
   const [mailAddress, setmailAddress] = useState("");
   const [password, setpassword] = useState("");
   const auth = useContext(statusContext);
+
+  // firebaseへ送信
+  // firestore認証
+  const db = getFirestore(app);
+  const docRef = collection(db, "userInformation");
+  const authenication = getAuth();
 
   const submitLogin = async () => {
     console.log(mailAddress, password);
@@ -41,6 +50,8 @@ export const Login = () => {
     console.dir("responce:" + JSON.stringify(response));
     if (status === "success") {
       console.log("成功");
+      // firebaseへのログイン
+      signInWithEmailAndPassword(authenication, mailAddress, password);
       auth?.setstatusCheck(true);
       navigate("/ItemList");
     } else if (status === "error") {
