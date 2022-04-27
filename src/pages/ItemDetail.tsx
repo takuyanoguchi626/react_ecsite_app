@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import axios from "axios";
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
@@ -20,14 +21,9 @@ export const ItemDetail = () => {
         const item = response.data.item;
         setItem(() => item);
         changeTotalPrice2(item);
-        // updateItem(item);
         setToppingList(() => response.data.item.toppingList);
       });
   }, [itemId]);
-
-  // const updateItem = (item: Item) => {
-  //   setItem(() => item);
-  // };
 
   // 商品情報
   const [item, setItem] = useState<Item>({
@@ -37,7 +33,7 @@ export const ItemDetail = () => {
     imagePath: "",
     name: "",
     priceL: 0,
-    priceM: 1,
+    priceM: 0,
     toppingList: [],
     type: "",
   });
@@ -75,7 +71,6 @@ export const ItemDetail = () => {
       }
       setselectedToppingIdList(() => selectedToppingIdList2);
     }
-    console.log("トッピングを選択" + selectedToppingIdList);
     changeTotalPrice();
   };
 
@@ -122,7 +117,7 @@ export const ItemDetail = () => {
     const orderItem: OrderItem = {
       id: Number(id?.orderItemId),
       itemId: item.id,
-      orderId: Number(order?.orderInfo.id), //仮）オーダーのステートを作成し、そのIDを取ってくる
+      orderId: Number(order?.orderInfo.id),
       quantity: quantity,
       size: size,
       item: item,
