@@ -1,10 +1,4 @@
-import {
-  Button,
-  Grid,
-  Input,
-  InputAdornment,
-  TextField,
-} from "@material-ui/core";
+import { Button, Grid, Input } from "@material-ui/core";
 import axios from "axios";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -24,22 +18,21 @@ export function RegisterInfo() {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
+
     trigger,
   } = useForm();
 
   const onSubmit = (data: any) => {
     console.log(data);
-    // reset();
   };
 
   const [registerData, setregisterData] = useState<User>({
-    name: "山田太郎",
-    mailAddress: "d@gmail.com",
-    password: "password",
-    zipcode: "123-4567",
-    address: "新宿三丁目",
-    telephone: "123-4567-8910",
+    name: "",
+    mailAddress: "",
+    password: "",
+    zipcode: "",
+    address: "",
+    telephone: "",
   });
 
   const UserInfo = async () => {
@@ -56,7 +49,6 @@ export function RegisterInfo() {
     );
     const status = response.data.status;
     console.dir("responce:" + JSON.stringify(response));
-
     if (status === "success") {
       console.log("成功");
       navigate("/AfterRegister");
@@ -68,9 +60,6 @@ export function RegisterInfo() {
       alert("登録できませんでした");
     }
   };
-  // console.log(watch());
-
-  // console.log(errors.name)
 
   return (
     <div className="register">
@@ -91,7 +80,7 @@ export function RegisterInfo() {
                 className={`form-control ${errors.name && "invalid"}`}
                 {...register("name", { required: "Name is Required" })}
                 value={registerData.name}
-                onKeyUp={(e) => {
+                onChange={(e) => {
                   setregisterData({
                     ...registerData,
                     name: e.currentTarget.value,
@@ -120,7 +109,7 @@ export function RegisterInfo() {
                   // },
                 })}
                 value={registerData.mailAddress}
-                onKeyUp={(e) => {
+                onChange={(e) => {
                   setregisterData({
                     ...registerData,
                     mailAddress: e.currentTarget.value,
@@ -150,7 +139,7 @@ export function RegisterInfo() {
                   // },
                 })}
                 value={registerData.telephone}
-                onKeyUp={(e) => {
+                onChange={(e) => {
                   setregisterData({
                     ...registerData,
                     telephone: e.currentTarget.value,
@@ -176,7 +165,7 @@ export function RegisterInfo() {
                   required: "Password is Required",
                 })}
                 value={registerData.password}
-                onKeyUp={(e) => {
+                onChange={(e) => {
                   setregisterData({
                     ...registerData,
                     password: e.currentTarget.value,
@@ -200,7 +189,7 @@ export function RegisterInfo() {
                   required: "zipcode is Required",
                 })}
                 value={registerData.zipcode}
-                onKeyUp={(e) => {
+                onChange={(e) => {
                   setregisterData({
                     ...registerData,
                     zipcode: e.currentTarget.value,
@@ -223,7 +212,7 @@ export function RegisterInfo() {
                   required: "address is Required",
                 })}
                 value={registerData.address}
-                onKeyUp={(e) => {
+                onChange={(e) => {
                   setregisterData({
                     ...registerData,
                     address: e.currentTarget.value,
@@ -236,12 +225,7 @@ export function RegisterInfo() {
               )}
             </div>
             <Grid container justifyContent="center" alignItems="flex-start">
-              <Button
-                color="inherit"
-                type="submit"
-                className="btn btn-primary my-3"
-                onClick={UserInfo}
-              >
+              <Button color="inherit" type="button" onClick={() => UserInfo()}>
                 送信
               </Button>
             </Grid>
