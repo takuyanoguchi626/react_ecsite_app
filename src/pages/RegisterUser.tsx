@@ -1,10 +1,4 @@
-import {
-  Button,
-  Grid,
-  Input,
-  InputAdornment,
-  TextField,
-} from "@material-ui/core";
+import { Button, Grid, Input } from "@material-ui/core";
 import axios from "axios";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -24,22 +18,21 @@ export function RegisterInfo() {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
+
     trigger,
   } = useForm();
 
   const onSubmit = (data: any) => {
     console.log(data);
-    // reset();
   };
 
   const [registerData, setregisterData] = useState<User>({
-    name: "山田太郎",
-    mailAddress: "d@gmail.com",
-    password: "password",
-    zipcode: "123-4567",
-    address: "新宿三丁目",
-    telephone: "123-4567-8910",
+    name: "",
+    mailAddress: "",
+    password: "",
+    zipcode: "",
+    address: "",
+    telephone: "",
   });
 
   const UserInfo = async () => {
@@ -56,7 +49,6 @@ export function RegisterInfo() {
     );
     const status = response.data.status;
     console.dir("responce:" + JSON.stringify(response));
-
     if (status === "success") {
       console.log("成功");
       navigate("/AfterRegister");
@@ -68,9 +60,6 @@ export function RegisterInfo() {
       alert("登録できませんでした");
     }
   };
-  // console.log(watch());
-
-  // console.log(errors.name)
 
   return (
     <div className="register">
@@ -88,21 +77,17 @@ export function RegisterInfo() {
               <Input
                 required
                 type="text"
-                className={`form-control ${errors.name && "invalid"}`}
-                {...register("name", { required: "Name is Required" })}
+                {...register("name", { minLength: 1 })}
                 value={registerData.name}
-                onKeyUp={(e) => {
+                onChange={(e) => {
                   setregisterData({
                     ...registerData,
                     name: e.currentTarget.value,
                   });
                   trigger("name");
-                  console.log(e.currentTarget.value);
                 }}
               />
-              {errors.name && (
-                <small className="text-danger">{errors.name.message}</small>
-              )}
+              {errors.name && "名前を記入してください"}
             </div>
 
             <div className="form-group">
@@ -112,15 +97,14 @@ export function RegisterInfo() {
 
               <Input
                 type="text"
-                className={`form-control ${errors.mailAddress && "invalid"}`}
                 {...register("mailAddress", {
-                  required: "Email is Required",
-                  // pattern: {
-                  //   message: "Invalid email address",
-                  // },
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: "正しいメールアドレスの形式で入力してください。",
+                  },
                 })}
                 value={registerData.mailAddress}
-                onKeyUp={(e) => {
+                onChange={(e) => {
                   setregisterData({
                     ...registerData,
                     mailAddress: e.currentTarget.value,
@@ -128,11 +112,7 @@ export function RegisterInfo() {
                   trigger("mailAddress");
                 }}
               />
-              {errors.mailAddress && (
-                <small className="text-danger">
-                  {errors.mailAddress.message}
-                </small>
-              )}
+              {errors.mailAddress && "メールアドレスは正しく記入してください"}
             </div>
 
             <div className="form-group">
@@ -142,15 +122,9 @@ export function RegisterInfo() {
 
               <Input
                 type="text"
-                className={`form-control ${errors.telephone && "invalid"}`}
-                {...register("telephone", {
-                  required: "Phone is Required",
-                  // pattern: {
-                  //   message: "Invalid phone no",
-                  // },
-                })}
+                {...register("telephone", { max: 11 })}
                 value={registerData.telephone}
-                onKeyUp={(e) => {
+                onChange={(e) => {
                   setregisterData({
                     ...registerData,
                     telephone: e.currentTarget.value,
@@ -158,25 +132,21 @@ export function RegisterInfo() {
                   trigger("telephone");
                 }}
               />
-              {errors.telephone && (
-                <small className="text-danger">
-                  {errors.telephone.message}
-                </small>
-              )}
+              {errors.telephone && "電話番号は11桁以内で記入してください"}
             </div>
 
             <div className="form-group">
               <label className="col-form-label">
                 <LockIcon />
               </label>
+
               <Input
                 type="text"
-                className={`form-control ${errors.password && "invalid"}`}
                 {...register("password", {
-                  required: "Password is Required",
+                  minLength: 5,
                 })}
                 value={registerData.password}
-                onKeyUp={(e) => {
+                onChange={(e) => {
                   setregisterData({
                     ...registerData,
                     password: e.currentTarget.value,
@@ -184,9 +154,7 @@ export function RegisterInfo() {
                   trigger("password");
                 }}
               />
-              {errors.password && (
-                <small className="text-danger">{errors.password.message}</small>
-              )}
+              {errors.password && "5文字以上のパスワードを記入してください"}
             </div>
 
             <div className="form-group">
@@ -195,12 +163,11 @@ export function RegisterInfo() {
               </label>
               <Input
                 type="text"
-                className={`form-control ${errors.zipcode && "invalid"}`}
                 {...register("zipcode", {
-                  required: "zipcode is Required",
+                  minLength: 5,
                 })}
                 value={registerData.zipcode}
-                onKeyUp={(e) => {
+                onChange={(e) => {
                   setregisterData({
                     ...registerData,
                     zipcode: e.currentTarget.value,
@@ -208,9 +175,7 @@ export function RegisterInfo() {
                   trigger("zipcode");
                 }}
               />
-              {errors.zipcode && (
-                <small className="text-danger">{errors.zipcode.message}</small>
-              )}
+              {errors.zipcode && "郵便番号は5桁以上で記入してください"}
             </div>
             <div className="form-group">
               <label className="col-form-label">
@@ -218,12 +183,11 @@ export function RegisterInfo() {
               </label>
               <Input
                 type="text"
-                className={`form-control ${errors.address && "invalid"}`}
                 {...register("address", {
-                  required: "address is Required",
+                  minLength: 3,
                 })}
                 value={registerData.address}
-                onKeyUp={(e) => {
+                onChange={(e) => {
                   setregisterData({
                     ...registerData,
                     address: e.currentTarget.value,
@@ -231,17 +195,10 @@ export function RegisterInfo() {
                   trigger("address");
                 }}
               />
-              {errors.address && (
-                <small className="text-danger">{errors.address.message}</small>
-              )}
+              {errors.address && "住所は都道府県から番地まで記入してください"}
             </div>
             <Grid container justifyContent="center" alignItems="flex-start">
-              <Button
-                color="inherit"
-                type="submit"
-                className="btn btn-primary my-3"
-                onClick={UserInfo}
-              >
+              <Button color="inherit" type="submit" onClick={() => UserInfo()}>
                 送信
               </Button>
             </Grid>

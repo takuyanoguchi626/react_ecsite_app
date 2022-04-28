@@ -8,7 +8,7 @@ export const Toppage = () => {
   const navigate = useNavigate();
   // 参考サイト
   // http://www.salvatore.jp/restaurant/daikanyama/
-  // http://www.da-isa.jp/
+
   return (
     <div>
       <Grid
