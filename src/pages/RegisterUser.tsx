@@ -16,10 +16,18 @@ import EmailIcon from "@mui/icons-material/Email";
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 import PhoneIcon from "@mui/icons-material/Phone";
 import HomeIcon from "@mui/icons-material/Home";
-import { collection, addDoc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  setDoc,
+  doc,
+  updateDoc,
+  getDoc,
+} from "firebase/firestore";
 import { getFirestore } from "firebase/firestore";
 import { app } from "../app/config";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { registerInfoContext } from "../components/Register/RegisterInfo";
 
 export function RegisterInfo() {
   const navigate = useNavigate();
@@ -37,25 +45,21 @@ export function RegisterInfo() {
     // reset();
   };
 
-  const [registerData, setregisterData] = useState<User>({
-    name: "山田太郎",
-    mailAddress: "d@gmail.com",
-    password: "password",
-    zipcode: "123-4567",
-    address: "新宿三丁目",
-    telephone: "123-4567-8910",
-  });
+  // ユーザー情報格納先コンテキスト
+  const userData = useContext(registerInfoContext);
+  console.log(userData?.registerData);
 
+  // ユーザー情報をAPIに送る
   const UserInfo = async () => {
     const response = await axios.post(
       "http://153.127.48.168:8080/ecsite-api/user",
       {
-        name: registerData.name,
-        email: registerData.mailAddress,
-        password: registerData.password,
-        zipcode: registerData.zipcode,
-        address: registerData.address,
-        telephone: registerData.telephone,
+        name: userData?.registerData.name,
+        email: userData?.registerData.mailAddress,
+        password: userData?.registerData.password,
+        zipcode: userData?.registerData.zipcode,
+        address: userData?.registerData.address,
+        telephone: userData?.registerData.telephone,
       }
     );
     const status = response.data.status;
@@ -63,8 +67,10 @@ export function RegisterInfo() {
 
     if (status === "success") {
       console.log("成功");
+      updateId();
       registerUserInfoToServer();
-      navigate("/AfterRegister");
+      console.log("ユーザー情報が送信されました（１）");
+      // navigate("/AfterRegister");
     } else if (response.data.errorCode === "E-01") {
       console.log("そのメールアドレスはすでに使われています");
       alert("そのメールアドレスはすでに使われています");
@@ -73,16 +79,28 @@ export function RegisterInfo() {
       alert("登録できませんでした");
     }
   };
-  // firebaseへ送信
+  // ユーザー情報をfirebaseへ送信
+
   // firestore認証
   const db = getFirestore(app);
   const docRef = collection(db, "userInformation");
   const authenication = getAuth();
 
-  const mailAddress = registerData.mailAddress;
-  const password = registerData.password;
+  const mailAddress = userData?.registerData.mailAddress;
+  const password = userData?.registerData.password;
+
+  // IDを更新する
+  const updateId = async () => {
+    const newestId = await getDoc(doc(db, "userInfoId", "lastId"));
+    await updateDoc(doc(db, "userInfoId", "lastId"), {
+      userId: newestId.data()?.userId + 1,
+    });
+  };
+
   //   ユーザー情報をfirebaseに送る
   const registerUserInfoToServer = async () => {
+    console.log("ユーザー情報が送信されました（２）");
+
     try {
       if (mailAddress !== undefined && password !== undefined) {
         // firebaseへ登録
@@ -91,21 +109,33 @@ export function RegisterInfo() {
         console.log("error");
         return;
       }
-      await addDoc(docRef, {
-        name: registerData.name,
-        email: registerData.mailAddress,
-        password: registerData.password,
-        zipcode: registerData.zipcode,
-        address: registerData.address,
-        telephone: registerData.telephone,
-      });
+
+      // // IDの初期値
+      // await setDoc(doc(db, "userInfoId", "lastId"), {
+      //   userId: 0,
+      // });
+
+      // IDを取得する
+      const newId = await getDoc(doc(db, "userInfoId", "lastId"));
+
+      // const sendUserInfo = await addDoc(collection(db, "userInformation"), {
+      const sendUserInfo = await setDoc(
+        doc(db, "userInformation", String(newId.data()?.userId + 1)),
+        {
+          id: newId.data()?.userId + 1,
+          name: userData?.registerData.name,
+          email: userData?.registerData.mailAddress,
+          password: userData?.registerData.password,
+          zipcode: userData?.registerData.zipcode,
+          address: userData?.registerData.address,
+          telephone: userData?.registerData.telephone,
+        }
+      );
+      // console.log(sendUserInfo.id);
     } catch (error) {
       console.log(error);
     }
   };
-  // console.log(watch());
-
-  // console.log(errors.name)
 
   return (
     <div className="register">
@@ -125,10 +155,10 @@ export function RegisterInfo() {
                 type="text"
                 className={`form-control ${errors.name && "invalid"}`}
                 {...register("name", { required: "Name is Required" })}
-                value={registerData.name}
+                value={userData?.registerData.name}
                 onChange={(e) => {
-                  setregisterData({
-                    ...registerData,
+                  userData?.setregisterData({
+                    ...userData?.registerData,
                     name: e.currentTarget.value,
                   });
                   trigger("name");
@@ -154,10 +184,10 @@ export function RegisterInfo() {
                   //   message: "Invalid email address",
                   // },
                 })}
-                value={registerData.mailAddress}
+                value={userData?.registerData.mailAddress}
                 onChange={(e) => {
-                  setregisterData({
-                    ...registerData,
+                  userData?.setregisterData({
+                    ...userData?.registerData,
                     mailAddress: e.currentTarget.value,
                   });
                   trigger("mailAddress");
@@ -180,14 +210,11 @@ export function RegisterInfo() {
                 className={`form-control ${errors.telephone && "invalid"}`}
                 {...register("telephone", {
                   required: "Phone is Required",
-                  // pattern: {
-                  //   message: "Invalid phone no",
-                  // },
                 })}
-                value={registerData.telephone}
+                value={userData?.registerData.telephone}
                 onChange={(e) => {
-                  setregisterData({
-                    ...registerData,
+                  userData?.setregisterData({
+                    ...userData?.registerData,
                     telephone: e.currentTarget.value,
                   });
                   trigger("telephone");
@@ -206,15 +233,23 @@ export function RegisterInfo() {
               </label>
               <Input
                 type="text"
-                className={`form-control ${errors.password && "invalid"}`}
-                {...register("password", {
-                  required: "Password is Required",
-                  minLength: 6,
+                {...(register(`form-control ${errors.password && "invalid"}`),
+                {
+                  ...register("password", {
+                    required: {
+                      value: true,
+                      message: "パスワードを入力してください。",
+                    },
+                    minLength: {
+                      value: 6,
+                      message: "パスワードは6文字以上で入力してください",
+                    },
+                  }),
                 })}
-                value={registerData.password}
+                value={userData?.registerData.password}
                 onChange={(e) => {
-                  setregisterData({
-                    ...registerData,
+                  userData?.setregisterData({
+                    ...userData?.registerData,
                     password: e.currentTarget.value,
                   });
                   trigger("password");
@@ -235,10 +270,10 @@ export function RegisterInfo() {
                 {...register("zipcode", {
                   required: "zipcode is Required",
                 })}
-                value={registerData.zipcode}
+                value={userData?.registerData.zipcode}
                 onChange={(e) => {
-                  setregisterData({
-                    ...registerData,
+                  userData?.setregisterData({
+                    ...userData?.registerData,
                     zipcode: e.currentTarget.value,
                   });
                   trigger("zipcode");
@@ -258,10 +293,10 @@ export function RegisterInfo() {
                 {...register("address", {
                   required: "address is Required",
                 })}
-                value={registerData.address}
+                value={userData?.registerData.address}
                 onChange={(e) => {
-                  setregisterData({
-                    ...registerData,
+                  userData?.setregisterData({
+                    ...userData?.registerData,
                     address: e.currentTarget.value,
                   });
                   trigger("address");
