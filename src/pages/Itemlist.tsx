@@ -37,6 +37,7 @@ export const ItemList = () => {
     axios.get(ItemListUrl).then((response) => {
       // itemListにreponsedataをセットする
       setItemList(() => response.data.items);
+      console.log(itemList);
     });
   }, []);
 
