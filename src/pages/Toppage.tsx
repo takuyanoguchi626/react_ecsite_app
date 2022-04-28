@@ -1,21 +1,16 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "@material-ui/core/Button";
-import {
-  Box,
-  Card,
-  CardContent,
-  CardMedia,
-  Grid,
-  Typography,
-} from "@material-ui/core";
+import { Card, CardMedia, Grid, Typography } from "@material-ui/core";
 import PhoneIcon from "@mui/icons-material/Phone";
+import "../css/header.css";
+import "../css/toppage.css";
 
 export const Toppage = () => {
   const navigate = useNavigate();
   // 参考サイト
   // http://www.salvatore.jp/restaurant/daikanyama/
-  // http://www.da-isa.jp/
+
   return (
     <div>
       <Grid
@@ -24,25 +19,36 @@ export const Toppage = () => {
         justifyContent="center"
         alignItems="flex-start"
       >
-        <Grid container justifyContent="center" alignItems="flex-start">
-          <h1>Enjoy our Delicious Pizza</h1>
-        </Grid>
-        <Grid container justifyContent="center" alignItems="flex-start">
+        <h1 className="toppageTitle">Enjoy our Delicious Pizza</h1>
+
+        <Grid
+          className="example"
+          container
+          justifyContent="center"
+          alignItems="flex-start"
+        >
           <CardMedia
             component="img"
             height="500"
             src="../img_pizza/pizza_toppage.png"
           />
+
+          <button className="loginbotan" onClick={() => navigate("/login")}>
+            ログインする
+          </button>
+          <button
+            className="registerbotan"
+            onClick={() => navigate("/registerUser")}
+          >
+            会員登録する
+          </button>
         </Grid>
+
         <br></br>
 
-        {/* デリバリーなら大徳というプロモーションバナー */}
-        <img src="../promotion.png" alt="" width="70%" />
-
         {/* CTRをまとめたセクション */}
-        <table>
-          <tr>.</tr>
-          <tr>
+        <table className="tablebtn">
+          {/* <tr>
             <td align="center">
               <Button
                 className="btn"
@@ -63,25 +69,33 @@ export const Toppage = () => {
                 会員登録する
               </Button>
             </td>
-          </tr>
+          </tr> */}
           <tr>
             <td colSpan={2} align="center">
-              <Typography variant="h6">
-                <div>
-                  ﾟ･*:.｡. .｡.:*･゜まずはここからチェックﾟ･*:.｡. .｡.:*･゜ﾟ
-                </div>
-              </Typography>
+              <h2>
+                <span>まずはここから商品をチェック</span>
+              </h2>
             </td>
           </tr>
           <tr>
-            <td colSpan={2} align="center">
+            <td align="center">
               <Button
                 className="btn"
                 style={{ color: "#e0f2f1", backgroundColor: "#004d40" }}
                 variant="contained"
                 onClick={() => navigate("/itemList")}
               >
-                メニューを見る
+                フードメニューを見る
+              </Button>
+            </td>
+            <td align="center">
+              <Button
+                className="btn"
+                style={{ color: "#e0f2f1", backgroundColor: "#004d40" }}
+                variant="contained"
+                onClick={() => navigate("/itemList")}
+              >
+                デリバリーメニューを見る
               </Button>
             </td>
           </tr>
@@ -167,6 +181,8 @@ export const Toppage = () => {
           </tr>
           <tr>.</tr>
         </table>
+        {/* デリバリーなら大徳というプロモーションバナー */}
+        <img src="../promotion.png" alt="" width="70%" />
       </Grid>
     </div>
   );
