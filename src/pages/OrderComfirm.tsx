@@ -71,6 +71,10 @@ export const OrderComfirm: FC = () => {
     <div>
       <CartListTable hasButton={false}></CartListTable>
       <div>
+        <div>消費税：{totalPrice.TAXOfTotalPrice}円</div>
+        <div>ご注文金額合計：{totalPrice.finallyTotalPrice}円 (税込)</div>
+      </div>
+      <div>
         <h2>お届け先情報</h2>
         <div>
           <div>
