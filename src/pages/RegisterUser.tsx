@@ -1,10 +1,4 @@
-import {
-  Button,
-  Grid,
-  Input,
-  InputAdornment,
-  TextField,
-} from "@material-ui/core";
+import { Button, Grid, Input } from "@material-ui/core";
 import axios from "axios";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -36,13 +30,12 @@ export function RegisterInfo() {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
+
     trigger,
   } = useForm();
 
   const onSubmit = (data: any) => {
     console.log(data);
-    // reset();
   };
 
   // ユーザー情報格納先コンテキスト
@@ -64,7 +57,6 @@ export function RegisterInfo() {
     );
     const status = response.data.status;
     console.dir("responce:" + JSON.stringify(response));
-
     if (status === "success") {
       console.log("成功");
       updateId();
@@ -148,8 +140,7 @@ export function RegisterInfo() {
               <Input
                 required
                 type="text"
-                className={`form-control ${errors.name && "invalid"}`}
-                {...register("name", { required: "Name is Required" })}
+                {...register("name", { minLength: 1 })}
                 value={userData?.registerData.name}
                 onChange={(e) => {
                   userData?.setregisterData({
@@ -157,12 +148,9 @@ export function RegisterInfo() {
                     name: e.currentTarget.value,
                   });
                   trigger("name");
-                  console.log(e.currentTarget.value);
                 }}
               />
-              {errors.name && (
-                <small className="text-danger">{errors.name.message}</small>
-              )}
+              {errors.name && "名前を記入してください"}
             </div>
 
             <div className="form-group">
@@ -172,12 +160,11 @@ export function RegisterInfo() {
 
               <Input
                 type="text"
-                className={`form-control ${errors.mailAddress && "invalid"}`}
                 {...register("mailAddress", {
-                  required: "Email is Required",
-                  // pattern: {
-                  //   message: "Invalid email address",
-                  // },
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: "正しいメールアドレスの形式で入力してください。",
+                  },
                 })}
                 value={userData?.registerData.mailAddress}
                 onChange={(e) => {
@@ -188,11 +175,7 @@ export function RegisterInfo() {
                   trigger("mailAddress");
                 }}
               />
-              {errors.mailAddress && (
-                <small className="text-danger">
-                  {errors.mailAddress.message}
-                </small>
-              )}
+              {errors.mailAddress && "メールアドレスは正しく記入してください"}
             </div>
 
             <div className="form-group">
@@ -202,10 +185,7 @@ export function RegisterInfo() {
 
               <Input
                 type="text"
-                className={`form-control ${errors.telephone && "invalid"}`}
-                {...register("telephone", {
-                  required: "Phone is Required",
-                })}
+                {...register("telephone", { max: 11 })}
                 value={userData?.registerData.telephone}
                 onChange={(e) => {
                   userData?.setregisterData({
@@ -215,31 +195,18 @@ export function RegisterInfo() {
                   trigger("telephone");
                 }}
               />
-              {errors.telephone && (
-                <small className="text-danger">
-                  {errors.telephone.message}
-                </small>
-              )}
+              {errors.telephone && "電話番号は11桁以内で記入してください"}
             </div>
 
             <div className="form-group">
               <label className="col-form-label">
                 <LockIcon />
               </label>
+
               <Input
                 type="text"
-                {...(register(`form-control ${errors.password && "invalid"}`),
-                {
-                  ...register("password", {
-                    required: {
-                      value: true,
-                      message: "パスワードを入力してください。",
-                    },
-                    minLength: {
-                      value: 6,
-                      message: "パスワードは6文字以上で入力してください",
-                    },
-                  }),
+                {...register("password", {
+                  minLength: 5,
                 })}
                 value={userData?.registerData.password}
                 onChange={(e) => {
@@ -250,9 +217,7 @@ export function RegisterInfo() {
                   trigger("password");
                 }}
               />
-              {errors.password && (
-                <small className="text-danger">{errors.password.message}</small>
-              )}
+              {errors.password && "5文字以上のパスワードを記入してください"}
             </div>
 
             <div className="form-group">
@@ -261,9 +226,8 @@ export function RegisterInfo() {
               </label>
               <Input
                 type="text"
-                className={`form-control ${errors.zipcode && "invalid"}`}
                 {...register("zipcode", {
-                  required: "zipcode is Required",
+                  minLength: 5,
                 })}
                 value={userData?.registerData.zipcode}
                 onChange={(e) => {
@@ -274,9 +238,7 @@ export function RegisterInfo() {
                   trigger("zipcode");
                 }}
               />
-              {errors.zipcode && (
-                <small className="text-danger">{errors.zipcode.message}</small>
-              )}
+              {errors.zipcode && "郵便番号は5桁以上で記入してください"}
             </div>
             <div className="form-group">
               <label className="col-form-label">
@@ -284,9 +246,8 @@ export function RegisterInfo() {
               </label>
               <Input
                 type="text"
-                className={`form-control ${errors.address && "invalid"}`}
                 {...register("address", {
-                  required: "address is Required",
+                  minLength: 3,
                 })}
                 value={userData?.registerData.address}
                 onChange={(e) => {
@@ -297,17 +258,10 @@ export function RegisterInfo() {
                   trigger("address");
                 }}
               />
-              {errors.address && (
-                <small className="text-danger">{errors.address.message}</small>
-              )}
+              {errors.address && "住所は都道府県から番地まで記入してください"}
             </div>
             <Grid container justifyContent="center" alignItems="flex-start">
-              <Button
-                color="inherit"
-                type="submit"
-                className="btn btn-primary my-3"
-                onClick={UserInfo}
-              >
+              <Button color="inherit" type="submit" onClick={() => UserInfo()}>
                 送信
               </Button>
             </Grid>
