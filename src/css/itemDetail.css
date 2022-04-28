@@ -18,6 +18,10 @@
   display: flex;
 }
 
+.itemDetail .itemImage {
+  margin-right: 20px;
+}
+
 .itemDetail .topping {
   display: -webkit-box;
   display: -ms-flexbox;

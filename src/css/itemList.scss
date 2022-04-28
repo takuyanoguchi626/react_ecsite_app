@@ -1,0 +1,36 @@
+.itemList {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .container {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .textField {
+      width: 300px;
+    }
+    .search-btn {
+      margin-left: 10px;
+    }
+  }
+
+  .items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    .item-wrapper {
+      margin-right: 20px;
+      margin-top: 20px;
+    }
+  }
+
+  .buttonGroup {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+}

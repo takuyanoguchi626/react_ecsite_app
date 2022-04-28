@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import { Item } from "../types/Item";
 import { Link } from "react-router-dom";
 import { View } from "react-native";
+import { Button, ButtonGroup, TextField } from "@material-ui/core";
+import "../css/itemList.css";
 
 export const ItemList = () => {
   const ItemListUrl = "http://153.127.48.168:8080/ecsite-api/item/items/pizza";
@@ -37,33 +39,29 @@ export const ItemList = () => {
     axios.get(ItemListUrl).then((response) => {
       // itemListにreponsedataをセットする
       setItemList(() => response.data.items);
-      console.log(itemList);
     });
   }, []);
 
   // 表示
   return (
-    <div>
-      <div className="search-wrapper">
-        <div className="container">
-          <form method="post" className="search-form">
-            <input type="text" name="name" className="search-name-input" />
-            <button className="btn search-btn" type="button">
-              検索
-            </button>
-          </form>
-        </div>
+    <div className="itemList">
+      <div className="container">
+        <TextField
+          id="outlined-basic"
+          className="textField"
+          label="検索ワードを入力してください"
+          variant="outlined"
+        />
+        <Button
+          className="btn search-btn"
+          type="button"
+          variant="contained"
+          color="secondary"
+        >
+          検索
+        </Button>
       </div>
-      {/* mapで一覧表示させる */}
-      {/* reactViewでCSSを適用する */}
-      <View
-        style={{
-          // 横並びにする
-          flexDirection: "row",
-          // はみ出る場合、下に折り返す
-          flexWrap: "wrap",
-        }}
-      >
+      <div className="items">
         {showItemList.map((item: Item) => {
           return (
             <div key={item.id} className="item-wrapper">
@@ -87,20 +85,26 @@ export const ItemList = () => {
             </div>
           );
         })}
-      </View>
-      {[...Array(numberOfPage)].map((num: number, index: number) => {
-        return (
-          <span key={index}>
-            <button
-              onClick={() => {
-                changePage(index + 1);
-              }}
-            >
-              {index + 1}
-            </button>
-          </span>
-        );
-      })}
+      </div>
+      <ButtonGroup
+        variant="text"
+        aria-label="text button group"
+        className="buttonGroup"
+      >
+        {[...Array(numberOfPage)].map((num: number, index: number) => {
+          return (
+            <span key={index}>
+              <Button
+                onClick={() => {
+                  changePage(index + 1);
+                }}
+              >
+                {index + 1}
+              </Button>
+            </span>
+          );
+        })}
+      </ButtonGroup>
     </div>
   );
 };
