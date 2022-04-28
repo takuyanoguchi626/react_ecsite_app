@@ -69,8 +69,7 @@ export function RegisterInfo() {
       console.log("成功");
       updateId();
       registerUserInfoToServer();
-      console.log("ユーザー情報が送信されました（１）");
-      // navigate("/AfterRegister");
+      navigate("/AfterRegister");
     } else if (response.data.errorCode === "E-01") {
       console.log("そのメールアドレスはすでに使われています");
       alert("そのメールアドレスはすでに使われています");
@@ -99,8 +98,6 @@ export function RegisterInfo() {
 
   //   ユーザー情報をfirebaseに送る
   const registerUserInfoToServer = async () => {
-    console.log("ユーザー情報が送信されました（２）");
-
     try {
       if (mailAddress !== undefined && password !== undefined) {
         // firebaseへ登録
@@ -118,7 +115,6 @@ export function RegisterInfo() {
       // IDを取得する
       const newId = await getDoc(doc(db, "userInfoId", "lastId"));
 
-      // const sendUserInfo = await addDoc(collection(db, "userInformation"), {
       const sendUserInfo = await setDoc(
         doc(db, "userInformation", String(newId.data()?.userId + 1)),
         {
@@ -131,7 +127,6 @@ export function RegisterInfo() {
           telephone: userData?.registerData.telephone,
         }
       );
-      // console.log(sendUserInfo.id);
     } catch (error) {
       console.log(error);
     }
