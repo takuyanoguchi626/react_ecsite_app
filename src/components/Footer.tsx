@@ -34,7 +34,10 @@ export const Footer = () => {
               <div>
                 <Link to="/QuestionForm">お問い合わせ</Link>
               </div>
-              <div>FAQ</div>
+              <div>
+                {" "}
+                <Link to="/FrequentQuestion">FAQ</Link>
+              </div>
               <div>サイトマップ</div>
             </Grid>
             <Grid item xs={4} md={2}>
