@@ -28,14 +28,15 @@ export const Footer = () => {
             <Grid item xs={4} md={2}>
               <div>ヘルプ</div>
               <div> カロリー情報</div>
-              <div>アレルギー情報</div>
+              <div>
+                <Link to="/Alergy">アレルギー情報</Link>
+              </div>
               <div>注文する</div>
               <div>ご注文方法</div>
               <div>
                 <Link to="/QuestionForm">お問い合わせ</Link>
               </div>
               <div>
-                {" "}
                 <Link to="/FrequentQuestion">FAQ</Link>
               </div>
               <div>サイトマップ</div>
