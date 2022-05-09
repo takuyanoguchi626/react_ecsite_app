@@ -97,8 +97,6 @@ export const OrderComfirm: FC = () => {
    */
 
   const autoComplete = async () => {
-    console.log(userStatus?.userInfo);
-
     const userInfoRef = collection(db, "userInformation");
     // クエリを実行する
     const filteredData = query(

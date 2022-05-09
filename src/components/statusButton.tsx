@@ -57,7 +57,6 @@ export const StatusButton: React.VFC = () => {
       navigate("/");
     }
     console.log("ログアウトしてTOPページへ飛ぶ");
-    console.log(userStatus?.userInfo);
   };
 
   const handleSignIn = () => {
