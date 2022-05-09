@@ -1,0 +1,27 @@
+.itemDetail {
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .description {
+    display: flex;
+  }
+
+  .itemImage {
+    margin-right: 20px;
+  }
+
+  .topping {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 80%;
+  }
+
+  .button {
+    margin: 20px;
+    .pushInCartList {
+      margin-right: 20px;
+    }
+  }
+}

@@ -9,6 +9,20 @@ import { OrderItem } from "../types/OrderItem";
 import { OrderTopping } from "../types/OrderTopping";
 import { orderContext } from "../components/providers/OrderProvider";
 import { IdContext } from "../components/providers/IdProvider";
+import "../css/itemDetail.css";
+import {
+  Button,
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  FormGroup,
+  FormLabel,
+  InputLabel,
+  MenuItem,
+  Radio,
+  RadioGroup,
+  Select,
+} from "@material-ui/core";
 
 export const ItemDetail = () => {
   // routerからitemidを取得する
@@ -166,85 +180,92 @@ export const ItemDetail = () => {
   const navigate = useNavigate();
 
   return (
-    <div>
-      <h1>{item?.name}</h1>
-      <img className="itemImage" src={item?.imagePath} alt="test" />
-      <p>{item?.description}</p>
-      <input
-        id="M"
-        name="size"
-        type="radio"
-        value="M"
-        checked={hasSize}
-        onChange={changeSize}
-      />
-      <label htmlFor="M"> M {item?.priceM}円</label>
-      <input
-        id="L"
-        name="size"
-        type="radio"
-        value="L"
-        checked={!hasSize}
-        onChange={changeSize}
-      />
-      <label htmlFor="L">L {item?.priceL}円</label>
-      <div>トッピング： 1つにつき Ｍ 200円(税抜) Ｌ 300 円(税抜)</div>
-      {toppingList?.map((topping, index) => {
-        return (
-          <div>
-            <label key={index}>
-              <input
-                type="checkbox"
-                // チェックが入った値を取得
-                onChange={getSelectedTopping}
-                value={topping.id}
+    <div className="itemDetail">
+      <div className="description">
+        <img className="itemImage" src={item?.imagePath} alt="test" />
+        <div>
+          <h1>{item?.name}</h1>
+          <p>{item?.description}</p>
+          <FormControl>
+            <FormLabel id="demo-radio-buttons-group-label">サイズ</FormLabel>
+            <RadioGroup
+              row
+              aria-labelledby="demo-radio-buttons-group-label"
+              defaultValue="female"
+              name="radio-buttons-group"
+            >
+              <FormControlLabel
+                value="M"
+                control={<Radio checked={hasSize} onChange={changeSize} />}
+                label="M"
               />
-              <span>{topping.name}</span>
-            </label>
-          </div>
-        );
-      })}
-      <div>
-        ; 数量
-        <select
-          className="quantity"
-          name="quantity"
-          id="pizzaQuantity"
-          onChange={(e) => setQuantity(Number(e.target.value))}
-          defaultValue="1"
-        >
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
-          <option value="10">10</option>
-          <option value="11">11</option>
-          <option value="12">12</option>
-        </select>
+              <FormControlLabel
+                value="L"
+                control={<Radio checked={!hasSize} onChange={changeSize} />}
+                label="L"
+              />
+            </RadioGroup>
+          </FormControl>
+        </div>
       </div>
+      <div>トッピング： 1つにつき Ｍ 200円(税抜) Ｌ 300 円(税抜)</div>
+      <div className="topping">
+        {toppingList?.map((topping, index) => {
+          return (
+            <FormGroup key={index}>
+              <FormControlLabel
+                control={
+                  <Checkbox onChange={getSelectedTopping} value={topping.id} />
+                }
+                label={topping.name}
+              />
+            </FormGroup>
+          );
+        })}
+      </div>
+      <FormControl>
+        <InputLabel id="demo-simple-select-label">数量</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          defaultValue="1"
+          label="Age"
+          onChange={(e) => setQuantity(Number(e.target.value))}
+        >
+          <MenuItem value={1}>1</MenuItem>
+          <MenuItem value={2}>2</MenuItem>
+          <MenuItem value={3}>3</MenuItem>
+          <MenuItem value={4}>4</MenuItem>
+          <MenuItem value={5}>5</MenuItem>
+          <MenuItem value={6}>6</MenuItem>
+          <MenuItem value={7}>7</MenuItem>
+          <MenuItem value={8}>8</MenuItem>
+          <MenuItem value={9}>9</MenuItem>
+          <MenuItem value={10}>10</MenuItem>
+          <MenuItem value={11}>11</MenuItem>
+          <MenuItem value={12}>12</MenuItem>
+        </Select>
+      </FormControl>
       <div>この商品金額：{totalPrice}円（税抜）</div>
-      <div>
-        <button
+      <div className="button">
+        <Button
+          className="pushInCartList"
+          variant="contained"
+          color="secondary"
           onClick={() => {
             pushInCartList();
           }}
         >
           カートに入れる
-        </button>
-      </div>
-      <div>
-        <button
+        </Button>
+        <Button
+          variant="contained"
           onClick={() => {
             navigate("/itemList/");
           }}
         >
           商品一覧に戻る
-        </button>
+        </Button>
       </div>
     </div>
   );

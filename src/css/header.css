@@ -1,4 +1,4 @@
-.root .appbar {
+/* .root .appbar {
   border-radius: 10px;
   box-shadow: 1px 1px 5px black;
   background-color: burlywood;
@@ -11,4 +11,17 @@
 }
 .title {
   flex-grow: 1;
+} */
+
+.toppageTitle {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  font-size: 55px;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  size: 40px;
+  padding: 5px 10px; /*文字周りの余白*/
+  color: black;
+  border-bottom: 3px dashed black;
 }
