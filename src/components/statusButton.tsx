@@ -17,12 +17,23 @@ export const StatusButton: React.VFC = () => {
 
   // firebase認証機能の認証
   const authrization = getAuth(app);
-  // 現在ログインしているユーザー
-  const currentUser = authrization.currentUser;
   // ログイン状態確認
   const loginStatus = authrization.onAuthStateChanged((user) => {
     console.log(user);
   });
+
+  const clearUserInfo = () => {
+    // 入力欄を更新
+    userStatus?.setUserInfo({
+      ...userStatus?.userInfo,
+      name: "",
+      mailAddress: "",
+      zipCode: 0,
+      address: "",
+      telephone: 0,
+    });
+  };
+
   // ログアウトメソッド
   const logout = () => {
     signOut(authrization)
@@ -31,6 +42,7 @@ export const StatusButton: React.VFC = () => {
         alert("ログアウトしました");
         auth?.setstatusCheck(false);
         loginStatus();
+        clearUserInfo();
       })
       .catch((error) => {
         alert("ログアウトに失敗しました");
@@ -40,21 +52,12 @@ export const StatusButton: React.VFC = () => {
   const handleSignOut = () => {
     if (loginStatus !== null) {
       logout();
-      if (auth?.statusCheck === false) {
-        // 入力欄を更新
-        userStatus?.setUserInfo({
-          ...userStatus?.userInfo,
-          name: "",
-          mailAddress: "",
-          zipCode: 0,
-          address: "",
-          telephone: 0,
-        });
-      }
+
       auth?.setstatusCheck(false);
       navigate("/");
     }
     console.log("ログアウトしてTOPページへ飛ぶ");
+    console.log(userStatus?.userInfo);
   };
 
   const handleSignIn = () => {

@@ -92,7 +92,13 @@ export const OrderComfirm: FC = () => {
   let inputUserAddress = "";
   let inputUserTelephone = 0;
 
+  /**
+   * 自動入力
+   */
+
   const autoComplete = async () => {
+    console.log(userStatus?.userInfo);
+
     const userInfoRef = collection(db, "userInformation");
     // クエリを実行する
     const filteredData = query(
