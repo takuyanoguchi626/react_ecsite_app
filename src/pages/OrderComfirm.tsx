@@ -27,8 +27,6 @@ export const OrderComfirm: FC = () => {
   const navigate = useNavigate();
   const totalPrice = useTotalPrice();
   //ユーザーが入力した情報
-  console.log("useStateが呼ばれた");
-
   const userStatus = useContext(userContext);
 
   //配達時間の表示の為の配列
@@ -94,6 +92,10 @@ export const OrderComfirm: FC = () => {
   let inputUserAddress = "";
   let inputUserTelephone = 0;
 
+  /**
+   * 自動入力
+   */
+
   const autoComplete = async () => {
     const userInfoRef = collection(db, "userInformation");
     // クエリを実行する
@@ -109,13 +111,6 @@ export const OrderComfirm: FC = () => {
       inputUserZipCode = doc.get("zipcode");
       inputUserAddress = doc.get("address");
       inputUserTelephone = doc.get("telephone");
-      console.log("firebaseから取得した結果＝＝＝");
-      console.log(inputUserName);
-      console.log(inputUserEmail);
-      console.log(inputUserZipCode);
-      console.log(inputUserAddress);
-      console.log(inputUserTelephone);
-      console.log("firebaseから取得した結果ここまで＝＝＝");
     });
 
     // 郵便番号のフォーマット
@@ -134,9 +129,6 @@ export const OrderComfirm: FC = () => {
       address: inputUserAddress,
       telephone: inputUserTelephone,
     });
-
-    console.log("セット作業が完了");
-    console.log(userStatus?.userInfo);
   };
 
   return (

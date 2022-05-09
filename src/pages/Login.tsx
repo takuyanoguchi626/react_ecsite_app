@@ -40,11 +40,11 @@ export const Login = () => {
 
   const submitLogin = async () => {
     setloginErrorMessage(() => "");
-
     signInWithEmailAndPassword(authenication, mailAddress, password)
       .then((result) => {
         // Signed in
         auth?.setstatusCheck(true);
+        console.log(result);
         navigate("/ItemList");
       })
       .catch((error) => {
