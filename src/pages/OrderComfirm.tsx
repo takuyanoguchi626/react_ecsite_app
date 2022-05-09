@@ -193,9 +193,10 @@ export const OrderComfirm: FC = () => {
                   variant="outlined"
                   id="zipcode"
                   type="number"
+                  value={userStatus?.userInfo.zipCode}
                   onChange={(e) => {
-                    setUserInfo({
-                      ...userInfo,
+                    userStatus?.setUserInfo({
+                      ...userStatus?.userInfo,
                       zipCode: Number(e.target.value),
                     });
                   }}
@@ -204,21 +205,6 @@ export const OrderComfirm: FC = () => {
                   住所検索
                 </Button>
               </div>
-              <label htmlFor="zipcode">郵便番号(ハイフンなし)</label>
-              <input
-                id="zipcode"
-                type="number"
-                value={userStatus?.userInfo.zipCode}
-                onChange={(e) => {
-                  userStatus?.setUserInfo({
-                    ...userStatus?.userInfo,
-                    zipCode: Number(e.target.value),
-                  });
-                }}
-              />
-              <button type="button">
-                <span>住所検索</span>
-              </button>
             </div>
             <div>
               <div>
@@ -228,23 +214,15 @@ export const OrderComfirm: FC = () => {
                   variant="outlined"
                   id="address"
                   type="text"
+                  value={userStatus?.userInfo.address}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setUserInfo({ ...userInfo, address: e.target.value })
+                    userStatus?.setUserInfo({
+                      ...userStatus?.userInfo,
+                      address: e.target.value,
+                    })
                   }
                 />
               </div>
-              <label htmlFor="address">住所</label>
-              <input
-                id="address"
-                type="text"
-                value={userStatus?.userInfo.address}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  userStatus?.setUserInfo({
-                    ...userStatus?.userInfo,
-                    address: e.target.value,
-                  })
-                }
-              />
             </div>
             <div>
               <TextField
@@ -272,32 +250,22 @@ export const OrderComfirm: FC = () => {
                   id="deliveryDate"
                   type="date"
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setUserInfo(() => {
+                    userStatus?.setUserInfo(() => {
                       console.log(e.target.value);
 
                       const deliveryDate = format(
                         new Date(e.target.value),
                         "yyyy-MM-dd"
                       );
-                      return { ...userInfo, deliveryDate: deliveryDate };
-              <label htmlFor="address">配達日時</label>
-              <input
-                id="deliveryDate"
-                type="date"
-                // onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                //   userStatus?.setUserInfo(() => {
-                //     console.log(e.target.value);
-
-                //      deliveryDate = format(
-                //       new Date(e.target.value),
-                //       "yyyy-MM-dd"
-                //     );
-                //     return { ...userInfo, deliveryDate: deliveryDate };
-                //   })
-                // }
-              />
-            </div>
-            {deliveryHourArr.map((time: number, index: number) => (
+                      return {
+                        ...userStatus?.userInfo,
+                        deliveryDate: deliveryDate,
+                      };
+                    })
+                  }
+                />
+              </div>
+              {/* {deliveryHourArr.map((time: number, index: number) => (
               <label key={index}>
                 <input
                   name="deliveryTime"
@@ -310,7 +278,7 @@ export const OrderComfirm: FC = () => {
                     })
                   }
                 />
-              </div>
+              </div> */}
               <FormControl>
                 <RadioGroup
                   row
@@ -324,8 +292,8 @@ export const OrderComfirm: FC = () => {
                       control={
                         <Radio
                           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                            setUserInfo({
-                              ...userInfo,
+                            userStatus?.setUserInfo({
+                              ...userStatus?.userInfo,
                               deliveryHour: Number(e.target.value),
                             })
                           }
@@ -368,8 +336,8 @@ export const OrderComfirm: FC = () => {
                   control={
                     <Radio
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        setUserInfo({
-                          ...userInfo,
+                        userStatus?.setUserInfo({
+                          ...userStatus?.userInfo,
                           paymentMethod: Number(e.target.value),
                         })
                       }
@@ -382,8 +350,8 @@ export const OrderComfirm: FC = () => {
                   control={
                     <Radio
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        setUserInfo({
-                          ...userInfo,
+                        userStatus?.setUserInfo({
+                          ...userStatus?.userInfo,
                           paymentMethod: Number(e.target.value),
                         })
                       }
