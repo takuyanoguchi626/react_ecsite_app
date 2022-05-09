@@ -13,6 +13,7 @@ export const StatusButton: React.VFC = () => {
   // SNS認証ログアウト
   const authrization = getAuth(app);
   const currentUser = authrization.currentUser;
+  // ログアウトメソッド
   const logout = () => {
     signOut(authrization)
       .then(() => {
@@ -25,16 +26,15 @@ export const StatusButton: React.VFC = () => {
       });
   };
   const handleSignOut = () => {
-    // SNSでログインしたユーザーをログアウト
     if (currentUser) {
       logout();
       auth?.setstatusCheck(false);
+      navigate("/");
     }
     console.log("ログアウトしてTOPページへ飛ぶ");
   };
 
   const handleSignIn = () => {
-    auth?.setstatusCheck(true);
     navigate("/login");
     console.log("ログイン画面へいく");
   };
