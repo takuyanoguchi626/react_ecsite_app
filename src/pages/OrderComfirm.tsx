@@ -118,12 +118,19 @@ export const OrderComfirm: FC = () => {
       console.log("firebaseから取得した結果ここまで＝＝＝");
     });
 
+    // 郵便番号のフォーマット
+    const stringZipCode = String(inputUserZipCode);
+    console.log(stringZipCode);
+    const formatZipCode = stringZipCode.replace("-", "");
+    console.log(formatZipCode);
+    const numberZipCode = Number(formatZipCode);
+    console.log(numberZipCode);
     // 入力欄を更新
     userStatus?.setUserInfo({
       ...userStatus?.userInfo,
       name: inputUserName,
       mailAddress: inputUserEmail,
-      zipCode: inputUserZipCode,
+      zipCode: numberZipCode,
       address: inputUserAddress,
       telephone: inputUserTelephone,
     });
