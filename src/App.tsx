@@ -24,7 +24,11 @@ import { ErrorPage } from "./pages/ErrorPage";
 import { QuestionForm } from "./pages/QuestionForm";
 import { QuestionCompleted } from "./pages/QuestionCompleted";
 import { EditCartItem } from "./pages/EditCartItem";
+
 import { HelpOrder } from "./pages/HelpOrder";
+
+import FrequentQuestion from "./components/FrequentQuestion";
+import { Alergy } from "./pages/Alergy";
 
 function App() {
   return (
@@ -59,6 +63,8 @@ function App() {
             <Route path="/*" element={<ErrorPage />} />
             <Route path="/QuestionForm" element={<QuestionForm />} />
             <Route path="/HelpOrder" element={<HelpOrder />} />
+            <Route path="/FrequentQuestion" element={<FrequentQuestion />} />
+            <Route path="/Alergy" element={<Alergy />} />
             <Route path="/QuestionCompleted" element={<QuestionCompleted />} />
             <Route
               path="/EditCartItem/"

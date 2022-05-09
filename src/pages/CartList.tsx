@@ -1,7 +1,9 @@
+import { Button } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 
 import { CartListTable } from "../components/CartListTable";
 import { useTotalPrice } from "../hooks/useTotalPrice";
+import "../css/cartList.css";
 
 export const CartList = () => {
   const navigate = useNavigate();
@@ -11,8 +13,8 @@ export const CartList = () => {
 
   return (
     <>
-      <div>
-        <div>
+      <div className="cartList">
+        <div className="context">
           <h1>ショッピングカート</h1>
           <div>
             <CartListTable hasButton={true}></CartListTable>
@@ -22,23 +24,24 @@ export const CartList = () => {
             <div>ご注文金額合計：{totalPrice.finallyTotalPrice}円 (税込)</div>
           </div>
           <div>
-            <button
+            <Button
+              variant="contained"
+              color="secondary"
               type="button"
               onClick={() => {
                 navigate("/OrderComfirm/");
               }}
             >
-              <span>注文に進む</span>
-            </button>
-            <div>
-              <button
-                onClick={() => {
-                  navigate("/ItemList/");
-                }}
-              >
-                商品一覧に戻る
-              </button>
-            </div>
+              注文に進む
+            </Button>
+            <Button
+              variant="contained"
+              onClick={() => {
+                navigate("/itemList/");
+              }}
+            >
+              商品一覧に戻る
+            </Button>
           </div>
         </div>
       </div>

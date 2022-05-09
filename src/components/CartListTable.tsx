@@ -1,3 +1,4 @@
+import { Button } from "@material-ui/core";
 import React, { FC, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { OrderItem } from "../types/OrderItem";
@@ -16,14 +17,22 @@ export const CartListTable: FC<props> = (props) => {
   const { hasButton } = props;
   //ショッピングカートの商品を取得
   const cart = useContext(cartListContext);
-  const cartList = cart?.cartList;
+  if (!cart) {
+    throw new Error("");
+  }
+  const cartList = cart.cartList;
   //商品を削除する
   const deleteCartItem = (index: number) => {
-    cart?.setCartList((cartList) => {
-      const cartList2 = [...cartList];
-      cartList2?.splice(index, 1);
-      return cartList2;
-    });
+    const result = window.confirm(
+      `本当に「${cartList[index].item.name}」をカートから削除してよろしいですか？`
+    );
+    if (result) {
+      cart?.setCartList((cartList) => {
+        const cartList2 = [...cartList];
+        cartList2?.splice(index, 1);
+        return cartList2;
+      });
+    }
   };
   //編集する商品を格納するcontextを取得
   const editOrderItem = useContext(EditContext);
@@ -87,22 +96,28 @@ export const CartListTable: FC<props> = (props) => {
                   if (hasButton) {
                     return (
                       <>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            deleteCartItem(index);
-                          }}
-                        >
-                          <span>削除</span>
-                        </button>
-                        <button
+                        <Button
+                          className="pushInCartList"
+                          variant="contained"
+                          color="secondary"
                           type="button"
                           onClick={() => {
                             edit(orderItem, index);
                           }}
                         >
-                          <span>編集</span>
-                        </button>
+                          編集
+                        </Button>
+                        <Button
+                          className="pushInCartList"
+                          variant="contained"
+                          color="secondary"
+                          type="button"
+                          onClick={() => {
+                            deleteCartItem(index);
+                          }}
+                        >
+                          削除
+                        </Button>
                       </>
                     );
                   }
