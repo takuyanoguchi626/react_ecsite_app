@@ -29,8 +29,14 @@ export const Footer = () => {
               <div>ヘルプ</div>
               <div> カロリー情報</div>
               <div>アレルギー情報</div>
-              <div>注文する</div>
-              <div>ご注文方法</div>
+              <div>
+                {" "}
+                <Link to="/Login">注文する</Link>
+              </div>
+              <div>
+                {" "}
+                <Link to="/HelpOrder">ご注文方法</Link>
+              </div>
               <div>
                 <Link to="/QuestionForm">お問い合わせ</Link>
               </div>
