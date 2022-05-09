@@ -1,0 +1,123 @@
+.example {
+  /* display: flex;
+  justify-content: center;
+  position: relative; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h2 {
+  position: relative;
+  margin: 30px;
+  text-align: center;
+}
+
+h2:before,
+h2:after {
+  position: absolute;
+  z-index: 0;
+  bottom: -10px;
+  display: block;
+  content: "";
+  border: 1em solid #d90606;
+}
+
+h2:before {
+  left: -30px;
+  border-left-width: 15px;
+  border-left-color: transparent;
+}
+
+h2:after {
+  right: -30px;
+  border-right-width: 15px;
+  border-right-color: transparent;
+}
+
+h2 span {
+  position: relative;
+  z-index: 1;
+  display: block;
+  padding: 1rem 2rem;
+  color: #fff;
+  background: #fa4141;
+}
+
+h2 span:before,
+h2 span:after {
+  position: absolute;
+  bottom: -10px;
+  display: block;
+  width: 10px;
+  height: 10px;
+  content: "";
+  border-style: solid;
+  border-color: #b70505 transparent transparent transparent;
+}
+
+h2 span:before {
+  left: 0;
+  border-width: 10px 0 0 10px;
+}
+
+h2 span:after {
+  right: 0;
+  border-width: 10px 10px 0 0;
+}
+
+.loginbotan {
+  display: block;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid #004d40;
+  color: #004d40;
+
+  padding: 10px;
+  text-align: center;
+
+  font-size: 120%;
+  font-weight: bold;
+  transition: 0.3s;
+  text-decoration: none;
+
+  text-align: center;
+  border-radius: 30px;
+  position: absolute;
+
+  right: 800px;
+  bottom: 300px;
+}
+.loginbotan:hover {
+  background: #004d40;
+  border: 1px solid #004d40;
+  color: white;
+}
+
+.registerbotan {
+  display: block;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid #004d40;
+  color: #004d40;
+
+  padding: 10px;
+  text-align: center;
+
+  font-size: 120%;
+  font-weight: bold;
+  transition: 0.3s;
+  text-decoration: none;
+
+  text-align: center;
+  border-radius: 30px;
+  position: absolute;
+
+  right: 450px;
+  bottom: 300px;
+}
+.registerbotan:hover {
+  background: #004d40;
+  border: 1px solid #004d40;
+  color: white;
+}
