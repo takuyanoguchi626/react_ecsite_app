@@ -5,6 +5,17 @@ import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { CartListTable } from "../components/CartListTable";
 import { useTotalPrice } from "../hooks/useTotalPrice";
+import "../css/orderConfirm.css";
+import {
+  Button,
+  FormControl,
+  FormControlLabel,
+  FormGroup,
+  FormLabel,
+  Radio,
+  RadioGroup,
+  TextField,
+} from "@material-ui/core";
 import { collection, getDocs } from "firebase/firestore";
 import { getFirestore, query, where } from "firebase/firestore";
 import { app } from "../app/config";
@@ -17,17 +28,6 @@ export const OrderComfirm: FC = () => {
   const totalPrice = useTotalPrice();
   //ユーザーが入力した情報
   console.log("useStateが呼ばれた");
-
-  // const [userInfo, setUserInfo] = useState<UserInfo>({
-  //   name: "",
-  //   mailAddress: "",
-  //   zipCode: 0,
-  //   address: "",
-  //   telephone: 0,
-  //   deliveryDate: "1111-11-11",
-  //   deliveryHour: 12,
-  //   paymentMethod: 0,
-  // });
 
   const userStatus = useContext(userContext);
 
@@ -140,22 +140,24 @@ export const OrderComfirm: FC = () => {
   };
 
   return (
-    <div>
-      <CartListTable hasButton={false}></CartListTable>
-      <div>
-        <div>消費税：{totalPrice.TAXOfTotalPrice}円</div>
-        <div>ご注文金額合計：{totalPrice.finallyTotalPrice}円 (税込)</div>
-      </div>
-      <div>
-        <h2>お届け先情報</h2>
+    <div className="orderConfirm">
+      <div className="context">
+        <CartListTable hasButton={false}></CartListTable>
         <div>
+          <div>消費税：{totalPrice.TAXOfTotalPrice}円</div>
+          <div>ご注文金額合計：{totalPrice.finallyTotalPrice}円 (税込)</div>
+        </div>
+        <div>
+          <h2>お届け先情報</h2>
           <button type="button" onClick={autoComplete}>
             自動入力
           </button>
           <div>
             <div>
-              <label htmlFor="name">お名前</label>
-              <input
+              <TextField
+                className="textField"
+                label="name"
+                variant="outlined"
                 id="name"
                 type="text"
                 value={userStatus?.userInfo.name}
@@ -167,11 +169,11 @@ export const OrderComfirm: FC = () => {
                 }}
               />
             </div>
-          </div>
-          <div>
             <div>
-              <label htmlFor="email">メールアドレス</label>
-              <input
+              <TextField
+                className="textField"
+                label="email"
+                variant="outlined"
                 id="email"
                 type="email"
                 value={userStatus?.userInfo.mailAddress}
@@ -183,9 +185,25 @@ export const OrderComfirm: FC = () => {
                 }}
               />
             </div>
-          </div>
-          <div>
             <div>
+              <div>
+                <TextField
+                  className="textField"
+                  label="zipCode"
+                  variant="outlined"
+                  id="zipcode"
+                  type="number"
+                  onChange={(e) => {
+                    setUserInfo({
+                      ...userInfo,
+                      zipCode: Number(e.target.value),
+                    });
+                  }}
+                />
+                <Button type="button" variant="contained">
+                  住所検索
+                </Button>
+              </div>
               <label htmlFor="zipcode">郵便番号(ハイフンなし)</label>
               <input
                 id="zipcode"
@@ -202,9 +220,19 @@ export const OrderComfirm: FC = () => {
                 <span>住所検索</span>
               </button>
             </div>
-          </div>
-          <div>
             <div>
+              <div>
+                <TextField
+                  className="textField"
+                  label="address"
+                  variant="outlined"
+                  id="address"
+                  type="text"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setUserInfo({ ...userInfo, address: e.target.value })
+                  }
+                />
+              </div>
               <label htmlFor="address">住所</label>
               <input
                 id="address"
@@ -218,11 +246,11 @@ export const OrderComfirm: FC = () => {
                 }
               />
             </div>
-          </div>
-          <div>
             <div>
-              <label htmlFor="tel">電話番号</label>
-              <input
+              <TextField
+                className="textField"
+                label="telephone"
+                variant="outlined"
                 id="tel"
                 type="tel"
                 value={userStatus?.userInfo.telephone}
@@ -234,9 +262,24 @@ export const OrderComfirm: FC = () => {
                 }
               />
             </div>
-          </div>
-          <div>
             <div>
+              <div>
+                <div>配達日時：</div>
+                <TextField
+                  className="textField"
+                  // label="deliveryDate"
+                  variant="outlined"
+                  id="deliveryDate"
+                  type="date"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setUserInfo(() => {
+                      console.log(e.target.value);
+
+                      const deliveryDate = format(
+                        new Date(e.target.value),
+                        "yyyy-MM-dd"
+                      );
+                      return { ...userInfo, deliveryDate: deliveryDate };
               <label htmlFor="address">配達日時</label>
               <input
                 id="deliveryDate"
@@ -267,9 +310,95 @@ export const OrderComfirm: FC = () => {
                     })
                   }
                 />
-                <span>{time}時</span>
-              </label>
-            ))}
+              </div>
+              <FormControl>
+                <RadioGroup
+                  row
+                  aria-labelledby="demo-radio-buttons-group-label"
+                  defaultValue="10"
+                  name="radio-buttons-group"
+                >
+                  {deliveryHourArr.map((time: number, index: number) => (
+                    <FormControlLabel
+                      value={time}
+                      control={
+                        <Radio
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            setUserInfo({
+                              ...userInfo,
+                              deliveryHour: Number(e.target.value),
+                            })
+                          }
+                        />
+                      }
+                      label={time + "時"}
+                    />
+                    // <label key={index}>
+                    // <input
+                    //   name="deliveryTime"
+                    //   type="radio"
+                    //   value={time}
+                    //   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    //     setUserInfo({
+                    //       ...userInfo,
+                    //       deliveryHour: Number(e.target.value),
+                    //     })
+                    //   }
+                    // />
+                    //   <span>{time}時</span>
+                    // </label>
+                  ))}
+                </RadioGroup>
+              </FormControl>
+            </div>
+          </div>
+          <div>
+            <FormControl>
+              <FormLabel id="demo-radio-buttons-group-label">
+                お支払方法
+              </FormLabel>
+              <RadioGroup
+                row
+                aria-labelledby="demo-radio-buttons-group-label"
+                defaultValue="1"
+                name="radio-buttons-group"
+              >
+                <FormControlLabel
+                  value="1"
+                  control={
+                    <Radio
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        setUserInfo({
+                          ...userInfo,
+                          paymentMethod: Number(e.target.value),
+                        })
+                      }
+                    />
+                  }
+                  label="代金引換"
+                />
+                <FormControlLabel
+                  value="2"
+                  control={
+                    <Radio
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        setUserInfo({
+                          ...userInfo,
+                          paymentMethod: Number(e.target.value),
+                        })
+                      }
+                    />
+                  }
+                  label="クレジットカード"
+                />
+              </RadioGroup>
+            </FormControl>
+          </div>
+          <div>
+            <div>{orderErrorMessage}</div>
+            <Button type="button" variant="contained" onClick={order}>
+              この内容で注文する
+            </Button>
           </div>
         </div>
         <h2>お支払い方法</h2>
