@@ -13,7 +13,7 @@ export const StatusButton: React.VFC = () => {
   // SNS認証ログアウト
   const authrization = getAuth(app);
   const currentUser = authrization.currentUser;
-  const logoutSNS = () => {
+  const logout = () => {
     signOut(authrization)
       .then(() => {
         // Sign-out successful.
@@ -24,15 +24,11 @@ export const StatusButton: React.VFC = () => {
         // An error happened.
       });
   };
-  const handleSignOut = async () => {
-    const response = await axios.post(
-      "http://153.127.48.168:8080/ecsite-api/user/logout"
-    );
-    console.dir("response:" + JSON.stringify(response));
-    auth?.setstatusCheck(false);
+  const handleSignOut = () => {
     // SNSでログインしたユーザーをログアウト
     if (currentUser) {
-      logoutSNS();
+      logout();
+      auth?.setstatusCheck(false);
     }
     console.log("ログアウトしてTOPページへ飛ぶ");
   };

@@ -23,6 +23,7 @@ import LockIcon from "@mui/icons-material/Lock";
 import EmailIcon from "@mui/icons-material/Email";
 import { collection, addDoc } from "firebase/firestore";
 import { getFirestore } from "firebase/firestore";
+import "../css/Login.css";
 
 // useEffectを使ったログイン機能;
 export const Login = () => {
@@ -35,30 +36,41 @@ export const Login = () => {
 
   // firebaseへ送信
   // firestore認証
-  const db = getFirestore(app);
-  const docRef = collection(db, "userInformation");
   const authenication = getAuth();
 
   const submitLogin = async () => {
-    console.log(mailAddress, password);
     setloginErrorMessage(() => "");
-    const response = await axios.post(
-      "http://153.127.48.168:8080/ecsite-api/user/login",
-      { mailAddress: mailAddress, password: password }
-    );
-    const status = response.data.status;
-    console.dir("responce:" + JSON.stringify(response));
-    if (status === "success") {
-      console.log("成功");
-      // firebaseへのログイン
-      signInWithEmailAndPassword(authenication, mailAddress, password);
-      auth?.setstatusCheck(true);
-      navigate("/ItemList");
-    } else if (status === "error") {
-      alert("メールアドレス、またはパスワードが間違っています");
-    } else {
-      alert("メールアドレス、パスワードを記入してください");
-    }
+
+    signInWithEmailAndPassword(authenication, mailAddress, password)
+      .then((result) => {
+        // Signed in
+        auth?.setstatusCheck(true);
+        navigate("/ItemList");
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        console.log(errorMessage);
+
+        if (errorMessage === "Firebase: Error (auth/user-not-found).") {
+          setloginErrorMessage("ユーザーが登録されていません");
+          console.log(errorMessage);
+        } else if (
+          errorMessage === "Firebase: Error (auth/invalid-email)." ||
+          "Firebase: Error (auth/invalid-password)."
+        ) {
+          setloginErrorMessage(
+            "メールアドレスまたはパスワードが間違っています。"
+          );
+        } else if (mailAddress === "" && password !== "") {
+          setloginErrorMessage("メールアドレスを入力してください");
+        } else if (password === "" && mailAddress !== "") {
+          setloginErrorMessage("パスワードを入力してください");
+        } else {
+          setloginErrorMessage(
+            "メールアドレスまたはパスワードを入力してください"
+          );
+        }
+      });
   };
 
   // firebase認証
@@ -81,7 +93,6 @@ export const Login = () => {
       })
       .catch((error) => {
         // Handle Errors here.
-        const errorCode = error.code;
         const errorMessage = error.message;
         console.log(error);
         alert(
@@ -104,7 +115,6 @@ export const Login = () => {
       })
       .catch((error) => {
         // Handle Errors here.
-        const errorCode = error.code;
         const errorMessage = error.message;
         console.log(error);
         alert(
@@ -132,6 +142,7 @@ export const Login = () => {
                 <div style={{ fontWeight: 700, padding: "30px" }}>
                   ログインする
                 </div>
+                <div id="loginerrorMessage">{loginErrorMessage}</div>
                 <label htmlFor="mailAddress">
                   <EmailIcon />
                 </label>
@@ -209,28 +220,3 @@ export const Login = () => {
     </div>
   );
 };
-
-// export function Login() {
-//   // eslint-disable-next-line react-hooks/rules-of-hooks
-//   const navigate = useNavigate();
-
-//   return (
-//     <div>
-//       <h3>ログイン画面</h3>
-//       {/* 入力フォームのimport */}
-//       {/* <InputLogin /> */}
-//       {/* ログイン切り替えボタンのimport */}
-//       <StatusButton />
-
-//       <button className="btn" onClick={() => navigate("/content")}>
-//         ユーザー登録
-//       </button>
-
-//       <div>
-//         <Button color="inherit" onClick={() => navigate("/")}>
-//           Topページに戻る
-//         </Button>
-//       </div>
-//     </div>
-//   );
-// }
