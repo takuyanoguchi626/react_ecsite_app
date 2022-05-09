@@ -18,11 +18,14 @@ import { ItemDetail } from "./pages/ItemDetail";
 import { ThemeProvider } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { theme } from "../src/css/theme";
+
 import { ItemRecommendation } from "./pages/ItemRecommendation";
 import { ErrorPage } from "./pages/ErrorPage";
 import { QuestionForm } from "./pages/QuestionForm";
 import { QuestionCompleted } from "./pages/QuestionCompleted";
 import { EditCartItem } from "./pages/EditCartItem";
+import FrequentQuestion from "./components/FrequentQuestion";
+import { Alergy } from "./pages/Alergy";
 
 function App() {
   return (
@@ -56,6 +59,8 @@ function App() {
             <Route path="/ErrorPage" element={<ErrorPage />} />
             <Route path="/*" element={<ErrorPage />} />
             <Route path="/QuestionForm" element={<QuestionForm />} />
+            <Route path="/FrequentQuestion" element={<FrequentQuestion />} />
+            <Route path="/Alergy" element={<Alergy />} />
             <Route path="/QuestionCompleted" element={<QuestionCompleted />} />
             <Route
               path="/EditCartItem/"
