@@ -10,4 +10,35 @@
       -ms-flex-align: center;
           align-items: center;
 }
+
+.orderConfirm .form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.orderConfirm .textField {
+  margin: 10px 0;
+}
+
+.orderConfirm .zipCode {
+  padding-left: 80px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.orderConfirm .orderButton {
+  padding-bottom: 30px;
+}
 /*# sourceMappingURL=orderConfirm.css.map */
