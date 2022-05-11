@@ -1,4 +1,4 @@
-import { Button, Grid, Input } from "@material-ui/core";
+import { Button, Grid, Input, TextField } from "@material-ui/core";
 import axios from "axios";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -137,7 +137,10 @@ export function RegisterInfo() {
                 <EmojiPeopleIcon />
               </label>
 
-              <Input
+              <TextField
+                className="textField"
+                label="名前"
+                variant="outlined"
                 required
                 type="text"
                 {...register("name", { minLength: 1 })}
@@ -152,13 +155,17 @@ export function RegisterInfo() {
               />
               {errors.name && "名前を記入してください"}
             </div>
+            <br />
 
             <div className="form-group">
               <label className="col-form-label">
                 <EmailIcon />
               </label>
 
-              <Input
+              <TextField
+                className="textField"
+                label="メールアドレス"
+                variant="outlined"
                 type="text"
                 {...register("mailAddress", {
                   pattern: {
@@ -177,13 +184,17 @@ export function RegisterInfo() {
               />
               {errors.mailAddress && "メールアドレスは正しく記入してください"}
             </div>
+            <br />
 
             <div className="form-group">
               <label className="col-form-label">
                 <PhoneIcon />
               </label>
 
-              <Input
+              <TextField
+                className="textField"
+                label="電話番号"
+                variant="outlined"
                 type="text"
                 {...register("telephone", { max: 11 })}
                 value={userData?.registerData.telephone}
@@ -197,13 +208,17 @@ export function RegisterInfo() {
               />
               {errors.telephone && "電話番号は11桁以内で記入してください"}
             </div>
+            <br />
 
             <div className="form-group">
               <label className="col-form-label">
                 <LockIcon />
               </label>
 
-              <Input
+              <TextField
+                className="textField"
+                label="パスワード"
+                variant="outlined"
                 type="text"
                 {...register("password", {
                   minLength: 5,
@@ -219,12 +234,16 @@ export function RegisterInfo() {
               />
               {errors.password && "5文字以上のパスワードを記入してください"}
             </div>
+            <br />
 
             <div className="form-group">
               <label className="col-form-label">
-                <img src="../zipcodeIcon.png" width="30" alt="" />
+                <img src="../zipcodeIcon.png" width="25" alt="" />
               </label>
-              <Input
+              <TextField
+                className="textField"
+                label="郵便番号"
+                variant="outlined"
                 type="text"
                 {...register("zipcode", {
                   minLength: 5,
@@ -240,11 +259,16 @@ export function RegisterInfo() {
               />
               {errors.zipcode && "郵便番号は5桁以上で記入してください"}
             </div>
+            <br />
+
             <div className="form-group">
               <label className="col-form-label">
                 <HomeIcon />
               </label>
-              <Input
+              <TextField
+                className="textField"
+                label="住所"
+                variant="outlined"
                 type="text"
                 {...register("address", {
                   minLength: 3,

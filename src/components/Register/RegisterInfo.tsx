@@ -17,12 +17,12 @@ export const RegisterInfo: React.FC<props> = (props) => {
   const { children } = props;
 
   const [registerData, setregisterData] = useState<User>({
-    name: "山田太郎",
-    mailAddress: "d@gmail.com",
-    password: "password",
-    zipcode: "123-4567",
-    address: "新宿三丁目",
-    telephone: "123-4567-8910",
+    name: "",
+    mailAddress: "",
+    password: "",
+    zipcode: "",
+    address: "",
+    telephone: "",
   });
 
   return (
