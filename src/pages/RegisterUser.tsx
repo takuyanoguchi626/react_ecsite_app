@@ -30,17 +30,18 @@ export function RegisterInfo() {
     register,
     handleSubmit,
     formState: { errors },
-
     trigger,
-  } = useForm();
+  } = useForm({
+    // form欄の外をクリックするとトリガーが発動するモードに設定する
+    mode: "onBlur",
+  });
 
-  const onSubmit = (data: any) => {
-    console.log(data);
-  };
+  // const onSubmit = (data: any) => {
+  //   console.log(data);
+  // };
 
   // ユーザー情報格納先コンテキスト
   const userData = useContext(registerInfoContext);
-  console.log(userData?.registerData);
 
   // ユーザー情報をAPIに送る
   const UserInfo = async () => {
@@ -99,11 +100,6 @@ export function RegisterInfo() {
         return;
       }
 
-      // // IDの初期値
-      // await setDoc(doc(db, "userInfoId", "lastId"), {
-      //   userId: 0,
-      // });
-
       // IDを取得する
       const newId = await getDoc(doc(db, "userInfoId", "lastId"));
 
@@ -131,7 +127,8 @@ export function RegisterInfo() {
           <h1>会員登録フォーム</h1>
         </Grid>
         <span className="containers">
-          <form onSubmit={handleSubmit(onSubmit)}>
+          {/* <form onSubmit={handleSubmit(onSubmit)}> */}
+          <form>
             <div className="form-group">
               <label className="col-form-label">
                 <EmojiPeopleIcon />
@@ -143,7 +140,10 @@ export function RegisterInfo() {
                 variant="outlined"
                 required
                 type="text"
-                {...register("name", { minLength: 1 })}
+                {...register("name", {
+                  required: true,
+                  minLength: 1,
+                })}
                 value={userData?.registerData.name}
                 onChange={(e) => {
                   userData?.setregisterData({
@@ -168,6 +168,7 @@ export function RegisterInfo() {
                 variant="outlined"
                 type="text"
                 {...register("mailAddress", {
+                  required: "メールアドレスを入力してください",
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                     message: "正しいメールアドレスの形式で入力してください。",
@@ -196,17 +197,23 @@ export function RegisterInfo() {
                 label="電話番号"
                 variant="outlined"
                 type="text"
-                {...register("telephone", { max: 11 })}
+                {...register("telephone", {
+                  max: {
+                    value: 11,
+                    message: "電話番号は11桁以内で入力してください。",
+                  },
+                  required: "",
+                })}
                 value={userData?.registerData.telephone}
                 onChange={(e) => {
                   userData?.setregisterData({
                     ...userData?.registerData,
                     telephone: e.currentTarget.value,
                   });
-                  trigger("telephone");
+                  // trigger("telephone");
                 }}
               />
-              {errors.telephone && "電話番号は11桁以内で記入してください"}
+              {/* {errors.telephone && "電話番号は11桁以内で記入してください"} */}
             </div>
             <br />
 
