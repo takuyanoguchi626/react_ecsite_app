@@ -139,125 +139,124 @@ export const OrderComfirm: FC = () => {
           <div>消費税：{totalPrice.TAXOfTotalPrice}円</div>
           <div>ご注文金額合計：{totalPrice.finallyTotalPrice}円 (税込)</div>
         </div>
-        <div>
-          <h2>お届け先情報</h2>
-          <button type="button" onClick={autoComplete}>
+        <div className="form">
+          <h2>---お届け先情報---</h2>
+          <Button type="button" variant="contained" onClick={autoComplete}>
             自動入力
-          </button>
+          </Button>
+          <div>
+            <TextField
+              className="textField"
+              label="name"
+              variant="outlined"
+              id="name"
+              type="text"
+              value={userStatus?.userInfo.name}
+              onChange={(e) => {
+                userStatus?.setUserInfo({
+                  ...userStatus?.userInfo,
+                  name: e.target.value,
+                });
+              }}
+            />
+          </div>
+          <div>
+            <TextField
+              className="textField"
+              label="email"
+              variant="outlined"
+              id="email"
+              type="email"
+              value={userStatus?.userInfo.mailAddress}
+              onChange={(e) => {
+                userStatus?.setUserInfo({
+                  ...userStatus?.userInfo,
+                  mailAddress: e.target.value,
+                });
+              }}
+            />
+          </div>
+          <div>
+            <div className="zipCode">
+              <TextField
+                className="textField"
+                label="zipCode"
+                variant="outlined"
+                id="zipcode"
+                type="number"
+                value={userStatus?.userInfo.zipCode}
+                onChange={(e) => {
+                  userStatus?.setUserInfo({
+                    ...userStatus?.userInfo,
+                    zipCode: Number(e.target.value),
+                  });
+                }}
+              />
+              <Button type="button" variant="contained">
+                住所検索
+              </Button>
+            </div>
+          </div>
           <div>
             <div>
               <TextField
                 className="textField"
-                label="name"
+                label="address"
                 variant="outlined"
-                id="name"
+                id="address"
                 type="text"
-                value={userStatus?.userInfo.name}
-                onChange={(e) => {
-                  userStatus?.setUserInfo({
-                    ...userStatus?.userInfo,
-                    name: e.target.value,
-                  });
-                }}
-              />
-            </div>
-            <div>
-              <TextField
-                className="textField"
-                label="email"
-                variant="outlined"
-                id="email"
-                type="email"
-                value={userStatus?.userInfo.mailAddress}
-                onChange={(e) => {
-                  userStatus?.setUserInfo({
-                    ...userStatus?.userInfo,
-                    mailAddress: e.target.value,
-                  });
-                }}
-              />
-            </div>
-            <div>
-              <div>
-                <TextField
-                  className="textField"
-                  label="zipCode"
-                  variant="outlined"
-                  id="zipcode"
-                  type="number"
-                  value={userStatus?.userInfo.zipCode}
-                  onChange={(e) => {
-                    userStatus?.setUserInfo({
-                      ...userStatus?.userInfo,
-                      zipCode: Number(e.target.value),
-                    });
-                  }}
-                />
-                <Button type="button" variant="contained">
-                  住所検索
-                </Button>
-              </div>
-            </div>
-            <div>
-              <div>
-                <TextField
-                  className="textField"
-                  label="address"
-                  variant="outlined"
-                  id="address"
-                  type="text"
-                  value={userStatus?.userInfo.address}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    userStatus?.setUserInfo({
-                      ...userStatus?.userInfo,
-                      address: e.target.value,
-                    })
-                  }
-                />
-              </div>
-            </div>
-            <div>
-              <TextField
-                className="textField"
-                label="telephone"
-                variant="outlined"
-                id="tel"
-                type="tel"
-                value={userStatus?.userInfo.telephone}
+                value={userStatus?.userInfo.address}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   userStatus?.setUserInfo({
                     ...userStatus?.userInfo,
-                    telephone: Number(e.target.value),
+                    address: e.target.value,
                   })
                 }
               />
             </div>
-            <div>
-              <div>
-                <div>配達日時：</div>
-                <TextField
-                  className="textField"
-                  // label="deliveryDate"
-                  variant="outlined"
-                  id="deliveryDate"
-                  type="date"
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    userStatus?.setUserInfo(() => {
-                      console.log(e.target.value);
+          </div>
+          <div>
+            <TextField
+              className="textField"
+              label="telephone"
+              variant="outlined"
+              id="tel"
+              type="tel"
+              value={userStatus?.userInfo.telephone}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                userStatus?.setUserInfo({
+                  ...userStatus?.userInfo,
+                  telephone: Number(e.target.value),
+                })
+              }
+            />
+          </div>
+          <div>
+            <div className="form">
+              <h2>---配達日時---</h2>
+              <TextField
+                className="textField"
+                // label="deliveryDate"
+                variant="outlined"
+                id="deliveryDate"
+                type="date"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  userStatus?.setUserInfo(() => {
+                    console.log(e.target.value);
 
-                      const deliveryDate = format(
-                        new Date(e.target.value),
-                        "yyyy-MM-dd"
-                      );
-                      return {
-                        ...userStatus?.userInfo,
-                        deliveryDate: deliveryDate,
-                      };
-                    })
-                  }
-                />
-              </div>
-              {/* {deliveryHourArr.map((time: number, index: number) => (
+                    const deliveryDate = format(
+                      new Date(e.target.value),
+                      "yyyy-MM-dd"
+                    );
+                    return {
+                      ...userStatus?.userInfo,
+                      deliveryDate: deliveryDate,
+                    };
+                  })
+                }
+              />
+            </div>
+            {/* {deliveryHourArr.map((time: number, index: number) => (
               <label key={index}>
                 <input
                   name="deliveryTime"
@@ -271,52 +270,49 @@ export const OrderComfirm: FC = () => {
                   }
                 />
               </div> */}
-              <FormControl>
-                <RadioGroup
-                  row
-                  aria-labelledby="demo-radio-buttons-group-label"
-                  defaultValue="10"
-                  name="radio-buttons-group"
-                >
-                  {deliveryHourArr.map((time: number, index: number) => (
-                    <FormControlLabel
-                      value={time}
-                      control={
-                        <Radio
-                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                            userStatus?.setUserInfo({
-                              ...userStatus?.userInfo,
-                              deliveryHour: Number(e.target.value),
-                            })
-                          }
-                        />
-                      }
-                      label={time + "時"}
-                    />
-                    // <label key={index}>
-                    // <input
-                    //   name="deliveryTime"
-                    //   type="radio"
-                    //   value={time}
-                    //   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    //     setUserInfo({
-                    //       ...userInfo,
-                    //       deliveryHour: Number(e.target.value),
-                    //     })
-                    //   }
-                    // />
-                    //   <span>{time}時</span>
-                    // </label>
-                  ))}
-                </RadioGroup>
-              </FormControl>
-            </div>
-          </div>
-          <div>
             <FormControl>
-              <FormLabel id="demo-radio-buttons-group-label">
-                お支払方法
-              </FormLabel>
+              <RadioGroup
+                row
+                aria-labelledby="demo-radio-buttons-group-label"
+                defaultValue="10"
+                name="radio-buttons-group"
+              >
+                {deliveryHourArr.map((time: number, index: number) => (
+                  <FormControlLabel
+                    value={time}
+                    control={
+                      <Radio
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                          userStatus?.setUserInfo({
+                            ...userStatus?.userInfo,
+                            deliveryHour: Number(e.target.value),
+                          })
+                        }
+                      />
+                    }
+                    label={time + "時"}
+                  />
+                  // <label key={index}>
+                  // <input
+                  //   name="deliveryTime"
+                  //   type="radio"
+                  //   value={time}
+                  //   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  //     setUserInfo({
+                  //       ...userInfo,
+                  //       deliveryHour: Number(e.target.value),
+                  //     })
+                  //   }
+                  // />
+                  //   <span>{time}時</span>
+                  // </label>
+                ))}
+              </RadioGroup>
+            </FormControl>
+          </div>
+          <div className="form">
+            <h2>---お支払方法---</h2>
+            <FormControl>
               <RadioGroup
                 row
                 aria-labelledby="demo-radio-buttons-group-label"
@@ -354,51 +350,12 @@ export const OrderComfirm: FC = () => {
               </RadioGroup>
             </FormControl>
           </div>
-          <div>
+          <div className="orderButton">
             <div>{orderErrorMessage}</div>
             <Button type="button" variant="contained" onClick={order}>
               この内容で注文する
             </Button>
           </div>
-        </div>
-        <h2>お支払い方法</h2>
-        <div>
-          <span>
-            <label>
-              <input
-                name="paymentMethod"
-                type="radio"
-                value="1"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  userStatus?.setUserInfo({
-                    ...userStatus?.userInfo,
-                    paymentMethod: Number(e.target.value),
-                  })
-                }
-              />
-              <span>代金引換</span>
-            </label>
-            <label>
-              <input
-                name="paymentMethod"
-                type="radio"
-                value="2"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  userStatus?.setUserInfo({
-                    ...userStatus?.userInfo,
-                    paymentMethod: Number(e.target.value),
-                  })
-                }
-              />
-              <span>クレジットカード</span>
-            </label>
-          </span>
-        </div>
-        <div>
-          <div>{orderErrorMessage}</div>
-          <button type="button" onClick={order}>
-            <span>この内容で注文する</span>
-          </button>
         </div>
       </div>
     </div>
