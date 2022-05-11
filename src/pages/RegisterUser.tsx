@@ -292,6 +292,7 @@ export function RegisterInfo() {
           </form>
         </span>
       </Grid>
+      <br />
     </div>
   );
 }
