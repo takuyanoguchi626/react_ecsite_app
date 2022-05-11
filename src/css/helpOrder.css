@@ -1,0 +1,13 @@
+.helpOrder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.helpTable {
+  width: 800px;
+}
+
+.helpOrderImg {
+  width: 70px;
+}

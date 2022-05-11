@@ -20,7 +20,8 @@ export const Footer = () => {
             alignItems="flex-start"
           >
             <Grid item xs={4} md={2} className="grid">
-              <div>ヘルプ</div>
+              <div>ヘルプ　35.650649,139.705431</div>
+
               <div> カロリー情報</div>
               <div>アレルギー情報</div>
               <div>注文する</div>
@@ -28,11 +29,19 @@ export const Footer = () => {
             <Grid item xs={4} md={2}>
               <div>ヘルプ</div>
               <div> カロリー情報</div>
+
               <div>
                 <Link to="/Alergy">アレルギー情報</Link>
               </div>
-              <div>注文する</div>
-              <div>ご注文方法</div>
+              <div>
+                {" "}
+                <Link to="/Login">注文する</Link>
+              </div>
+              <div>
+                {" "}
+                <Link to="/HelpOrder">ご注文方法</Link>
+              </div>
+
               <div>
                 <Link to="/QuestionForm">お問い合わせ</Link>
               </div>
