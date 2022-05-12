@@ -1,23 +1,16 @@
-import { Button, Grid, Input, TextField } from "@material-ui/core";
-import axios from "axios";
-import { useContext, useState } from "react";
+import { Button, Grid, TextField } from "@material-ui/core";
+// import axios from "axios";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { statusContext } from "../components/providers/statusContext";
-import { User } from "../types/User";
+// import { statusContext } from "../components/providers/statusContext";
+// import { User } from "../types/User";
 import LockIcon from "@mui/icons-material/Lock";
 import EmailIcon from "@mui/icons-material/Email";
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 import PhoneIcon from "@mui/icons-material/Phone";
 import HomeIcon from "@mui/icons-material/Home";
-import {
-  collection,
-  addDoc,
-  setDoc,
-  doc,
-  updateDoc,
-  getDoc,
-} from "firebase/firestore";
+import { collection, setDoc, doc, updateDoc, getDoc } from "firebase/firestore";
 import { getFirestore } from "firebase/firestore";
 import { app } from "../app/config";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
@@ -26,7 +19,7 @@ import "../css/registerUser.css";
 
 export function RegisterInfo() {
   const navigate = useNavigate();
-  const auth = useContext(statusContext);
+  // const auth = useContext(statusContext);
   const {
     register,
     handleSubmit,
@@ -40,36 +33,31 @@ export function RegisterInfo() {
   // ユーザー情報格納先コンテキスト
   const userData = useContext(registerInfoContext);
 
-  // ユーザー情報をAPIに送る
-  const UserInfo = async () => {
-    const response = await axios.post(
-      "http://153.127.48.168:8080/ecsite-api/user",
-      {
-        name: userData?.registerData.name,
-        email: userData?.registerData.mailAddress,
-        password: userData?.registerData.password,
-        zipcode: userData?.registerData.zipcode,
-        address: userData?.registerData.address,
-        telephone: userData?.registerData.telephone,
-      }
-    );
-    const status = response.data.status;
-    console.dir("responce:" + JSON.stringify(response));
-    if (status === "success") {
-      console.log("成功");
-      updateId();
-      registerUserInfoToServer();
-      navigate("/AfterRegister");
-    } else if (response.data.errorCode === "E-01") {
-      console.log("そのメールアドレスはすでに使われています");
-      alert("そのメールアドレスはすでに使われています");
-    } else {
-      console.log("登録できませんでした");
-      alert("登録できませんでした");
-    }
+  // ユーザー情報をfirebaseに送る
+  const UserInfo = () => {
+    // const UserInfo = async () => {
+    //   const response = await axios.post(
+    //     "http://153.127.48.168:8080/ecsite-api/user",
+    //     {
+    //       name: userData?.registerData.name,
+    //       email: userData?.registerData.mailAddress,
+    //       password: userData?.registerData.password,
+    //       zipcode: userData?.registerData.zipcode,
+    //       address: userData?.registerData.address,
+    //       telephone: userData?.registerData.telephone,
+    //     }
+    //   );
+    //   const status = response.data.status;
+    //   console.dir("responce:" + JSON.stringify(response));
+    //   if (status === "success") {
+    //     console.log("成功");
+    updateId();
+    registerUserInfoToServer();
+    //   } else if (response.data.errorCode === "E-01") {
+    //     console.log("そのメールアドレスはすでに使われています");
+    //     alert("そのメールアドレスはすでに使われています");
+    //   } else {
   };
-  // ユーザー情報をfirebaseへ送信
-
   // firestore認証
   const db = getFirestore(app);
   const docRef = collection(db, "userInformation");
@@ -88,33 +76,40 @@ export function RegisterInfo() {
 
   //   ユーザー情報をfirebaseに送る
   const registerUserInfoToServer = async () => {
-    try {
-      if (mailAddress !== undefined && password !== undefined) {
-        // firebaseへ登録
-        createUserWithEmailAndPassword(authenication, mailAddress, password);
-      } else {
-        console.log("error");
-        return;
-      }
+    if (mailAddress !== undefined && password !== undefined) {
+      // firebaseへ登録
+      createUserWithEmailAndPassword(authenication, mailAddress, password)
+        .then((userCredential) => {
+          const response = userCredential;
+          if (response) {
+            navigate("/AfterRegister");
+          }
+        })
+        .catch((error) => {
+          const errorMsg = error.message;
+          alert(`登録できませんでした+${errorMsg}`);
+        });
+    }
+
 
       // IDを取得する
       const newId = await getDoc(doc(db, "userInfoId", "lastId"));
 
-      const sendUserInfo = await setDoc(
-        doc(db, "userInformation", String(newId.data()?.userId + 1)),
-        {
-          id: newId.data()?.userId + 1,
-          name: userData?.registerData.name,
-          email: userData?.registerData.mailAddress,
-          password: userData?.registerData.password,
-          zipcode: userData?.registerData.zipcode,
-          address: userData?.registerData.address,
-          telephone: userData?.registerData.telephone,
-        }
-      );
-    } catch (error) {
+
+    const sendUserInfo = await setDoc(
+      doc(db, "userInformation", String(newId.data()?.userId + 1)),
+      {
+        id: newId.data()?.userId + 1,
+        name: userData?.registerData.name,
+        email: userData?.registerData.mailAddress,
+        password: userData?.registerData.password,
+        zipcode: userData?.registerData.zipcode,
+        address: userData?.registerData.address,
+        telephone: userData?.registerData.telephone,
+      }
+    ).catch((error) => {
       console.log(error);
-    }
+    });
   };
 
   return (
@@ -159,6 +154,7 @@ export function RegisterInfo() {
               </label>
 
               <TextField
+                required
                 className="textField"
                 label="メールアドレス"
                 variant="outlined"
@@ -189,6 +185,7 @@ export function RegisterInfo() {
               </label>
 
               <TextField
+                required
                 className="textField"
                 label="電話番号"
                 variant="outlined"
@@ -223,6 +220,7 @@ export function RegisterInfo() {
               </label>
 
               <TextField
+                required
                 className="textField"
                 label="パスワード"
                 variant="outlined"
@@ -252,6 +250,7 @@ export function RegisterInfo() {
                 <img src="../zipcodeIcon.png" width="25" alt="" />
               </label>
               <TextField
+                required
                 className="textField"
                 label="郵便番号"
                 variant="outlined"
@@ -281,6 +280,7 @@ export function RegisterInfo() {
                 <HomeIcon />
               </label>
               <TextField
+                required
                 className="textField"
                 label="住所"
                 variant="outlined"
@@ -311,7 +311,6 @@ export function RegisterInfo() {
           </form>
         </span>
       </Grid>
-      <br />
     </div>
   );
 }
