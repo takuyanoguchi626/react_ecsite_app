@@ -91,10 +91,8 @@ export function RegisterInfo() {
         });
     }
 
-
-      // IDを取得する
-      const newId = await getDoc(doc(db, "userInfoId", "lastId"));
-
+    // IDを取得する
+    const newId = await getDoc(doc(db, "userInfoId", "lastId"));
 
     const sendUserInfo = await setDoc(
       doc(db, "userInformation", String(newId.data()?.userId + 1)),
@@ -143,6 +141,11 @@ export function RegisterInfo() {
                   });
                   trigger("name");
                 }}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault(); //デフォルトのイベントをプリベント（妨げる）する
+                  }
+                }}
               />
               <div id="registerUserErrMsg">{errors.name?.message}</div>
             </div>
@@ -173,6 +176,11 @@ export function RegisterInfo() {
                     mailAddress: e.currentTarget.value,
                   });
                   trigger("mailAddress");
+                }}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault(); //デフォルトのイベントをプリベント（妨げる）する
+                  }
                 }}
               />
               <div id="registerUserErrMsg">{errors.mailAddress?.message}</div>
@@ -209,6 +217,11 @@ export function RegisterInfo() {
                   });
                   trigger("telephone");
                 }}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault(); //デフォルトのイベントをプリベント（妨げる）する
+                  }
+                }}
               />
               <div id="registerUserErrMsg">{errors.telephone?.message}</div>
             </div>
@@ -240,6 +253,11 @@ export function RegisterInfo() {
                   });
                   trigger("password");
                 }}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault(); //デフォルトのイベントをプリベント（妨げる）する
+                  }
+                }}
               />
               <div id="registerUserErrMsg">{errors.password?.message}</div>
             </div>
@@ -270,6 +288,11 @@ export function RegisterInfo() {
                   });
                   trigger("zipcode");
                 }}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault(); //デフォルトのイベントをプリベント（妨げる）する
+                  }
+                }}
               />
               <div id="registerUserErrMsg">{errors.zipcode?.message}</div>
             </div>
@@ -299,6 +322,11 @@ export function RegisterInfo() {
                     address: e.currentTarget.value,
                   });
                   trigger("address");
+                }}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault(); //デフォルトのイベントをプリベント（妨げる）する
+                  }
                 }}
               />
               <div id="registerUserErrMsg">{errors.address?.message}</div>
