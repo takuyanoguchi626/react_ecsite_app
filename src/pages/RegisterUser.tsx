@@ -15,6 +15,7 @@ import { getFirestore } from "firebase/firestore";
 import { app } from "../app/config";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { registerInfoContext } from "../components/Register/RegisterInfo";
+import "../css/registerUser.css";
 
 export function RegisterInfo() {
   const navigate = useNavigate();
@@ -23,17 +24,14 @@ export function RegisterInfo() {
     register,
     handleSubmit,
     formState: { errors },
-
     trigger,
-  } = useForm();
-
-  const onSubmit = (data: any) => {
-    console.log(data);
-  };
+  } = useForm({
+    // form欄の外をクリックするとトリガーが発動するモードに設定する
+    mode: "onBlur",
+  });
 
   // ユーザー情報格納先コンテキスト
   const userData = useContext(registerInfoContext);
-  console.log(userData?.registerData);
 
   // ユーザー情報をfirebaseに送る
   const UserInfo = () => {
@@ -93,13 +91,10 @@ export function RegisterInfo() {
         });
     }
 
-    // // IDの初期値
-    // await setDoc(doc(db, "userInfoId", "lastId"), {
-    //   userId: 0,
-    // });
 
-    // IDを取得する
-    const newId = await getDoc(doc(db, "userInfoId", "lastId"));
+      // IDを取得する
+      const newId = await getDoc(doc(db, "userInfoId", "lastId"));
+
 
     const sendUserInfo = await setDoc(
       doc(db, "userInformation", String(newId.data()?.userId + 1)),
@@ -124,7 +119,8 @@ export function RegisterInfo() {
           <h1>会員登録フォーム</h1>
         </Grid>
         <span className="containers">
-          <form onSubmit={handleSubmit(onSubmit)}>
+          {/* <form onSubmit={handleSubmit(onSubmit)}> */}
+          <form>
             <div className="form-group">
               <label className="col-form-label">
                 <EmojiPeopleIcon />
@@ -136,7 +132,9 @@ export function RegisterInfo() {
                 variant="outlined"
                 required
                 type="text"
-                {...register("name", { minLength: 1 })}
+                {...register("name", {
+                  required: "名前を入力してください",
+                })}
                 value={userData?.registerData.name}
                 onChange={(e) => {
                   userData?.setregisterData({
@@ -146,7 +144,7 @@ export function RegisterInfo() {
                   trigger("name");
                 }}
               />
-              {errors.name && "名前を記入してください"}
+              <div id="registerUserErrMsg">{errors.name?.message}</div>
             </div>
             <br />
 
@@ -162,6 +160,7 @@ export function RegisterInfo() {
                 variant="outlined"
                 type="text"
                 {...register("mailAddress", {
+                  required: "メールアドレスを入力してください",
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                     message: "正しいメールアドレスの形式で入力してください。",
@@ -176,7 +175,7 @@ export function RegisterInfo() {
                   trigger("mailAddress");
                 }}
               />
-              {errors.mailAddress && "メールアドレスは正しく記入してください"}
+              <div id="registerUserErrMsg">{errors.mailAddress?.message}</div>
             </div>
             <br />
 
@@ -191,7 +190,17 @@ export function RegisterInfo() {
                 label="電話番号"
                 variant="outlined"
                 type="text"
-                {...register("telephone", { max: 11 })}
+                {...register("telephone", {
+                  minLength: {
+                    value: 10,
+                    message: "電話番号は10桁以上で入力してください。",
+                  },
+                  maxLength: {
+                    value: 11,
+                    message: "電話番号は11桁以内で入力してください。",
+                  },
+                  required: "電話番号を入力してください",
+                })}
                 value={userData?.registerData.telephone}
                 onChange={(e) => {
                   userData?.setregisterData({
@@ -201,7 +210,7 @@ export function RegisterInfo() {
                   trigger("telephone");
                 }}
               />
-              {errors.telephone && "電話番号は11桁以内で記入してください"}
+              <div id="registerUserErrMsg">{errors.telephone?.message}</div>
             </div>
             <br />
 
@@ -217,7 +226,11 @@ export function RegisterInfo() {
                 variant="outlined"
                 type="text"
                 {...register("password", {
-                  minLength: 5,
+                  required: "パスワードを入力してください",
+                  minLength: {
+                    value: 5,
+                    message: "パスワードは5桁以上で入力してください",
+                  },
                 })}
                 value={userData?.registerData.password}
                 onChange={(e) => {
@@ -228,7 +241,7 @@ export function RegisterInfo() {
                   trigger("password");
                 }}
               />
-              {errors.password && "5文字以上のパスワードを記入してください"}
+              <div id="registerUserErrMsg">{errors.password?.message}</div>
             </div>
             <br />
 
@@ -243,7 +256,11 @@ export function RegisterInfo() {
                 variant="outlined"
                 type="text"
                 {...register("zipcode", {
-                  minLength: 5,
+                  required: "郵便番号を入力してください",
+                  minLength: {
+                    value: 5,
+                    message: "郵便番号は5桁以上で入力してください",
+                  },
                 })}
                 value={userData?.registerData.zipcode}
                 onChange={(e) => {
@@ -254,7 +271,7 @@ export function RegisterInfo() {
                   trigger("zipcode");
                 }}
               />
-              {errors.zipcode && "郵便番号は5桁以上で記入してください"}
+              <div id="registerUserErrMsg">{errors.zipcode?.message}</div>
             </div>
             <br />
 
@@ -269,7 +286,11 @@ export function RegisterInfo() {
                 variant="outlined"
                 type="text"
                 {...register("address", {
-                  minLength: 3,
+                  required: "住所を入力してください",
+                  minLength: {
+                    value: 3,
+                    message: "住所を正しく入力してください",
+                  },
                 })}
                 value={userData?.registerData.address}
                 onChange={(e) => {
@@ -280,7 +301,7 @@ export function RegisterInfo() {
                   trigger("address");
                 }}
               />
-              {errors.address && "住所は都道府県から番地まで記入してください"}
+              <div id="registerUserErrMsg">{errors.address?.message}</div>
             </div>
             <Grid container justifyContent="center" alignItems="flex-start">
               <Button color="inherit" type="submit" onClick={() => UserInfo()}>
