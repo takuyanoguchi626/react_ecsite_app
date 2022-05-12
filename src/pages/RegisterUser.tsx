@@ -22,6 +22,7 @@ import { getFirestore } from "firebase/firestore";
 import { app } from "../app/config";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { registerInfoContext } from "../components/Register/RegisterInfo";
+import "../css/registerUser.css";
 
 export function RegisterInfo() {
   const navigate = useNavigate();
@@ -35,10 +36,6 @@ export function RegisterInfo() {
     // form欄の外をクリックするとトリガーが発動するモードに設定する
     mode: "onBlur",
   });
-
-  // const onSubmit = (data: any) => {
-  //   console.log(data);
-  // };
 
   // ユーザー情報格納先コンテキスト
   const userData = useContext(registerInfoContext);
@@ -141,8 +138,7 @@ export function RegisterInfo() {
                 required
                 type="text"
                 {...register("name", {
-                  required: true,
-                  minLength: 1,
+                  required: "名前を入力してください",
                 })}
                 value={userData?.registerData.name}
                 onChange={(e) => {
@@ -153,7 +149,7 @@ export function RegisterInfo() {
                   trigger("name");
                 }}
               />
-              {errors.name && "名前を記入してください"}
+              <div id="registerUserErrMsg">{errors.name?.message}</div>
             </div>
             <br />
 
@@ -183,7 +179,7 @@ export function RegisterInfo() {
                   trigger("mailAddress");
                 }}
               />
-              {errors.mailAddress?.message}
+              <div id="registerUserErrMsg">{errors.mailAddress?.message}</div>
             </div>
             <br />
 
@@ -217,7 +213,7 @@ export function RegisterInfo() {
                   trigger("telephone");
                 }}
               />
-              {errors.telephone?.message}
+              <div id="registerUserErrMsg">{errors.telephone?.message}</div>
             </div>
             <br />
 
@@ -247,7 +243,7 @@ export function RegisterInfo() {
                   trigger("password");
                 }}
               />
-              {errors.password?.message}
+              <div id="registerUserErrMsg">{errors.password?.message}</div>
             </div>
             <br />
 
@@ -276,7 +272,7 @@ export function RegisterInfo() {
                   trigger("zipcode");
                 }}
               />
-              {errors.zipcode?.message}
+              <div id="registerUserErrMsg">{errors.zipcode?.message}</div>
             </div>
             <br />
 
@@ -305,7 +301,7 @@ export function RegisterInfo() {
                   trigger("address");
                 }}
               />
-              {errors.address?.message}
+              <div id="registerUserErrMsg">{errors.address?.message}</div>
             </div>
             <Grid container justifyContent="center" alignItems="flex-start">
               <Button color="inherit" type="submit" onClick={() => UserInfo()}>
