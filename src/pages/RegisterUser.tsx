@@ -43,32 +43,33 @@ export function RegisterInfo() {
   console.log(userData?.registerData);
 
   // ユーザー情報をAPIに送る
-  const UserInfo = async () => {
-    const response = await axios.post(
-      "http://153.127.48.168:8080/ecsite-api/user",
-      {
-        name: userData?.registerData.name,
-        email: userData?.registerData.mailAddress,
-        password: userData?.registerData.password,
-        zipcode: userData?.registerData.zipcode,
-        address: userData?.registerData.address,
-        telephone: userData?.registerData.telephone,
-      }
-    );
-    const status = response.data.status;
-    console.dir("responce:" + JSON.stringify(response));
-    if (status === "success") {
-      console.log("成功");
-      updateId();
-      registerUserInfoToServer();
-      navigate("/AfterRegister");
-    } else if (response.data.errorCode === "E-01") {
-      console.log("そのメールアドレスはすでに使われています");
-      alert("そのメールアドレスはすでに使われています");
-    } else {
-      console.log("登録できませんでした");
-      alert("登録できませんでした");
-    }
+  const UserInfo = () => {
+    // const UserInfo = async () => {
+    //   const response = await axios.post(
+    //     "http://153.127.48.168:8080/ecsite-api/user",
+    //     {
+    //       name: userData?.registerData.name,
+    //       email: userData?.registerData.mailAddress,
+    //       password: userData?.registerData.password,
+    //       zipcode: userData?.registerData.zipcode,
+    //       address: userData?.registerData.address,
+    //       telephone: userData?.registerData.telephone,
+    //     }
+    //   );
+    //   const status = response.data.status;
+    //   console.dir("responce:" + JSON.stringify(response));
+    //   if (status === "success") {
+    //     console.log("成功");
+    updateId();
+    registerUserInfoToServer();
+    navigate("/AfterRegister");
+    //   } else if (response.data.errorCode === "E-01") {
+    //     console.log("そのメールアドレスはすでに使われています");
+    //     alert("そのメールアドレスはすでに使われています");
+    //   } else {
+    //     console.log("登録できませんでした");
+    //     alert("登録できませんでした");
+    //   }
   };
   // ユーザー情報をfirebaseへ送信
 
@@ -95,7 +96,7 @@ export function RegisterInfo() {
         // firebaseへ登録
         createUserWithEmailAndPassword(authenication, mailAddress, password);
       } else {
-        console.log("error");
+        alert("登録できませんでした");
         return;
       }
 
