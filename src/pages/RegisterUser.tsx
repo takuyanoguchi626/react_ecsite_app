@@ -183,7 +183,7 @@ export function RegisterInfo() {
                   trigger("mailAddress");
                 }}
               />
-              {errors.mailAddress && "メールアドレスは正しく記入してください"}
+              {errors.mailAddress?.message}
             </div>
             <br />
 
@@ -198,11 +198,15 @@ export function RegisterInfo() {
                 variant="outlined"
                 type="text"
                 {...register("telephone", {
-                  max: {
+                  minLength: {
+                    value: 10,
+                    message: "電話番号は10桁以上で入力してください。",
+                  },
+                  maxLength: {
                     value: 11,
                     message: "電話番号は11桁以内で入力してください。",
                   },
-                  required: "",
+                  required: "電話番号を入力してください",
                 })}
                 value={userData?.registerData.telephone}
                 onChange={(e) => {
@@ -210,10 +214,10 @@ export function RegisterInfo() {
                     ...userData?.registerData,
                     telephone: e.currentTarget.value,
                   });
-                  // trigger("telephone");
+                  trigger("telephone");
                 }}
               />
-              {/* {errors.telephone && "電話番号は11桁以内で記入してください"} */}
+              {errors.telephone?.message}
             </div>
             <br />
 
@@ -228,7 +232,11 @@ export function RegisterInfo() {
                 variant="outlined"
                 type="text"
                 {...register("password", {
-                  minLength: 5,
+                  required: "パスワードを入力してください",
+                  minLength: {
+                    value: 5,
+                    message: "パスワードは5桁以上で入力してください",
+                  },
                 })}
                 value={userData?.registerData.password}
                 onChange={(e) => {
@@ -239,7 +247,7 @@ export function RegisterInfo() {
                   trigger("password");
                 }}
               />
-              {errors.password && "5文字以上のパスワードを記入してください"}
+              {errors.password?.message}
             </div>
             <br />
 
@@ -253,7 +261,11 @@ export function RegisterInfo() {
                 variant="outlined"
                 type="text"
                 {...register("zipcode", {
-                  minLength: 5,
+                  required: "郵便番号を入力してください",
+                  minLength: {
+                    value: 5,
+                    message: "郵便番号は5桁以上で入力してください",
+                  },
                 })}
                 value={userData?.registerData.zipcode}
                 onChange={(e) => {
@@ -264,7 +276,7 @@ export function RegisterInfo() {
                   trigger("zipcode");
                 }}
               />
-              {errors.zipcode && "郵便番号は5桁以上で記入してください"}
+              {errors.zipcode?.message}
             </div>
             <br />
 
@@ -278,7 +290,11 @@ export function RegisterInfo() {
                 variant="outlined"
                 type="text"
                 {...register("address", {
-                  minLength: 3,
+                  required: "住所を入力してください",
+                  minLength: {
+                    value: 3,
+                    message: "住所を正しく入力してください",
+                  },
                 })}
                 value={userData?.registerData.address}
                 onChange={(e) => {
@@ -289,7 +305,7 @@ export function RegisterInfo() {
                   trigger("address");
                 }}
               />
-              {errors.address && "住所は都道府県から番地まで記入してください"}
+              {errors.address?.message}
             </div>
             <Grid container justifyContent="center" alignItems="flex-start">
               <Button color="inherit" type="submit" onClick={() => UserInfo()}>
